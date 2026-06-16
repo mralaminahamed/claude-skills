@@ -1,0 +1,26 @@
+{
+  "skill_name": "github-contribution-flow",
+  "evals": [
+    {
+      "id": 0,
+      "name": "changes-driven-multiscope",
+      "prompt": "Read all the uncommitted changes in this repo and commit them scope by scope, then create a new branch and open a PR.",
+      "expected_output": "Branch off develop; one commit per scope (coupons, admin, build) with conventional messages; push; gh pr create with --assignee @me and --label \"needs testing\"; no Closes #N.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "changes-driven-implicit-scope",
+      "prompt": "Commit my changes and open a pull request for them.",
+      "expected_output": "Even without the words 'scope by scope', the changes should be grouped into separate per-scope commits (not one lump). Branch + push + PR with assignee + needs-testing label.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "issue-driven-regression",
+      "prompt": "Debug and fix GitHub issue #42, then ship it.",
+      "expected_output": "Detect repo, fetch issue, root-cause (min-h-screen on coupons container), minimal fix, bugfix/ branch, single commit with Closes #42, PR with assignee + needs-testing label.",
+      "files": []
+    }
+  ]
+}

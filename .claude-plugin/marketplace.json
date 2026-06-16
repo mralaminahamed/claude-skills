@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-skills",
+  "description": "Al Amin Ahamed's WordPress development and GitHub contribution skills for Claude Code.",
+  "owner": {
+    "name": "Al Amin Ahamed",
+    "url": "https://github.com/mralaminahamed"
+  },
+  "plugins": [
+    {
+      "name": "claude-skills",
+      "source": "./",
+      "description": "WordPress plugin development and GitHub contribution skills: PR QA fixes, scoped commit/PR flow, PHPStan stubs scaffolding, WP admin browser automation, email templating, PHPUnit redirect harness, plugin audits, and release versioning.",
+      "version": "1.0.0",
+      "category": "development",
+      "strict": true
+    }
+  ]
+}
