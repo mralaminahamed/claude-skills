@@ -1,5 +1,5 @@
 ---
-name: github-contribution-flow
+name: wp-github-flow
 description: Use when shipping a contribution through GitHub — either (a) debugging a GitHub issue by URL/number (fetch, root-cause, fix), or (b) shipping uncommitted working-tree changes when the user says "commit my changes", "commit scope by scope", "create a branch and PR", "open a PR for these changes", or similar. Covers grouping changes into scoped conventional commits, creating a branch, pushing, and opening a PR with assignee + labels. Use this whenever the end goal is a commit/branch/PR, even if no issue is mentioned.
 ---
 

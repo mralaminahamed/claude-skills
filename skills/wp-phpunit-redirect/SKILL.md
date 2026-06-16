@@ -1,5 +1,5 @@
 ---
-name: wp-phpunit-redirect-harness
+name: wp-phpunit-redirect
 description: Use when WordPress PHPUnit tests exercise code that calls wp_safe_redirect()/wp_redirect() followed by exit/die, or when the suite mysteriously stops early and prints no "Tests:" summary. Installs a throwing-filter harness so redirect+exit paths become assertable.
 ---
 

@@ -6,7 +6,7 @@ All notable changes to **wp-dev-skills** are documented here. This project adher
 
 ### Added
 
-- `wp-org-plugin-submission` skill — WordPress.org directory submission (review checklist, readme.txt rules) and SVN deploy (trunk/tags/assets, Stable-tag mechanics) with a `svn-deploy.sh` helper.
+- `wp-org-submission` skill — WordPress.org directory submission (review checklist, readme.txt rules) and SVN deploy (trunk/tags/assets, Stable-tag mechanics) with a `svn-deploy.sh` helper.
 - CI workflow (`validate.yml`) and `validate_skills.py` — checks JSON manifests, version sync, and SKILL.md frontmatter on every push/PR.
 - Repo docs: README skill table, CONTRIBUTING, issue/PR templates.
 
@@ -18,5 +18,5 @@ All notable changes to **wp-dev-skills** are documented here. This project adher
 
 ### Added
 
-- Initial release with 8 skills: `fix-pr-qa-failures`, `github-contribution-flow`, `phpstan-stubs-scaffold`, `wp-admin-browser`, `wp-email-templates`, `wp-phpunit-redirect-harness`, `wp-plugin-audit`, `wp-plugin-release`.
+- Initial release with 8 skills: `wp-ci-qa`, `wp-github-flow`, `wp-phpstan-stubs`, `wp-admin-browser`, `wp-email-templates`, `wp-phpunit-redirect`, `wp-plugin-audit`, `wp-plugin-release`.
 - Plugin manifest + standalone marketplace manifest.

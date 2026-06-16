@@ -1,5 +1,5 @@
 ---
-name: wp-org-plugin-submission
+name: wp-org-submission
 description: Use when submitting a plugin to the WordPress.org plugin directory for the first time, deploying a new version via SVN, fixing a reviewer rejection, or setting up WP.org assets (banner, icon, screenshots). Covers the pre-submission checklist, 17 recurring rejection patterns with exact reviewer quotes, readme.txt requirements, the git→SVN deploy flow, and how the Stable tag controls what users receive. For pure WP.org guideline compliance review (18 official guidelines, GPL, naming, trialware rules), use the official wp-plugin-directory-guidelines skill instead.
 ---
 
@@ -10,7 +10,7 @@ Get a plugin into the WP.org directory and keep releasing to it. Two distinct ph
 - **Phase 1 — Initial submission.** Plugin not yet in the directory. One-time human review, then SVN access is granted.
 - **Phase 2 — SVN deploy.** Plugin already approved. Ship a new version into the existing SVN repo.
 
-`wp-org-plugin-submission` is about the *directory/SVN side*. Sync the version sources first with [[wp-plugin-release]] — this skill assumes the codebase already carries the target version.
+`wp-org-submission` is about the *directory/SVN side*. Sync the version sources first with [[wp-plugin-release]] — this skill assumes the codebase already carries the target version.
 
 ## When to use
 

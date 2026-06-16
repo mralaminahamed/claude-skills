@@ -1,5 +1,5 @@
 ---
-name: fix-pr-qa-failures
+name: wp-ci-qa
 description: Use when a PR has QA-reported failures, a "Testing Failed" label, or QA comments saying features are broken. Covers reading QA feedback, tracing root causes, applying scoped commits, updating PR labels, and posting a QA re-test comment.
 ---
 

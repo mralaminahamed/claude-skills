@@ -9,15 +9,15 @@ WordPress plugin development and GitHub contribution [skills](https://docs.claud
 
 | Skill | Use when |
 |-------|----------|
-| **fix-pr-qa-failures** | A PR has QA-reported failures, a "Testing Failed" label, or QA comments saying features are broken. Read feedback, trace root causes, apply scoped commits, update labels, post a re-test comment. |
-| **github-contribution-flow** | Shipping a contribution through GitHub — debug an issue by URL/number, or turn uncommitted changes into scoped conventional commits, a branch, and a PR with assignee + labels. |
-| **phpstan-stubs-scaffold** | Creating a new PHPStan stubs package. Scaffolds the full standard structure. |
+| **wp-ci-qa** | A PR has QA-reported failures, a "Testing Failed" label, or QA comments saying features are broken. Read feedback, trace root causes, apply scoped commits, update labels, post a re-test comment. |
+| **wp-github-flow** | Shipping a contribution through GitHub — debug an issue by URL/number, or turn uncommitted changes into scoped conventional commits, a branch, and a PR with assignee + labels. |
+| **wp-phpstan-stubs** | Creating a new PHPStan stubs package. Scaffolds the full standard structure. |
 | **wp-admin-browser** | Driving a WordPress admin panel via Chrome DevTools MCP — login, create users, navigate menus, submit forms, CRUD through the browser. |
 | **wp-email-templates** | Adding or refactoring transactional emails in a WP plugin — extract inline strings into reusable branded HTML templates sent via `wp_mail()`. |
-| **wp-phpunit-redirect-harness** | WP PHPUnit tests hit `wp_safe_redirect()`/`wp_redirect()` + `exit`, or the suite stops early with no summary. Installs a throwing-filter harness so redirect+exit paths become assertable. |
+| **wp-phpunit-redirect** | WP PHPUnit tests hit `wp_safe_redirect()`/`wp_redirect()` + `exit`, or the suite stops early with no summary. Installs a throwing-filter harness so redirect+exit paths become assertable. |
 | **wp-plugin-audit** | Auditing a WP plugin for inconsistencies — fans out parallel checks across dimensions and verifies every finding before reporting. |
 | **wp-plugin-release** | Bumping/releasing a WP plugin version — keeps Stable tag, header, constant, and readme/changelog coherent. |
-| **wp-org-plugin-submission** | Submitting a plugin to the WordPress.org directory for the first time, or deploying a new version via SVN — review checklist, readme.txt rules, trunk/tags/assets, Stable tag mechanics. |
+| **wp-org-submission** | Submitting a plugin to the WordPress.org directory for the first time, or deploying a new version via SVN — review checklist, readme.txt rules, trunk/tags/assets, Stable tag mechanics. |
 
 ## Install
 
