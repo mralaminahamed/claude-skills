@@ -1,0 +1,23 @@
+name: Skill request
+description: Propose a new skill or a capability for an existing one.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What recurring task should this skill handle?
+    validations:
+      required: true
+  - type: textarea
+    id: trigger
+    attributes:
+      label: When should it activate
+      description: The trigger conditions — phrasing, file types, or situations that should fire the skill.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected behavior
+      description: What should the skill do once active?

@@ -1,0 +1,40 @@
+name: Bug report
+description: A skill misbehaves, fails to activate, or produces wrong output.
+labels: [bug]
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Skill
+      description: Which skill is affected?
+      options:
+        - fix-pr-qa-failures
+        - github-contribution-flow
+        - phpstan-stubs-scaffold
+        - wp-admin-browser
+        - wp-email-templates
+        - wp-phpunit-redirect-harness
+        - wp-plugin-audit
+        - wp-plugin-release
+        - "not sure / other"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did the skill do, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Prompt used…
+        2. …
+  - type: input
+    id: version
+    attributes:
+      label: Claude Code version
+      placeholder: "e.g. 1.x.x"

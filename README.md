@@ -1,6 +1,9 @@
 # claude-skills
 
-WordPress plugin development and GitHub contribution [skills](https://docs.claude.com/en/docs/claude-code/skills) for [Claude Code](https://claude.com/claude-code), packaged as an installable plugin and marketplace.
+[![Validate](https://github.com/mralaminahamed/claude-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/mralaminahamed/claude-skills/actions/workflows/validate.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+WordPress plugin development and GitHub contribution [skills](https://docs.claude.com/en/docs/claude-code/skills) for [Claude Code](https://claude.com/claude-code) — shipped as an installable plugin **and** a standalone marketplace.
 
 ## Skills
 
@@ -24,16 +27,41 @@ Add the marketplace, then install the plugin:
 /plugin install claude-skills@claude-skills
 ```
 
-Or install from a local clone:
+Or from a local clone:
 
 ```
-/plugin marketplace add ~/Projects/claude-skills
+/plugin marketplace add ~/Projects/claude-plugins/claude-skills-repo
 /plugin install claude-skills@claude-skills
+```
+
+Skills activate automatically when their description matches what you're doing. Claude Code picks them up on the next session.
+
+## Layout
+
+```
+claude-skills/
+├── .claude-plugin/
+│   ├── plugin.json         # plugin manifest
+│   └── marketplace.json    # standalone marketplace manifest
+└── skills/
+    └── <skill-name>/
+        ├── SKILL.md         # required — frontmatter: name, description
+        ├── references/      # optional supporting docs
+        └── scripts/         # optional helper scripts
 ```
 
 ## Develop
 
-Skills live in [`skills/`](skills), one directory per skill, each with a `SKILL.md`. Edit the `SKILL.md` (and any supporting `scripts/`, `references/`, `examples/`) and the change is picked up on the next Claude Code session.
+Each skill is a directory under [`skills/`](skills) with a `SKILL.md`. Edit the `SKILL.md` (and any `references/` or `scripts/`) — the change is live on the next Claude Code session.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for skill authoring conventions and the validation rules CI enforces.
+
+## Versioning
+
+The plugin version lives in two manifests — keep them in sync on release:
+
+- `.claude-plugin/plugin.json` → `version`
+- `.claude-plugin/marketplace.json` → `plugins[0].version`
 
 ## License
 
