@@ -1,6 +1,6 @@
 # Pre-submission checklist — WordPress.org plugin directory
 
-Work top-to-bottom before generating the release zip. Sourced from 8 real plugin submissions; most rejections trace to §§2.3–2.5. See `references/review-issues-catalog.md` for reviewer quotes and corrective patterns for each item.
+Work top-to-bottom before generating the release zip. Sourced from 8 real plugin submissions; most rejections trace to §§3–5. See `review-issues-catalog.md` for reviewer quotes and corrective patterns for each item.
 
 ## 1. Identity & slug
 
@@ -48,7 +48,7 @@ Short description, max 150 chars, single line.
 - [ ] Every function, class, constant, option, hook, and JS global uses a **single** project-specific prefix of **4+ characters** (not `wp_`, `_`, `__`)
 - [ ] No `if ( ! function_exists( 'NAME' ) )` wrappers around plugin-own functions
 - [ ] **No obfuscation / no minified-only** — source must be in the zip or publicly linked; see §4
-- [ ] **No trialware (Guideline 5)** — the free plugin must be 100% functional; no features gated behind a license key, upgrade nag, or Pro check. Freemium = separate Pro plugin hosted on your own site. See `references/trialware-compliance.md`
+- [ ] **No trialware (Guideline 5)** — the free plugin must be 100% functional; no features gated behind a license key, upgrade nag, or Pro check. Freemium = separate Pro plugin hosted on your own site. See `trialware-compliance.md`
 - [ ] No "powered by" links without opt-in. No admin notices that can't be dismissed
 - [ ] No undisclosed user-data collection or tracking pixels
 - [ ] No `unlink()` — use `wp_delete_file()`
@@ -95,7 +95,7 @@ Build check after zip:
 
 ```bash
 # Must return no output
-unzip -l release/<slug>.zip | grep -E '\.wordpress-org/|/tests/|/node_modules/|/\.git/'
+unzip -l release/<slug>.zip | grep -E '\.wordpress-org/|/tests/|/node_modules/|/\.git/|/\.github/|/bin/|/coverage/'
 ```
 
 ## 5. Security pattern
@@ -130,6 +130,7 @@ Escape function quick reference:
 | URL in href/src | `esc_url()` |
 | URL to database | `esc_url_raw()` |
 | HTML body content | `wp_kses_post()` |
+| HTML with custom allowed tags | `wp_kses( $html, $allowed )` |
 | Inline JS | `esc_js()` |
 | Textarea content | `esc_textarea()` |
 
@@ -163,7 +164,7 @@ All must return `200`.
 - Slug changes require an explicit line: *"Please change the slug to `new-slug`."*
 - Three-month timeout — unresolved issues = rejected slug (burned permanently)
 
-See `references/review-issues-catalog.md` for the full 17-issue catalog with exact reviewer quotes.
+See `review-issues-catalog.md` for the full 17-issue catalog with exact reviewer quotes.
 
 ## References
 

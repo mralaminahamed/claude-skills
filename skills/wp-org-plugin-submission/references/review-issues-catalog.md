@@ -68,7 +68,7 @@ Both Terms and Privacy URLs must return HTTP 200 (see Issue 1). No marketing cop
 2. Trademarks at the end: `Alamin AI Provider for OpenCode Zen` ✓ — `OpenCode Zen AI Provider` ✗
 3. Search Google + DuckDuckGo + `wordpress.org/plugins/` before submitting.
 4. No portmanteaus (`PricesPress` → rejected).
-5. Slug changes during review: reply explicitly — *"Please reserve the new slug `<new-slug>`."* Slug is permanent after approval.
+5. Slug changes during review: reply explicitly — *"Please change the slug to `<new-slug>`."* Slug is permanent after approval.
 
 ---
 
@@ -113,7 +113,7 @@ Option A — include `src/` in the zip alongside `build/`:
 - Do not add `src/` to `.distignore`
 - Reviewers can then read the source directly from the zip
 
-Option B — public repo + readme note:
+Option B — public repo + readme note (the section name is a suggestion, not a required heading):
 
 ```
 == Source code ==
@@ -355,25 +355,25 @@ Dismissals stored in user meta via AJAX; activation redirects fire once (transie
 
 ## Issue occurrence matrix
 
-| Issue | OpenCode Zen | MiniMax | Swift Menu | Warranty Cart | EasyCommerce | GiveWP Multi |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 Invalid URLs | ✓ | ✓ | ✓ | | ✓ | |
-| 2 Undisclosed service | | ✓ | | | | |
-| 3 Name / trademark | ✓ | | ✓ | | | ✓ |
-| 4 Main file name | ✓ | | | | | |
-| 5 Unneeded folders / WP.org assets in zip | ✓ | | | | ✓ | |
-| 6 No source for compiled output | | | | ✓ | ✓ | |
-| 7 Out-of-date libraries | | | | ✓ | | |
-| 8 Improper enqueueing | | | ✓ | ✓ | | ✓ |
-| 9 Remote CDN calls | | | | ✓ | | |
-| 10 Core loading files | | | ✓ | ✓ | | |
-| 11 Missing nonce / capability | | | ✓ | | | ✓ |
-| 12 Late escaping | | | ✓ | ✓ | | |
-| 13 Sanitize / validate input | | | | ✓ | | |
-| 14 Generic / mixed prefix | | | ✓ | ✓ | ✓ | |
-| 15 Text domain ≠ slug | | | ✓ | | | |
-| 16 REST `permission_callback` | | | | | | ✓ |
-| 17 Admin hijacking (Guideline 11) | | | | | | ✓ |
+| Issue | Squad Modules | Author Profiles | OpenCode Zen | MiniMax | Swift Menu | Warranty Cart | EasyCommerce | GiveWP Multi |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 1 Invalid URLs | | | ✓ | ✓ | ✓ | | ✓ | |
+| 2 Undisclosed service | | | | ✓ | | | | |
+| 3 Name / trademark | | | ✓ | | ✓ | | | ✓ |
+| 4 Main file name | | | ✓ | | | | | |
+| 5 Unneeded folders / WP.org assets in zip | | | ✓ | | | | ✓ | |
+| 6 No source for compiled output | | | | | | ✓ | ✓ | |
+| 7 Out-of-date libraries | | | | | | ✓ | | |
+| 8 Improper enqueueing | | | | | ✓ | ✓ | | ✓ |
+| 9 Remote CDN calls | | | | | | ✓ | | |
+| 10 Core loading files | | | | | ✓ | ✓ | | |
+| 11 Missing nonce / capability | | | | | ✓ | | | ✓ |
+| 12 Late escaping | | | | | ✓ | ✓ | | |
+| 13 Sanitize / validate input | | | | | | ✓ | | |
+| 14 Generic / mixed prefix | | | | | ✓ | ✓ | ✓ | |
+| 15 Text domain ≠ slug | | | | | ✓ | | | |
+| 16 REST `permission_callback` | | | | | | | | ✓ |
+| 17 Admin hijacking (Guideline 11) | | | | | | | | ✓ |
 
 ---
 

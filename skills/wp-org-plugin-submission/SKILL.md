@@ -27,7 +27,7 @@ The review is done by humans and can take days to weeks. Submitting a clean plug
 1. **Slug availability** — the directory slug is derived from the plugin name in the main file header. Pick a name not already taken at `https://wordpress.org/plugins/<slug>/` (404 = free). Slug is permanent.
 2. **readme.txt valid** — must parse in the official validator: `https://wordpress.org/plugins/developers/readme-validator/`. Required header fields, valid `Stable tag`, GPL-compatible `License`. See `references/submission-checklist.md`.
 3. **Guidelines compliance** — sanitize input, escape output, nonce-protect actions, prefix all globals, no obfuscation/minified-only code, no external loading of scripts, no tracking or calling home without explicit opt-in consent, GPL-compatible code + assets only. Full checklist in `references/submission-checklist.md`. 17-issue catalog with exact reviewer quotes in `references/review-issues-catalog.md`.
-4. **Build a clean zip** — source files (`src/`, `composer.json`, build configs) must be included. Exclude `.git`, `node_modules`, `tests`, `.wordpress-org`. See §4 of `references/submission-checklist.md`.
+4. **Build a clean zip** — source files (`src/`, `composer.json`, build configs) must be included; `.wordpress-org/` and `node_modules` must not. Full include/exclude lists in §4 of `references/submission-checklist.md`.
 5. **Submit** at `https://wordpress.org/plugins/developers/add/`. The reviewer replies by email. Fix what they flag, reply briefly (context only, no change list), attach the updated zip. On approval, SVN access is granted at `https://plugins.svn.wordpress.org/<slug>/`.
 
 ## Phase 2 — SVN deploy
@@ -55,7 +55,7 @@ It checks out SVN, syncs `trunk/` to the build (adding/removing files), copies `
 
 ## Top rejection patterns
 
-Distilled from 8 real submissions. Full catalog with exact reviewer quotes in `references/review-issues-catalog.md`.
+Most frequent — not exhaustive. Full 17-issue catalog with exact reviewer quotes in `references/review-issues-catalog.md`.
 
 - Generic or trademarked slug; "WordPress"/"Woo" in the plugin name.
 - Main PHP file name doesn't match the slug (`plugin.php` instead of `<slug>.php`).

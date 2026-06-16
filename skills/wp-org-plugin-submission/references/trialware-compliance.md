@@ -2,7 +2,9 @@
 
 ## The rule
 
-**The free plugin on WP.org must be 100% functional.** No features gated behind a license key, upgrade prompt, or Pro plan check. Admin notices that cannot be dismissed are also violations.
+**The free plugin on WP.org must be 100% functional.** No features gated behind a license key, upgrade prompt, or Pro plan check.
+
+Non-dismissible admin notices are a separate Guideline 11 violation — see Issue 17 in `review-issues-catalog.md`.
 
 WP.org allows a freemium model but the Pro tier must be a **completely separate plugin**, hosted on the developer's own website, with no licensing code inside the free plugin.
 
@@ -69,7 +71,7 @@ Run before submission whenever the plugin previously had a freemium model.
 - [ ] No `license_key` in `get_option()` / `update_option()` / `sanitize_settings()`
 - [ ] No "free tier" or "Pro only" comments in hook handlers or pusher/puller classes
 - [ ] No feature guards that return early based on plan status
-- [ ] `storesheet_settings` (or equivalent option) has no `license_key` field
+- [ ] Plugin's settings option has no `license_key` field
 
 **TypeScript/React files:**
 - [ ] No `usePlan` / `useLicense` hook
@@ -92,7 +94,9 @@ Run before submission whenever the plugin previously had a freemium model.
 
 ## How to remove a licensing layer
 
-Typical removal path when a free plugin previously had `PlanManager`-style gating:
+Typical removal path when a free plugin previously had `PlanManager`-style gating.
+
+> **Note:** The file paths, class names, and method names below are from the **StoreSheet** plugin. Substitute your own plugin's equivalents.
 
 ### 1. Delete licensing infrastructure
 
@@ -178,7 +182,7 @@ When replying to a Guideline 5 rejection, be brief. Context only — no change l
 If the removed Plans page was fetching data from `api.wordpress.org` (to show other plugins), remove that entry from `== External services ==` in `readme.txt` as well:
 
 ```
-= WordPress.org Plugin Directory (admin only) =     ← delete this block
+== WordPress.org Plugin Directory (admin only) ==     ← delete this block
 The Plans page optionally fetches a list of the plugin author's other plugins
 from the WordPress.org API…
 ```
