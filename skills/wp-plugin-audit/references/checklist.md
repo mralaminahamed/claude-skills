@@ -5,6 +5,7 @@ Concrete checks per dimension, the `grep`s that surface them, and the report sha
 ## Dimension A — Version & metadata
 
 ```bash
+# Version fields across sources
 grep -n "Version:\|Requires at least\|Requires PHP\|Tested up to\|Text Domain" *.php
 grep -n "_VERSION'" *.php
 grep -n "Stable tag\|Requires\|Tested up to" readme.txt
@@ -12,9 +13,56 @@ grep -n '"php"\|"version"\|"license"\|psr-4' composer.json
 grep -n "Project-Id-Version" languages/*.pot
 grep -rn "db_version\|schema_version" includes/ src/
 grep -rIn "[0-9]\+\.[0-9]\+\.[0-9]\+" --include=*.php --include=readme.txt .   # stray version strings
+
+# Plugin file header format checks (run on the main plugin file)
+MAIN_PLUGIN=$(find . -maxdepth 1 -name "*.php" | xargs grep -l "Plugin Name:" 2>/dev/null | head -1)
+# PHPDoc block style (/** vs /*)
+grep -n "^/\*\*\|^ \* @wordpress-plugin\|^ \* @package\|^ \* @author\|^ \* @copyright\|^ \* @license" "$MAIN_PLUGIN"
+# Description length check
+grep -n "Description:" "$MAIN_PLUGIN"
+# License field vs License URI consistency
+grep -n "License:" "$MAIN_PLUGIN"
 ```
 
-Cross-check: header `Version` == version constant == `readme.txt` Stable tag. `Requires PHP` consistent across header/readme/composer. Changelog has an entry for the current version. Flag mismatches. **Do not flag** schema `$db_version` for differing from plugin version — it's independent.
+Cross-check:
+- Header `Version` == version constant == `readme.txt` Stable tag.
+- `Requires PHP` consistent across header/readme/composer.
+- Changelog has an entry for the current version.
+- Plugin file uses `/** */` PHPDoc block (not plain `/* */`).
+- PHPDoc block contains `@wordpress-plugin` marker, `@package`, `@author`, `@copyright`, `@license` fields.
+- `Description` ≤ 140 characters.
+- `License` slug is consistent with `License URI` (e.g. `GPL v2 or later` → `gpl-2.0.txt`).
+- `Text Domain` present when plugin has `__()` / `_e()` calls.
+
+Flag mismatches. **Do not flag** schema `$db_version` for differing from plugin version — it's independent.
+
+### Canonical header format (reference)
+
+```php
+/**
+ * Plugin Name
+ *
+ * @package           PluginPackage
+ * @author            Your Name
+ * @copyright         2024 Your Name or Company Name
+ * @license           GPL-2.0-or-later
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Plugin Name
+ * Plugin URI:        https://example.com/plugin-name
+ * Description:       Description of the plugin.
+ * Version:           1.0.0
+ * Requires at least: 5.2
+ * Requires PHP:      7.2
+ * Author:            Your Name
+ * Author URI:        https://example.com
+ * Text Domain:       plugin-slug
+ * License:           GPL v2 or later
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Update URI:        https://example.com/my-plugin/
+ * Requires Plugins:  my-plugin, yet-another-plugin
+ */
+```
 
 ## Dimension B — Naming / prefix / i18n
 
@@ -29,7 +77,7 @@ grep -rn "@package" includes/ templates/ *.php
 grep -rn "register_rest_route\|add_option\|set_transient\|add_action\|add_filter\|wp_enqueue_\|wp_create_nonce\|wp_nonce_field" includes/
 ```
 
-Check: one canonical prefix everywhere; one text domain on every string; translator comments on `sprintf`/`printf` with placeholders; uniform `@package`; consistent option/transient/hook/REST/cookie/nonce/handle/CSS-class prefixes.
+Check: one canonical prefix everywhere; one text domain on every string; translator comments on `sprintf`/`printf` with placeholders; uniform `@package` matching the plugin's declared `@package` in the file header PHPDoc; consistent option/transient/hook/REST/cookie/nonce/handle/CSS-class prefixes.
 
 ## Dimension C — Docs ↔ code
 

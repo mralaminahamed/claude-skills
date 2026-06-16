@@ -19,6 +19,34 @@ Read-only audit that surfaces inconsistencies across a WP plugin's code, config,
 Dispatch one read-only agent per dimension (Explore or general-purpose), in a single message so they run concurrently. Each returns findings with `file:line`, the inconsistent value, and the expected/canonical form.
 
 - **A — Version & metadata.** Cross-reference every version/metadata source: plugin header (`Version`, `Requires at least`, `Requires PHP`, `Tested up to`, `Text Domain`), the version constant, `readme.txt` (`Stable tag` + Changelog + Upgrade Notice), `composer.json`, the `.pot` `Project-Id-Version`, and the schema/DB version. Flag every mismatch; note fields that are *intentionally* independent (schema `$db_version` ≠ plugin version) so they aren't flagged.
+
+  Also audit the **main plugin file header format** against the canonical PHPDoc DocBlock style (preferred over plain block comment):
+  ```php
+  /**
+   * Plugin Name
+   *
+   * @package           PluginPackage
+   * @author            Your Name
+   * @copyright         2019 Your Name or Company Name
+   * @license           GPL-2.0-or-later
+   *
+   * @wordpress-plugin
+   * Plugin Name:       Plugin Name
+   * Plugin URI:        https://example.com/plugin-name
+   * Description:       Description of the plugin.
+   * Version:           1.0.0
+   * Requires at least: 5.2
+   * Requires PHP:      7.2
+   * Author:            Your Name
+   * Author URI:        https://example.com
+   * Text Domain:       plugin-slug
+   * License:           GPL v2 or later
+   * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+   * Update URI:        https://example.com/my-plugin/
+   * Requires Plugins:  my-plugin, yet-another-plugin
+   */
+  ```
+  Flag: missing `@wordpress-plugin` marker (distinguishes WP header from plain PHPDoc); missing `@package`/`@author`/`@copyright`/`@license` PHPDoc fields; `Description` over 140 characters; `License` slug not matching `License URI`; missing `Text Domain` when plugin has translated strings; using a plain `/* */` block instead of `/** */` PHPDoc block.
 - **B — Naming / prefix / i18n.** Canonical prefix (e.g. `myplugin_` / `_myplugin_`) — flag legacy prefixes outside the migration file. Text-domain consistency on every `__()`/`_e()`/`esc_html__()`/`_n()`; missing translator comments on `sprintf`/`printf` with placeholders. `@package` tag variants. Option/transient/hook/REST/cookie/nonce/AJAX/asset-handle/CSS-class prefix uniformity.
 - **C — Docs ↔ code.** Path references (renamed dirs), function/class/option/table names referenced in docs that no longer match code, documented commands that don't exist (`composer test:unit` etc.), test counts, architecture trees vs real files, behavior claims that contradict code. Distinguish *historical* docs (point-in-time, leave) from *current* docs (must match).
 - **D — Code conventions.** DB-write style (ORM vs `$wpdb` per the repo's CLAUDE.md), docblock style, `@since` tags, capability/nonce coverage, return-type consistency, leftover renamed-dir refs, duplicated logic, escaping/sanitization uniformity. Tag each: bug-risk / convention / cosmetic.
@@ -44,3 +72,7 @@ Do not trust agent output verbatim — agents over-report. For each finding, `gr
 ## References
 
 - `references/checklist.md` — per-dimension grep commands, common false positives to kill, and the severity-grouped report template.
+- `references/readme-txt.md` — readme.txt required/optional sections, field limits, Stable tag rules, common mistakes, and verification greps.
+- `references/escaping-sanitization.md` — escaping functions by context, sanitization functions by input type, late-escape rule, common XSS/SQLi flags.
+- `references/capability-nonce.md` — nonce creation/verification patterns, capability map, public webhook exception, false-positive patterns.
+- `references/i18n-translator-comments.md` — all i18n function signatures, translator comment format and placement rules, variable/placeholder rules, common flags.
