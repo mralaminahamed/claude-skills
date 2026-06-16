@@ -15,7 +15,7 @@ Integrate Freemius into a WordPress plugin for commercial distribution: SDK boot
 - "Debug Freemius SDK not loading", "fix opt-in dialog not showing".
 - "Configure Freemius for multisite licensing".
 
-**Not for:** General WooCommerce payment flows — use `wp-woocommerce`. WP.org trialware compliance (Freemius-powered upsells must follow WP.org Guideline 5 — use `wp-org-submission` and `references/trialware-compliance.md`).
+**Not for:** General WooCommerce payment flows — use `wp-woocommerce`. WP.org trialware compliance (Freemius-powered upsells must follow WP.org Guideline 5 — use `wp-org-submission`, which contains `references/trialware-compliance.md`).
 
 ## Method
 

@@ -128,6 +128,7 @@ Always wait for the page to load after each menu click before interacting with t
 
 - [Chrome DevTools MCP tools](references/chrome-devtools-tools.md) — full tool params, interaction sequence template, priority rules
 - [WordPress admin navigation](references/wp-admin-navigation.md) — menu paths, form submit patterns, success strings
+- [Browser debug patterns](references/browser-debug-patterns.md) — console error capture, network request inspection, evaluate_script debug snippets, screenshot strategy, PHP error detection
 
 ---
 

@@ -242,3 +242,9 @@ add_filter( 'user_has_cap', function( $caps, $cap_to_check, $args, $user ) {
 - Avoid `BLOG_ID_CURRENT_SITE` constant — use `get_current_blog_id()` and `get_main_site_id()` instead.
 - Network admin pages can't use the WordPress Settings API (`register_setting`, `add_settings_section`) — handle saves via `network_admin_edit_{action}` hooks with manual `wp_redirect`.
 - On large networks (1000+ sites), avoid `get_sites( [ 'number' => 0 ] )` — chunk with `number`/`offset` or use Action Scheduler (`wp-background-processing`) to process sites asynchronously.
+
+## References
+
+- `references/multisite-patterns.md` — detection helpers, site switching, options API, get_sites() params, table prefix, capabilities, activation hooks.
+- `references/network-admin-patterns.md` — network admin menu, network settings save via network_admin_edit_{action}, network option storage, network-wide transients.
+- `references/multisite-testing.md` — PHPUnit multisite bootstrap, data-isolation tests, network-activation tests, new-site hook tests, gotchas.

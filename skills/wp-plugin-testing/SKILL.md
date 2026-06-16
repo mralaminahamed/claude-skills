@@ -15,7 +15,7 @@ Set up and write automated tests for WordPress plugins: PHPUnit integration test
 - "Test a hook callback", "assert a filter changes the output", "test AJAX handlers".
 - "Add tests to CI", "run tests on GitHub Actions".
 
-**Not for:** PHPStan static analysis — use `wp-phpstan-stubs`. Debugging CI failures on an existing suite — use `wp-ci-qa`.
+**Not for:** PHPStan static analysis — use the official `wp-phpstan` skill. Scaffolding a stubs package for a third-party library — use `wp-phpstan-stubs`. Debugging CI failures on an existing suite — use `wp-ci-qa`.
 
 ## Method
 

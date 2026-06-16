@@ -182,3 +182,11 @@ Declare blocks compatibility alongside HPOS:
 
 - `references/wc-hooks.md` — categorised hook list (cart, checkout, orders, products, admin) with signatures and since versions.
 - `references/hpos-migration.md` — HPOS compatibility checklist and query migration patterns.
+- `references/product-crud.md` — WC_Product factory, meta CRUD, product type registration, variation patterns.
+- `references/rest-api.md` — WC REST API auth, endpoints, batch operations, extending product/order responses via filters.
+- `references/block-cart-checkout.md` — SlotFills, registerCheckoutFilters, extensionCartUpdate, woocommerce_store_api_register_update_callback, enqueue pattern.
+- `references/payment-methods.md` — registerPaymentMethod(), registerExpressPaymentMethod(), AbstractPaymentMethodType PHP class, block payment registration.
+- `references/payment-gateway.md` — WC_Payment_Gateway scaffold, process_payment(), process_refund(), webhook handler, settings fields.
+- `references/shipping.md` — WC_Shipping_Method scaffold, calculate_shipping(), woocommerce_package_rates filter, zone handling, split packages.
+- `references/orders.md` — wc_get_orders(), getter list, line item iteration, status hooks, custom status registration, wc_create_refund(), HPOS admin columns.
+- `references/coupons-tax-webhooks.md` — WC_Coupon CRUD, wc_order_statuses filter, WC_Tax::calc_tax(), WC_Webhook programmatic creation, HMAC-SHA256 verification.

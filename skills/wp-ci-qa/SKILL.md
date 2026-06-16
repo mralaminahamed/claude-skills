@@ -16,6 +16,7 @@ Full workflow for diagnosing and fixing bugs reported by QA on an open PR. Start
 - `references/root-cause-patterns.md` — catalog of recurring bug patterns
   (symptom → cause → detect → fix). **Read before tracing; append after.**
 - `references/qa-comment-template.md` — the Step 8 re-test comment template + rules.
+- `references/github-actions-wp-matrix.md` — PHPUnit/PHPCS/PHPStan workflow configs, PHP×WP version matrix, caching, and CI failure triage.
 
 ## Workflow
 

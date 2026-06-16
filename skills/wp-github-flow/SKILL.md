@@ -14,7 +14,7 @@ Two entry modes that converge on the same shipping flow (branch → scoped commi
 
 Both end at **§6 Branch, Commit, PR**, which is shared.
 
-## When to Use
+## When to use
 
 **Issue-driven:**
 - User says "analyze/debug/fix/investigate issue #NNN"
@@ -35,6 +35,7 @@ Both end at **§6 Branch, Commit, PR**, which is shared.
 
 - `references/gh-reference.md` — `gh` CLI commands, branch naming rules, label discovery, PR template sections, common CI failures
 - `references/codesigner-entry-points.md` — CoDesigner free/pro layout, repos, registry + render paths, project conventions
+- `references/conventional-commits.md` — type/scope table, WP-specific scope list, summary rules, multi-commit PR rules, footer conventions, rebase reword
 
 ## Repo ≠ where the issue lives
 
