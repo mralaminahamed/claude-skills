@@ -1,7 +1,7 @@
 {
   "name": "claude-skills",
-  "version": "1.0.0",
-  "description": "WordPress plugin development and GitHub contribution skills for Claude Code: PR QA fixes, scoped commit/PR flow, PHPStan stubs scaffolding, WP admin browser automation, email templating, PHPUnit redirect harness, plugin audits, and release versioning.",
+  "version": "1.1.0",
+  "description": "WordPress plugin development and GitHub contribution skills for Claude Code: PR QA fixes, scoped commit/PR flow, PHPStan stubs scaffolding, WP admin browser automation, email templating, PHPUnit redirect harness, plugin audits, release versioning, and WordPress.org submission/SVN deploy.",
   "author": {
     "name": "Al Amin Ahamed",
     "email": "n.mukto@codexpert.io",

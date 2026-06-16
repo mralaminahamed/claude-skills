@@ -17,6 +17,7 @@ WordPress plugin development and GitHub contribution [skills](https://docs.claud
 | **wp-phpunit-redirect-harness** | WP PHPUnit tests hit `wp_safe_redirect()`/`wp_redirect()` + `exit`, or the suite stops early with no summary. Installs a throwing-filter harness so redirect+exit paths become assertable. |
 | **wp-plugin-audit** | Auditing a WP plugin for inconsistencies — fans out parallel checks across dimensions and verifies every finding before reporting. |
 | **wp-plugin-release** | Bumping/releasing a WP plugin version — keeps Stable tag, header, constant, and readme/changelog coherent. |
+| **wp-org-plugin-submission** | Submitting a plugin to the WordPress.org directory for the first time, or deploying a new version via SVN — review checklist, readme.txt rules, trunk/tags/assets, Stable tag mechanics. |
 
 ## Install
 
