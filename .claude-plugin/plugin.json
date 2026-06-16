@@ -4,7 +4,6 @@
   "description": "17 WordPress plugin development skills for Claude Code: GitHub flow (scoped commits, PR, hotfix, revert), WooCommerce extensions, plugin testing (PHPUnit/Brain\\Monkey/redirect harness), coding standards (PHPCS/WPCS), CI/QA triage, PHPStan stubs scaffolding, build tools (@wordpress/scripts), background processing (Action Scheduler), multisite, i18n workflow, database (dbDelta/migrations), email templates, Freemius SDK, plugin audit, release versioning, WP.org submission/SVN deploy, and WP admin browser automation.",
   "author": {
     "name": "Al Amin Ahamed",
-    "email": "mrabir.ahamed@gmail.com",
     "url": "https://github.com/mralaminahamed"
   },
   "homepage": "https://github.com/mralaminahamed/wp-dev-skills",
