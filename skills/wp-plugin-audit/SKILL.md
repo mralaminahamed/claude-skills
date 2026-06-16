@@ -68,6 +68,7 @@ Do not trust agent output verbatim — agents over-report. For each finding, `gr
 
 - Audit is read-only. Run on the current working tree (mention if it includes unmerged changes).
 - When fixing afterward: many files span multiple finding-categories — a single cohesive "fix audit findings" commit with an enumerated body is cleaner than fragile per-scope partial staging.
+- For authoritative WP.org Plugin Directory guideline compliance (18 official rules: GPL, naming, trialware, external services), use the official `wp-plugin-directory-guidelines` skill (WordPress/agent-skills). This audit covers *code consistency and conventions*; that skill covers *directory submission rules*.
 
 ## References
 
