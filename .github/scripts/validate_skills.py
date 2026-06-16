@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate claude-skills plugin structure. Stdlib only."""
+"""Validate wp-dev-skills plugin structure. Stdlib only."""
 import json
 import sys
 from pathlib import Path

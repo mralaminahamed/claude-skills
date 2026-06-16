@@ -1,5 +1,5 @@
 {
-  "name": "claude-skills",
+  "name": "wp-dev-skills",
   "version": "1.1.0",
   "description": "WordPress plugin development and GitHub contribution skills for Claude Code: PR QA fixes, scoped commit/PR flow, PHPStan stubs scaffolding, WP admin browser automation, email templating, PHPUnit redirect harness, plugin audits, release versioning, and WordPress.org submission/SVN deploy.",
   "author": {
@@ -7,8 +7,8 @@
     "email": "n.mukto@codexpert.io",
     "url": "https://github.com/mralaminahamed"
   },
-  "homepage": "https://github.com/mralaminahamed/claude-skills",
-  "repository": "https://github.com/mralaminahamed/claude-skills",
+  "homepage": "https://github.com/mralaminahamed/wp-dev-skills",
+  "repository": "https://github.com/mralaminahamed/wp-dev-skills",
   "license": "MIT",
   "keywords": [
     "wordpress",

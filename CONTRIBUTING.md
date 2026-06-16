@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for improving **claude-skills**.
+Thanks for improving **wp-dev-skills**.
 
 ## Adding a skill
 

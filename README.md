@@ -1,6 +1,6 @@
-# claude-skills
+# wp-dev-skills
 
-[![Validate](https://github.com/mralaminahamed/claude-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/mralaminahamed/claude-skills/actions/workflows/validate.yml)
+[![Validate](https://github.com/mralaminahamed/wp-dev-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/mralaminahamed/wp-dev-skills/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 WordPress plugin development and GitHub contribution [skills](https://docs.claude.com/en/docs/claude-code/skills) for [Claude Code](https://claude.com/claude-code) — shipped as an installable plugin **and** a standalone marketplace.
@@ -24,15 +24,15 @@ WordPress plugin development and GitHub contribution [skills](https://docs.claud
 Add the marketplace, then install the plugin:
 
 ```
-/plugin marketplace add mralaminahamed/claude-skills
-/plugin install claude-skills@claude-skills
+/plugin marketplace add mralaminahamed/wp-dev-skills
+/plugin install wp-dev-skills@wp-dev-skills
 ```
 
 Or from a local clone:
 
 ```
-/plugin marketplace add ~/Projects/claude-plugins/claude-skills-repo
-/plugin install claude-skills@claude-skills
+/plugin marketplace add ~/Projects/claude-plugins/wp-dev-skills-repo
+/plugin install wp-dev-skills@wp-dev-skills
 ```
 
 Skills activate automatically when their description matches what you're doing. Claude Code picks them up on the next session.
@@ -40,7 +40,7 @@ Skills activate automatically when their description matches what you're doing. 
 ## Layout
 
 ```
-claude-skills/
+wp-dev-skills/
 ├── .claude-plugin/
 │   ├── plugin.json         # plugin manifest
 │   └── marketplace.json    # standalone marketplace manifest
