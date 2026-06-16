@@ -1,6 +1,6 @@
 ---
 name: wp-org-plugin-submission
-description: Use when submitting a plugin to the WordPress.org plugin directory for the first time, deploying a new version via SVN, or auditing a plugin for WP.org guideline compliance (trialware, source code, security, naming, external services). Covers the pre-submission checklist, 17 recurring rejection patterns with exact reviewer quotes, readme.txt requirements, the git→SVN deploy flow, and how the Stable tag controls what users receive.
+description: Use when submitting a plugin to the WordPress.org plugin directory for the first time, deploying a new version via SVN, fixing a reviewer rejection, or setting up WP.org assets (banner, icon, screenshots). Covers the pre-submission checklist, 17 recurring rejection patterns with exact reviewer quotes, readme.txt requirements, the git→SVN deploy flow, and how the Stable tag controls what users receive. For pure WP.org guideline compliance review (18 official guidelines, GPL, naming, trialware rules), use the official wp-plugin-directory-guidelines skill instead.
 ---
 
 # WordPress.org Plugin Submission & SVN Deploy
@@ -17,8 +17,10 @@ Get a plugin into the WP.org directory and keep releasing to it. Two distinct ph
 - "Submit this plugin to WordPress.org", "publish to the .org directory", "add my plugin to wp.org".
 - "Deploy the new version to SVN", "push the release to wp.org", "tag a release on plugins.svn".
 - "Set up screenshots / banner / icon", "why aren't my assets showing".
-- "Audit this plugin for WP.org compliance", "will this pass WP.org review", "check for guideline violations".
 - "Fix a WP.org rejection", "respond to plugin review email", "they flagged trialware / source code / external service".
+- Pre-submission hygiene sweep using the 17-issue rejection catalog (real reviewer quotes).
+
+**Not for:** "will this pass WP.org review?", "check guideline violations", "is my plugin GPL-compliant?" — use the official `wp-plugin-directory-guidelines` skill for authoritative 18-guideline compliance review. This skill owns the *workflow* (SVN, assets, rejections); that skill owns the *rules*.
 
 ## Phase 1 — Initial submission
 
@@ -77,3 +79,4 @@ Most frequent — not exhaustive. Full 17-issue catalog with exact reviewer quot
 - `references/trialware-compliance.md` — Guideline 5 freemium pattern, audit checklist, and step-by-step licensing-layer removal.
 - `references/svn-deploy.md` — complete SVN workflow, asset spec, Stable-tag mechanics, hotfix flow.
 - `scripts/svn-deploy.sh` — git/build → SVN trunk+tag deploy helper.
+- **Official:** `wp-plugin-directory-guidelines` (WordPress/agent-skills) — authoritative source for the 18 WP.org Plugin Directory guidelines; use it for GPL/naming/trialware rule interpretation when our 17-issue catalog conflicts or is ambiguous.
