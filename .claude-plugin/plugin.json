@@ -18,5 +18,11 @@
     "github",
     "code-review",
     "skills"
+  ],
+  "dependencies": [
+    {
+      "name": "wordpress-official-agent-skills",
+      "marketplace": "wordpress-official-agent-skills"
+    }
   ]
 }

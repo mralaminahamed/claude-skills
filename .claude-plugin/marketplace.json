@@ -6,6 +6,7 @@
     "name": "Al Amin Ahamed",
     "url": "https://github.com/mralaminahamed"
   },
+  "allowCrossMarketplaceDependenciesOn": ["wordpress-official-agent-skills"],
   "plugins": [
     {
       "name": "wp-dev-skills",
