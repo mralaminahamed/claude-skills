@@ -234,7 +234,73 @@ class Test_Network_Feature extends WP_UnitTestCase {
 
 Run multisite tests: `WP_MULTISITE=1 vendor/bin/phpunit`
 
-### 7. GitHub Actions CI
+### 7. Testing redirect + exit paths
+
+Production code commonly ends with:
+
+```php
+wp_safe_redirect( $url );
+exit;
+```
+
+`add_filter( 'wp_redirect', '__return_false' )` stops the header but **not** `exit` — the PHP process dies, PHPUnit prints no summary, and all subsequent tests never run.
+
+**Fix: throw from the filter to unwind the stack before `exit` is reached.**
+
+```php
+// tests/Support/Redirect.php — own PSR-4 file so every test class can catch it
+namespace MyPlugin\Test;
+class Redirect extends \Exception {
+    public string $location;
+    public function __construct( string $location ) {
+        parent::__construct( 'redirect' );
+        $this->location = $location;
+    }
+}
+```
+
+```php
+class Test_With_Redirect extends WP_UnitTestCase {
+
+    private $redirect_filter;
+
+    public function setUp(): void {
+        parent::setUp();
+        // Whitelist external hosts exactly as production does
+        add_filter( 'allowed_redirect_hosts', fn( $h ) => array_merge( $h, [ 'dashboard.example.com' ] ) );
+        $this->redirect_filter = static fn( $loc ) => throw new \MyPlugin\Test\Redirect( $loc );
+        add_filter( 'wp_redirect', $this->redirect_filter );
+    }
+
+    public function tearDown(): void {
+        remove_filter( 'wp_redirect', $this->redirect_filter );
+        parent::tearDown();
+    }
+
+    private function run(): ?string {
+        try {
+            my_plugin_do_thing_that_may_redirect();
+        } catch ( \MyPlugin\Test\Redirect $e ) {
+            return $e->location;
+        }
+        return null;
+    }
+
+    public function test_redirects_on_success(): void {
+        $location = $this->run();
+        $this->assertSame( 'https://dashboard.example.com/', $location );
+        $this->assertSame( $user_id, get_current_user_id() ); // side effects before exit
+    }
+
+    public function test_no_redirect_on_error(): void {
+        $this->assertNull( $this->run() );
+    }
+}
+```
+
+Copy-paste harness: `references/example-test.php`. AJAX / REST / `wp_die()` patterns: `references/redirect-assertions.md`.
+
+### 8. GitHub Actions CI
 
 ```yaml
 # .github/workflows/phpunit.yml
@@ -276,4 +342,4 @@ jobs:
 - Integration tests require a real MySQL database; they're slow in CI. Separate unit and integration into distinct test suites and run unit suite on every push, integration suite on PRs only.
 - For WooCommerce plugin tests, include WC's test helpers: `require WC_ABSPATH . 'tests/legacy/includes/wc-helper-product.php'`.
 - Codeception + wp-browser is the recommended path for acceptance tests; see `https://wpbrowser.wptestkit.dev` for full docs.
-- The `wp-phpunit-redirect` skill handles the specific pattern of redirecting PHPUnit bootstrap paths — use it when the base WP test suite paths don't resolve.
+- `references/redirect-assertions.md` covers AJAX (`WP_Ajax_UnitTestCase`), REST, and `wp_die()` assertion patterns. `references/phpunit-bootstrap.md` has the full bootstrap + CI setup.
