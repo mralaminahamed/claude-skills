@@ -109,6 +109,6 @@ grep -rn "wp_nonce_field\|nonce_action" --include=*.php .
 
 ### False-positive patterns to drop
 
-- `wp_ajax_nopriv_` handler with no `current_user_can()` → only a bug if it **writes data**; read-only public AJAX is fine.
-- `permission_callback` returning `true` on a **truly public** GET endpoint → intentional; document it.
-- HMAC-verified webhook endpoint with no `current_user_can()` → intentional; document it.
+- ⚠️ 🟠 `wp_ajax_nopriv_` handler with no `current_user_can()` → only a bug if it **writes data**; read-only public AJAX is fine.
+- ⚠️ 🟠 `permission_callback` returning `true` on a **truly public** GET endpoint → intentional; document it.
+- ⚠️ 🟠 HMAC-verified webhook endpoint with no `current_user_can()` → intentional; document it.
