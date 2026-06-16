@@ -21,6 +21,41 @@
       "prompt": "Debug and fix GitHub issue #42, then ship it.",
       "expected_output": "Detect repo, fetch issue, root-cause (min-h-screen on coupons container), minimal fix, bugfix/ branch, single commit with Closes #42, PR with assignee + needs-testing label.",
       "files": []
+    },
+    {
+      "id": 3,
+      "name": "hotfix-production-critical",
+      "prompt": "There's a critical bug in production causing checkout to fail — fix it immediately.",
+      "expected_output": "Branch hotfix/{slug} off main (not develop). Minimal targeted fix only. Single commit: fix(checkout): <what broke>. Push, open PR against main with --label \"hotfix\" and --assignee @me. No scope-grouping delay — urgency wins. After merge: note that main should be back-merged to develop.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "feature-branch-fresh-start",
+      "prompt": "Start working on the user profile page — create a branch and set it up.",
+      "expected_output": "No uncommitted changes to commit first. Branch feature/user-profile off develop. Push with -u origin. No PR yet (no changes). Confirm clean working tree on new branch. Do not open a PR until there is something to review.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "stale-pr-rebase",
+      "prompt": "My feature branch is behind develop — update it without creating a merge commit.",
+      "expected_output": "git fetch origin. git rebase origin/develop (not merge). Resolve any conflicts. git push --force-with-lease (not --force). Confirm PR is up to date. Do not squash existing commits unless user asked.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "draft-pr-wip",
+      "prompt": "Open a draft PR for the work I've been doing — it's not ready for review yet.",
+      "expected_output": "Commit staged changes with wip: prefix or conventional message. Push branch. gh pr create --draft --assignee @me. Do NOT add needs-testing label (draft). Add TODO checklist in PR body noting what's incomplete. Title should reflect the work, not 'WIP'.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "revert-broken-commit",
+      "prompt": "The last merge broke the site — revert it.",
+      "expected_output": "Identify the bad commit SHA via git log. git revert <sha> (not reset --hard). Branch revert/broken-feature off develop. Push. Open PR: title 'revert: <original commit message>', body 'Reverts #N'. Assignee + needs-testing label. Do not force-push main.",
+      "files": []
     }
   ]
 }
