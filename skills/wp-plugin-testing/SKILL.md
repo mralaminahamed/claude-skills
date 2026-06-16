@@ -23,8 +23,8 @@ Set up and write automated tests for WordPress plugins: PHPUnit integration test
 
 | Type | Tool | WP loaded | DB | Speed |
 |---|---|---|---|---|
-| Integration | PHPUnit + WP test suite | ✅ Full | ✅ Real (temp) | Slow |
-| Unit | PHPUnit + WP_Mock / Brain\Monkey | ❌ | ❌ | Fast |
+| Integration | PHPUnit + WP test suite (`WP_UnitTestCase`) | ✅ Full | ✅ Real (temp) | Slow |
+| Unit | PHPUnit + Brain\Monkey (recommended) or WP_Mock | ❌ | ❌ | Fast |
 | Acceptance | Codeception + wp-browser | ✅ Browser | ✅ Real | Slowest |
 
 Start with integration tests for hooks/filters; unit tests for pure business logic; acceptance only for critical user flows.
@@ -134,13 +134,19 @@ $post_ids   = self::factory()->post->create_many( 5, [ 'post_status' => 'publish
 $attachment = self::factory()->attachment->create_upload_object( '/path/to/image.jpg' );
 ```
 
-### 4. Unit tests with WP_Mock
+### 4. Unit tests with Brain\Monkey (or WP_Mock)
 
-For pure functions that don't need a real WP environment.
+For pure functions that don't need a real WP environment. **Brain\Monkey** is the recommended choice — it includes Mockery, has first-class `stubEscapeFunctions()` / `stubTranslationFunctions()` helpers, and richer hook assertion API. WP_Mock (10up) is a lighter alternative.
 
 ```bash
+# Brain\Monkey (recommended)
+composer require --dev brain/monkey mockery/mockery yoast/phpunit-polyfills
+
+# WP_Mock (alternative)
 composer require --dev 10up/wp_mock
 ```
+
+See `references/brain-monkey-patterns.md` for the full base-class pattern (including `ReflectsObjects` for testing private/protected members) that matches real-world plugins like squad-modules-for-divi.
 
 **`tests/bootstrap-unit.php`:**
 ```php
