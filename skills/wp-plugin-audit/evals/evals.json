@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-plugin-audit",
+  "evals": [
+    {
+      "id": 0,
+      "name": "security-audit-before-release",
+      "prompt": "Audit this plugin for security vulnerabilities before the 1.0 release.",
+      "expected_output": "Systematic scan: all $_POST/$_GET/$_REQUEST access for wp_unslash+sanitize. All echo/print/wp_kses for escaping. All AJAX/admin-post handlers for nonce+capability. All SQL for $wpdb->prepare. All wp_remote_* for wp_safe_remote_*. All file operations for path traversal. Report with severity (CRITICAL/HIGH/MEDIUM/LOW) and exact file:line.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "wporg-review-preflight",
+      "prompt": "Check if my plugin will pass WP.org plugin review.",
+      "expected_output": "Check: plugin header complete, readme.txt valid, GPLv2+ license, no obfuscated code, all globals prefixed with plugin slug, no calling home without disclosure, no trialware, no direct file access blocks on all PHP files, stable tag matches version header. Produce pass/fail list with exact locations for failures.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "pr-security-review",
+      "prompt": "Review this PR for security issues before merging.",
+      "expected_output": "Diff analysis: flag unescaped output, missing nonces, missing capability checks, direct DB queries without prepare, new AJAX endpoints without auth. Classify each: MUST FIX vs SHOULD FIX vs NOTE. Do not flag false positives from the known-safe patterns list. Comment on specific lines.",
+      "files": []
+    }
+  ]
+}

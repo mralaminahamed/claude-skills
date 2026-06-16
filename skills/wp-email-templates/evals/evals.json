@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-email-templates",
+  "evals": [
+    {
+      "id": 0,
+      "name": "html-order-notification",
+      "prompt": "Create an HTML email template for order confirmation notifications.",
+      "expected_output": "Table-based layout (max 600px), all CSS inline, preheader text, logo header, order summary body, CTA button with VML fallback for Outlook, footer with unsubscribe link. PHP class with set()/render()/send() methods. Content-Type: text/html header. remove_filter after send. List-Unsubscribe header.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "background-email-queue",
+      "prompt": "Send welcome emails in the background so they don't block user registration.",
+      "expected_output": "Hook user_register. Queue via as_enqueue_async_action() not inline wp_mail(). Worker action sends email, throws RuntimeException on failure for AS retry. Correct headers (Content-Type, From). remove_filter wp_mail_content_type after send. Log wp_mail_failed.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "fix-raw-html-in-email",
+      "prompt": "The email is showing raw HTML tags instead of rendered content.",
+      "expected_output": "Check Content-Type header — likely missing or set to text/plain. Add add_filter('wp_mail_content_type', fn()=>'text/html') before wp_mail() and remove_filter immediately after. Confirm headers array includes 'Content-Type: text/html; charset=UTF-8'. Check email client isn't stripping inline styles.",
+      "files": []
+    }
+  ]
+}

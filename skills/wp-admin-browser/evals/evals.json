@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-admin-browser",
+  "evals": [
+    {
+      "id": 0,
+      "name": "verify-settings-saved",
+      "prompt": "Open the plugin settings page in WP admin and verify all options are saved correctly.",
+      "expected_output": "Navigate to admin URL, take screenshot of settings page, read field values, compare against expected config, report any mismatches with annotated screenshot.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "debug-broken-admin-page",
+      "prompt": "The plugin settings page looks broken — go check it and tell me what's wrong.",
+      "expected_output": "Open admin URL, take screenshot, check console for JS errors, check network requests for failed assets, identify root cause (missing script, CSS conflict, PHP error in page output), report specific issue with evidence.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "test-golden-path-flow",
+      "prompt": "Test the full plugin setup flow in the browser: activate, configure settings, save, verify the front-end output.",
+      "expected_output": "Navigate to Plugins page, activate, go to settings, fill required fields, save, navigate to front-end page, take screenshot confirming plugin output visible, report pass/fail at each step.",
+      "files": []
+    }
+  ]
+}

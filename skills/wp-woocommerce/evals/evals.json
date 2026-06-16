@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-woocommerce",
+  "evals": [
+    {
+      "id": 0,
+      "name": "build-payment-gateway",
+      "prompt": "Build a WooCommerce payment gateway for MyPay that supports refunds and the block checkout.",
+      "expected_output": "PHP class extending WC_Payment_Gateway with id, init_form_fields(), process_payment() returning result array, process_refund() returning bool|WP_Error, webhook_handler() with HMAC signature verification. Register via woocommerce_payment_gateways filter. JS block integration: registerPaymentMethod() with canMakePayment, onPaymentSetup handler, paymentMethodData meta. PHP AbstractPaymentMethodType class passes settings to JS via get_payment_method_data().",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "hpos-compatibility",
+      "prompt": "Add HPOS compatibility to my WooCommerce extension — it's breaking on WC 8.2+.",
+      "expected_output": "Declare HPOS compatibility via FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true). Replace all get_post_meta($order_id) with $order->get_meta(). Replace WP_Query with wc_get_orders(). Replace update_post_meta with $order->update_meta_data()->save(). Remove direct $wpdb queries on posts/postmeta for orders. Admin column hooks: manage_woocommerce_page_wc-orders not edit-shop_order.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "custom-shipping-method",
+      "prompt": "Create a WooCommerce shipping method that calculates rates from an external API based on cart weight.",
+      "expected_output": "Class extends WC_Shipping_Method with id, supports=['shipping-zones','instance-settings'], init_form_fields() with title/api_key fields, calculate_shipping() that totals package weight, calls external API via wp_remote_post(), adds rate via $this->add_rate() with correct id, label, cost. Register via woocommerce_shipping_methods filter. is_available() check. Cache API response in transient keyed by weight+destination.",
+      "files": []
+    }
+  ]
+}

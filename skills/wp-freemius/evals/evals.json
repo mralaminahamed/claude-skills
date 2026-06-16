@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-freemius",
+  "evals": [
+    {
+      "id": 0,
+      "name": "bootstrap-freemius",
+      "prompt": "Integrate Freemius into my plugin with a free plan and a Pro plan.",
+      "expected_output": "Copy freemius/start.php via SDK. Add fs_dynamic_init() with plugin_id, slug, public_key, is_premium=true, has_paid_plans=true, is_org_compliant=true, anonymous_mode_enabled=true. Single my_plugin_fs() singleton getter. Call on plugins_loaded. Add menu with pricing=true. Define plan configs.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "gate-premium-feature",
+      "prompt": "Gate the export feature so only Pro license holders can use it.",
+      "expected_output": "Wrap export code with if(my_plugin_fs()->can_use_premium_code()). AJAX handler: check nonce, then premium check, return wp_send_json_error with upgrade_url if free. Admin UI: show upgrade CTA with get_upgrade_url() link when free. Free version must still be functional (not wp_die'd). WP.org compliant.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "wporg-compliance-fix",
+      "prompt": "The WP.org review team rejected my Freemius plugin for trialware — fix it.",
+      "expected_output": "Set is_org_compliant=>true and anonymous_mode_enabled=>true in fs_dynamic_init(). Remove any wp_die/exit on free-tier access. Ensure plugin is fully functional without license. Make upgrade notices dismissible. No full-page upsell on activation. Free tier must have real value, not just a nag screen.",
+      "files": []
+    }
+  ]
+}

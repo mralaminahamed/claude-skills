@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-multisite",
+  "evals": [
+    {
+      "id": 0,
+      "name": "network-activation-setup",
+      "prompt": "Make my plugin support multisite network activation and run table setup on every site.",
+      "expected_output": "register_activation_hook checks $network_wide. If true: get_sites() loop with switch_to_blog()/my_plugin_create_tables()/restore_current_blog() wrapped in try/finally. Hook wp_initialize_site to run setup on new sites. Declare network-wide support.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "fix-settings-leak",
+      "prompt": "My plugin settings are leaking between sites on a multisite install — site A's settings appear on site B.",
+      "expected_output": "Diagnose: likely using get_site_option() instead of get_option() for per-site data, or using switch_to_blog() without restore_current_blog(). Fix: use get_option/update_option inside correct blog context. Ensure all switch_to_blog() calls have restore_current_blog() in finally block. Test with 2 sites having different values.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "network-admin-settings-page",
+      "prompt": "Add a network admin settings page so super admins can configure global plugin defaults.",
+      "expected_output": "add_action('network_admin_menu') adds page with manage_network_options capability. Settings saved via network_admin_edit_{action} hook with check_admin_referer. Use update_site_option/get_site_option (wp_sitemeta table). Redirect back with updated=true. Add network_admin_plugin_action_links_ filter for Settings link.",
+      "files": []
+    }
+  ]
+}

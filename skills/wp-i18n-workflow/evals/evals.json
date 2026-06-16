@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-i18n-workflow",
+  "evals": [
+    {
+      "id": 0,
+      "name": "setup-i18n-workflow",
+      "prompt": "Set up a complete i18n workflow for my plugin including POT generation and JS translations.",
+      "expected_output": "Add Text Domain header. Call load_plugin_textdomain() on init. Use wp i18n make-pot to generate .pot. Explain PO→MO workflow. For JS: call wp_set_script_translations() after enqueue, run wp i18n make-json to generate .json from .po. Add pot-generation to composer/npm scripts.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "fix-translations-not-loading",
+      "prompt": "French translations exist but strings still show in English on the French site.",
+      "expected_output": "Diagnose: check Text Domain in plugin header matches __() calls and load_plugin_textdomain() argument. Verify languages/my-plugin-fr_FR.mo exists (not just .po). Check wp option get WPLANG returns fr_FR. Add debug filter on load_textdomain_mofile to log file path and existence. Run wp i18n make-mo if .mo missing.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "js-translations-not-working",
+      "prompt": "My block editor JS strings aren't being translated even though the .po file exists.",
+      "expected_output": "Check wp_set_script_translations() is called with correct handle matching wp_enqueue_script handle. Run wp i18n make-json languages/my-plugin-fr_FR.po --no-purge to generate .json file. Verify .json filename format matches expected {domain}-{locale}-{md5}.json. Confirm script handle is exact match.",
+      "files": []
+    }
+  ]
+}

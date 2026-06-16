@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-plugin-release",
+  "evals": [
+    {
+      "id": 0,
+      "name": "full-release-1-2-0",
+      "prompt": "Release version 1.2.0 of my plugin — bump version, update changelog, tag, and deploy to WP.org.",
+      "expected_output": "Bump Version: header in plugin.php and version constant. Update Stable tag: and Tested up to: in readme.txt. Prepend 1.2.0 entry to == Changelog == and CHANGELOG.md. Run POT generation. Commit with conventional message. git tag v1.2.0. git push --tags. SVN: rsync to trunk, svn add/delete, commit, svn copy to tags/1.2.0.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "github-release-only",
+      "prompt": "Create a GitHub release for v1.1.0 with release notes from the changelog.",
+      "expected_output": "Extract 1.1.0 section from CHANGELOG.md. Ensure tag v1.1.0 exists (create if not). Run: gh release create v1.1.0 --title '1.1.0' --notes-file from extracted changelog section --latest. Confirm release URL.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "hotfix-release",
+      "prompt": "Emergency fix for a critical security bug — release 1.1.1 as fast as possible.",
+      "expected_output": "Apply minimal fix. Bump to 1.1.1. Add Changelog entry: = 1.1.1 = * Security: [description]. Update Upgrade Notice with security warning. Tag and push. SVN commit trunk, copy to tags/1.1.1. Create GitHub release marked as latest. Do not merge unrelated pending changes.",
+      "files": []
+    }
+  ]
+}

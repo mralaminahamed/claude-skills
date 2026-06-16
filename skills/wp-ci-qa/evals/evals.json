@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-ci-qa",
+  "evals": [
+    {
+      "id": 0,
+      "name": "phpunit-failure-fix",
+      "prompt": "The PHPUnit job is failing in CI — investigate and fix it.",
+      "expected_output": "Read CI logs, identify failing test and assertion. Trace root cause to code (not test config). Fix minimal change in source. If test expectation is wrong, update test. Confirm fix does not break other tests. Add regression note if needed.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "phpcs-local-pass-ci-fail",
+      "prompt": "PHPCS passes locally but fails in CI — figure out why.",
+      "expected_output": "Compare local phpcs version vs CI composer.lock version. Check if phpcs.xml.dist has absolute paths. Confirm CI runs from repo root. Check for missing WordPress/WPCS rulesets in CI composer install. Fix version pin or path issue. Do NOT add phpcs:ignore suppressions.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "multi-check-pr-fix",
+      "prompt": "Three checks are failing on this PR: PHPCS, PHPStan level 5, and the unit test suite. Fix all three.",
+      "expected_output": "Triage each failure independently. PHPCS: run phpcbf for auto-fixable, manually fix non-fixable with minimal scope. PHPStan: fix type errors in source (not baseline suppression unless justified). PHPUnit: fix broken test or fix the code. One commit per check scope. Do not mix fixes.",
+      "files": []
+    }
+  ]
+}

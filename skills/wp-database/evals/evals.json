@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-database",
+  "evals": [
+    {
+      "id": 0,
+      "name": "create-custom-table",
+      "prompt": "Create a custom database table for storing plugin log entries on plugin activation.",
+      "expected_output": "Use dbDelta() inside activation hook. SQL must have two spaces after PRIMARY KEY, no trailing comma on last field, KEY not INDEX, include {$charset_collate}. Store schema version in option. Check MY_PLUGIN_DB_VERSION before running. Table name uses $wpdb->prefix.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "add-column-migration",
+      "prompt": "Add a 'priority' column to my existing plugin table without breaking existing data.",
+      "expected_output": "Add versioned migration function. Check column exists first via INFORMATION_SCHEMA query. Use ALTER TABLE ADD COLUMN if missing. Bump MY_PLUGIN_DB_VERSION constant. Run migration in init hook via version_compare check against stored db_version option. Idempotent — safe to run twice.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "fix-dbdelta-not-creating-table",
+      "prompt": "dbDelta is not creating my table — it just silently does nothing.",
+      "expected_output": "Diagnose: check for trailing comma on last field, single space after PRIMARY KEY (needs two), using INDEX instead of KEY, missing $charset_collate, or $wpdb->prefix missing. Fix the SQL. Verify by dropping table and re-running. Add error_log($wpdb->last_error) temporarily to surface issues.",
+      "files": []
+    }
+  ]
+}

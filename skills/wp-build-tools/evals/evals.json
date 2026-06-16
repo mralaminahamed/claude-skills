@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-build-tools",
+  "evals": [
+    {
+      "id": 0,
+      "name": "setup-wp-scripts",
+      "prompt": "Set up @wordpress/scripts build for my plugin with separate admin and frontend entry points.",
+      "expected_output": "Install @wordpress/scripts. Add package.json scripts (build, start). Create webpack.config.js extending defaultConfig with entry: { admin: './src/admin/index.js', frontend: './src/frontend/index.js' }. Enqueue using .asset.php dependencies and version hash in PHP. CSS extracted automatically.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "fix-asset-version",
+      "prompt": "The plugin scripts aren't cache-busting correctly — the version is hardcoded instead of using the build hash.",
+      "expected_output": "Read the enqueue code. Replace hardcoded version with require plugin_dir_path(__FILE__) . 'build/index.asset.php' and use $asset['version'] and $asset['dependencies']. Works for all entry points. Confirm .asset.php exists in build output.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "add-block-entries",
+      "prompt": "I have 5 blocks in src/blocks/ — set up webpack to auto-discover and build them all.",
+      "expected_output": "webpack.config.js uses glob to find ./src/blocks/*/index.js, reduces to entry object keyed as blocks/{name}. Extends defaultConfig entry. Output: build/blocks/{name}.js + build/blocks/{name}.asset.php. PHP registers each with register_block_type(__DIR__ . '/build/blocks/{name}').",
+      "files": []
+    }
+  ]
+}

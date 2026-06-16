@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-background-processing",
+  "evals": [
+    {
+      "id": 0,
+      "name": "import-timeout-fix",
+      "prompt": "The product import is timing out on large datasets — fix it using background processing.",
+      "expected_output": "Replace synchronous loop with Action Scheduler fan-out: dispatcher action queues one as_enqueue_async_action() per item, worker action processes single item and throws on failure for auto-retry. Add progress tracking via option. No exit() or set_time_limit() hacks.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "recurring-api-sync",
+      "prompt": "Schedule a recurring job to sync products from an external API every hour.",
+      "expected_output": "Use as_schedule_recurring_action() with HOUR_IN_SECONDS interval, group name, unique check via as_has_scheduled_action(). Register on plugin activation, clear on deactivation. Worker throws RuntimeException on API failure so AS retries. Log errors via error_log.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "progress-ui",
+      "prompt": "Show a progress bar in the admin while the background import is running.",
+      "expected_output": "Store total/done counts in options. AJAX endpoint checks_ajax_referer, returns my_plugin_get_progress() JSON. Admin JS polls every 2s with setInterval, updates progress bar width and count display, clears interval when complete. No blocking on page load.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-plugin-testing",
+  "evals": [
+    {
+      "id": 0,
+      "name": "setup-phpunit-from-scratch",
+      "prompt": "Set up PHPUnit integration tests for my plugin from scratch.",
+      "expected_output": "composer require --dev phpunit/phpunit brain/monkey mockery/mockery yoast/phpunit-polyfills. Create phpunit.xml.dist with unit+integration suites. Write tests/bootstrap.php loading WP test suite via WP_TESTS_DIR. Create bin/install-wp-tests.sh. Add base Integration_Test_Case extending WP_UnitTestCase with Mockery trait and REST server setup. Add GitHub Actions workflow with MySQL service.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "unit-test-with-brain-monkey",
+      "prompt": "Write unit tests for this class that calls get_option and apply_filters without loading WordPress.",
+      "expected_output": "Extend Unit_Test_Case (Brain\\Monkey base). stubEscapeFunctions() and stubTranslationFunctions() called in setUp. Use Functions\\when() for get_option stubs. Use Functions\\expect() with ->once()->with()->andReturn() for asserted calls. Monkey\\setUp() in setUp, Monkey\\tearDown() in tearDown. No WP bootstrap required.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "test-redirect-exit-code",
+      "prompt": "Write tests for a function that calls wp_safe_redirect() then exit — the test suite keeps dying.",
+      "expected_output": "Create Redirect exception class in own file. Add wp_redirect filter in setUp that throws Redirect($location) and returns false. Remove filter in tearDown. Wrap call in run() helper that catches Redirect and returns location. Assert on $this->run() return value AND side effects that ran before exit. Tests no longer terminate PHP process.",
+      "files": []
+    }
+  ]
+}

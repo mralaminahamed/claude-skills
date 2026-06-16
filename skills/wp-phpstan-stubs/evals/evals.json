@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-phpstan-stubs",
+  "evals": [
+    {
+      "id": 0,
+      "name": "setup-phpstan",
+      "prompt": "Set up PHPStan for my plugin with WordPress and WooCommerce stubs.",
+      "expected_output": "composer require --dev phpstan/phpstan szepeviktor/phpstan-wordpress. Create phpstan.neon with level:5, paths:[src,includes], bootstrapFiles:[vendor/autoload.php], includes:[vendor/szepeviktor/phpstan-wordpress/extension.neon]. Add phpstan script to composer.json. For WooCommerce: add woocommerce stubs package.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "fix-undefined-wp-functions",
+      "prompt": "PHPStan is reporting undefined function errors for WP core functions like get_option and wp_mail.",
+      "expected_output": "The WordPress stubs package is missing or not included in phpstan.neon. Run composer require --dev szepeviktor/phpstan-wordpress. Add includes:[vendor/szepeviktor/phpstan-wordpress/extension.neon] to phpstan.neon. If still failing, check phpstan version compatibility. Do NOT add @phpstan-ignore-next-line for core WP functions.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "add-third-party-stubs",
+      "prompt": "PHPStan can't see Freemius SDK methods — add stubs for it.",
+      "expected_output": "Check if mralaminahamed/freemius-stubs exists on packagist. If yes: composer require --dev mralaminahamed/freemius-stubs, add scanFiles or scanDirectories to phpstan.neon. If not: scaffold stub file with class Freemius { public function can_use_premium_code(): bool {} ... } and reference in phpstan.neon scanFiles.",
+      "files": []
+    }
+  ]
+}

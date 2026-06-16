@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-org-submission",
+  "evals": [
+    {
+      "id": 0,
+      "name": "prepare-for-submission",
+      "prompt": "Prepare my plugin for WP.org submission.",
+      "expected_output": "Audit: valid plugin header (Name, Description, Version, Author, License: GPLv2+, Text Domain), readme.txt with all required sections (Description, Installation, FAQ, Changelog, Upgrade Notice), Stable tag matches version, Tested up to current WP. Check no obfuscated code, no calling home without consent, no trialware. Produce checklist of pass/fail.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "fix-review-issues",
+      "prompt": "The WP.org review team sent a list of issues — fix them all.",
+      "expected_output": "Parse each issue from the review email. Fix in order of severity: security (nonces, escaping, sanitization) first, then guidelines (prefixing, licensing, readme), then best practices. One commit per issue category. Do not add false-positive suppressions. Reply to reviewer with what changed.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "first-svn-deploy",
+      "prompt": "Deploy my plugin to WordPress.org SVN for the first time.",
+      "expected_output": "svn checkout only trunk + assets (not all tags). rsync plugin files to trunk excluding dev files (node_modules, src, tests, composer.json). svn add new files, svn delete removed. svn commit trunk. svn copy trunk to tags/{version}. Copy banner/icon/screenshots to assets/. Commit assets/.",
+      "files": []
+    }
+  ]
+}

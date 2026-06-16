@@ -1,0 +1,26 @@
+{
+  "skill_name": "wp-coding-standards",
+  "evals": [
+    {
+      "id": 0,
+      "name": "setup-phpcs-from-scratch",
+      "prompt": "Set up PHP_CodeSniffer with WordPress Coding Standards for my plugin.",
+      "expected_output": "composer require --dev squizlabs/php_codesniffer wp-coding-standards/wpcs dealerdirect/phpcodesniffer-composer-installer. Create phpcs.xml.dist with WordPress-Extra + WordPress-Docs rulesets, file targets, excludes for vendor/node_modules/build, minimum_supported_wp_version config. Add composer phpcs and phpcbf scripts.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "fix-phpcs-errors",
+      "prompt": "Run PHPCS and fix all errors in the includes/ directory.",
+      "expected_output": "Run vendor/bin/phpcbf includes/ for auto-fixable. Then vendor/bin/phpcs includes/ to find remaining. Fix manually: Yoda conditions, missing nonce checks, unescaped output, missing text domain, direct $_POST access without wp_unslash+sanitize. No blanket phpcs:disable. Use phpcs:ignore only with explanation on unavoidable suppressions.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "add-phpcs-to-ci",
+      "prompt": "Add PHPCS to GitHub Actions so it annotates PRs with inline error comments.",
+      "expected_output": "Add .github/workflows/phpcs.yml. Steps: checkout, setup-php with cs2pr tool, composer install, run vendor/bin/phpcs --report=checkstyle | cs2pr. Cache vendor/ by composer.lock hash. Add phpcs cache arg to phpcs.xml.dist.",
+      "files": []
+    }
+  ]
+}
