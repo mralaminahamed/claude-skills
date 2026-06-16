@@ -68,16 +68,20 @@ Flag mismatches. **Do not flag** schema `$db_version` for differing from plugin 
 
 ```bash
 # legacy prefixes outside the migration file
-grep -rn "oldprefix_\|legacy_" includes/ templates/ | grep -v Migration
+grep -rn "oldprefix_\|legacy_" includes/ src/ templates/ | grep -v Migration
 # text domain on every translation call
-grep -rn "__(\|_e(\|esc_html__(\|esc_attr__(\|_n(\|_x(" includes/ templates/
+grep -rn "__(\|_e(\|esc_html__(\|esc_attr__(\|_n(\|_x(" includes/ src/ templates/
 # @package variants
-grep -rn "@package" includes/ templates/ *.php
+grep -rn "@package" includes/ src/ templates/ *.php
 # identifier prefixes
-grep -rn "register_rest_route\|add_option\|set_transient\|add_action\|add_filter\|wp_enqueue_\|wp_create_nonce\|wp_nonce_field" includes/
+grep -rn "register_rest_route\|add_option\|set_transient\|add_action\|add_filter\|wp_enqueue_\|wp_create_nonce\|wp_nonce_field" includes/ src/
+# sprintf/printf with translatable strings — must have translator comment on preceding line
+grep -rn "printf\s*(.*__(\|sprintf\s*(.*__(" --include=*.php includes/ src/ templates/
+# variables embedded directly in translatable strings (wrong — use placeholders)
+grep -rn "__(\s*\"[^\"]*\$\|__(\s*'"'"'[^'"'"']*\$" --include=*.php includes/ src/ templates/
 ```
 
-Check: one canonical prefix everywhere; one text domain on every string; translator comments on `sprintf`/`printf` with placeholders; uniform `@package` matching the plugin's declared `@package` in the file header PHPDoc; consistent option/transient/hook/REST/cookie/nonce/handle/CSS-class prefixes.
+Check: one canonical prefix everywhere; one text domain on every string; translator comments (`/* translators: ... */`) on line immediately before every `sprintf`/`printf` with a translatable string containing `%s`/`%d`/`%1$s` etc.; uniform `@package` matching the plugin's declared `@package` in the file header PHPDoc; consistent option/transient/hook/REST/cookie/nonce/handle/CSS-class prefixes. See `references/i18n-translator-comments.md` for full function list and placement rules.
 
 ## Dimension C — Docs ↔ code
 
@@ -94,19 +98,27 @@ Check: renamed dirs/functions/options/tables; documented commands actually exist
 ## Dimension D — Code conventions
 
 ```bash
-grep -rn "->update(\|->insert(\|\$wpdb->" includes/      # DB-write style
-grep -rn "current_user_can\|check_ajax_referer\|wp_verify_nonce\|permission_callback" includes/
-grep -rn "@since\|@package" includes/
+grep -rn "->update(\|->insert(\|\$wpdb->" includes/ src/                    # DB-write style
+grep -rn "current_user_can\|check_ajax_referer\|wp_verify_nonce\|permission_callback" includes/ src/
+grep -rn "@since\|@param\|@return" includes/ src/ templates/                # docblock completeness
+# Escaping / sanitization
+grep -rn "echo \$_GET\|echo \$_POST\|echo \$_REQUEST" --include=*.php .    # raw output
+grep -rn "echo get_option\|echo get_post_meta" --include=*.php .            # unescaped option
+grep -rn '\$wpdb->query\s*(\s*"' --include=*.php .                          # raw SQL (SQLi)
+grep -rn 'href=.*esc_html\|src=.*esc_html' --include=*.php .               # wrong escape fn on URL
+grep -rn 'href="<?php echo\|src="<?php echo' --include=*.php . | grep -v esc_url  # missing esc_url
 ```
 
-Check: DB-write style matches the repo's CLAUDE.md rule; capability/nonce coverage on every privileged action; consistent return types / docblock style; no leftover renamed-dir refs; duplicated logic. Tag bug-risk / convention / cosmetic.
+Check: DB-write style matches the repo's CLAUDE.md rule; capability/nonce coverage on every privileged action; consistent `@since`/`@param`/`@return` docblock style; no raw user-input output; no unescaped option echo; no unparameterised `$wpdb->query`. Tag each: bug-risk / convention / cosmetic. See `references/escaping-sanitization.md` for full context table and `references/capability-nonce.md` for false-positive patterns.
 
 ## Verify-before-report (mandatory)
 
 Agents over-report. For each candidate, `Read` the exact line and confirm. Common false positives to kill:
 - "Missing translator comment" on a `sprintf` whose format is pure HTML (`'<a href="%s">%s</a>'`) — not translatable.
 - "Inconsistent prefix" on the migration file's intentional legacy names.
-- "No capability check" on an HMAC-verified public webhook.
+- "No capability check" on an HMAC-verified public webhook — HMAC is the auth mechanism.
+- `wp_ajax_nopriv_` handler with no `current_user_can()` — only a bug if it **writes data**; read-only public AJAX is intentional.
+- `permission_callback` returning `true` on a truly public GET endpoint — intentional; must be documented.
 - "ORM interpolation" where the ORM method actually routes to `$wpdb->update()` internally.
 
 ## Report template
