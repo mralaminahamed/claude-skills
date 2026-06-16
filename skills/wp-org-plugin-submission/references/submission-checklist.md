@@ -1,13 +1,17 @@
 # Pre-submission checklist — WordPress.org plugin directory
 
-Work top to bottom before the first submission. Most rejections come from sections 2 and 3.
+Work top-to-bottom before generating the release zip. Sourced from 8 real plugin submissions; most rejections trace to §§2.3–2.5. See `references/review-issues-catalog.md` for reviewer quotes and corrective patterns for each item.
 
 ## 1. Identity & slug
 
-- Main plugin file header `Plugin Name:` sets the public name; the directory derives the permanent **slug** from it.
-- Confirm the slug is free: `https://wordpress.org/plugins/<slug>/` returns 404.
-- Do **not** use "WordPress", "WooCommerce", "Woo", or other trademarks in the name. "X for WooCommerce" is acceptable; "WooCommerce X" is not.
-- One plugin per submission. No "framework" submissions that do nothing on their own.
+- [ ] Plugin display name does **not** start with a generic word (`AI`, `Easy`, `Simple`, `Advanced`, `WordPress`, `WP`, `Plugin`)
+- [ ] Display name and slug are distinguishable from existing plugins (search Google, DuckDuckGo, and `wordpress.org/plugins/`)
+- [ ] Trademarks / third-party names appear **at the end** after `for` or `with` — never at the start
+- [ ] Plugin slug, plugin folder name, and main PHP file name are **identical** (e.g. `my-plugin/my-plugin.php`)
+- [ ] Main PHP file is **not** named `plugin.php`, `index.php`, or any generic name
+- [ ] `Plugin URI`, `Author URI`, and `Terms`/`Privacy` URLs in `readme.txt` all return HTTP 200 within 5 s — verify with `curl -I`
+- [ ] Text domain in every i18n call matches the plugin slug exactly
+- [ ] `Tested up to:` reflects the current WordPress release
 
 ## 2. readme.txt (must pass the validator)
 
@@ -29,60 +33,137 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Short description, max 150 chars, single line.
 ```
 
-- `Stable tag` must equal the released version (and a matching `tags/<version>/` dir after deploy).
-- Max **5** tags; unused/spammy tags hurt.
-- Required sections: `== Description ==`, `== Installation ==`, `== Frequently Asked Questions ==`, `== Screenshots ==`, `== Changelog ==`. `== Upgrade Notice ==` recommended.
-- Each `== Screenshots ==` numbered line maps to `assets/screenshot-N.png` (N matches the list order).
+- `Stable tag` must equal the released version (matching `tags/<version>/` dir after deploy)
+- Max **5** tags; unused/spammy tags hurt
+- Required sections: `== Description ==`, `== Installation ==`, `== Frequently Asked Questions ==`, `== Screenshots ==`, `== Changelog ==`
+- Each `== Screenshots ==` numbered line maps to `assets/screenshot-N.png`
+- Every external service documented under `== External services ==` with Terms + Privacy URLs (both must return HTTP 200)
 
-## 3. Guideline compliance (the 18 guidelines, distilled)
+## 3. Guideline compliance
 
-- **GPL-compatible** — all code, bundled libraries, images, and fonts.
-- **No external code loading** — bundle JS/CSS; don't pull executable code from a CDN/remote at runtime.
-- **No phoning home without consent** — any external API call, analytics, or telemetry needs clear disclosure and explicit opt-in. Document every external service in the readme.
-- **Security** — sanitize all input (`sanitize_text_field`, `absint`, etc.), escape all output (`esc_html`, `esc_attr`, `esc_url`, `wp_kses`), use nonces + capability checks on every state-changing action, prepared statements for all SQL (`$wpdb->prepare`).
-- **Prefix everything** — functions, classes, constants, options, globals, hooks. Generic names (`init`, `register`, `$options`) collide.
-- **No obfuscation / no minified-only** — human-readable source must be present.
-- **No trialware / no "powered by" links** without opt-in. No admin nags that can't be dismissed.
-- **No tracking pixels** or undisclosed user-data collection.
-- **Sane file footprint** — no executables, no unrelated files. Don't include `node_modules`, build tooling, or `.git` in the zip.
-- **Respect the user's site** — no modifying other plugins/core, no creating admin pages that hijack the dashboard.
+- [ ] All code, bundled libraries, images, and fonts are **GPL-compatible**
+- [ ] No external code loading — bundle JS/CSS; no CDN calls (jQuery.com, jsDelivr, Google-hosted assets)
+- [ ] No phoning home without consent — every external API call disclosed in `== External services ==` with opt-in
+- [ ] **Security** — see §5 for the full nonce/capability/sanitize/escape pattern
+- [ ] Every function, class, constant, option, hook, and JS global uses a **single** project-specific prefix of **4+ characters** (not `wp_`, `_`, `__`)
+- [ ] No `if ( ! function_exists( 'NAME' ) )` wrappers around plugin-own functions
+- [ ] **No obfuscation / no minified-only** — source must be in the zip or publicly linked; see §4
+- [ ] **No trialware (Guideline 5)** — the free plugin must be 100% functional; no features gated behind a license key, upgrade nag, or Pro check. Freemium = separate Pro plugin hosted on your own site. See `references/trialware-compliance.md`
+- [ ] No "powered by" links without opt-in. No admin notices that can't be dismissed
+- [ ] No undisclosed user-data collection or tracking pixels
+- [ ] No `unlink()` — use `wp_delete_file()`
+- [ ] No `file_get_contents()` for remote URLs — use `wp_remote_get()`
+- [ ] No `curl_*()` — use the WordPress HTTP API
+- [ ] No inline `<style>` / `<script>` tags — use `wp_enqueue_*`, `wp_add_inline_script`, `wp_add_inline_style`
+- [ ] No includes of core loading files (`wp-config.php`, `wp-load.php`, `wp-blog-header.php`)
+- [ ] No hijacking the admin dashboard — notices scoped to plugin's own screens, dismissible, never persistent nags on unrelated pages (Guideline 11)
 
-## 4. Build the submission zip
+## 4. Production zip — source code
 
-Ship only production files. Exclude dev artifacts with a `.distignore` (WP-CLI `dist-archive`) or an explicit export:
+**Source code must ship in the zip.** Reviewers verify GPL compliance by reading source. If you have a compiled JS/CSS build, include `src/`, `webpack.config.js`, `package.json`, `composer.json` — or link a public repo in `readme.txt`.
+
+Keep in zip (required for review):
+
+- `src/` — JS/TS/CSS source
+- `composer.json`, `composer.lock`
+- `package.json`, `yarn.lock` / `package-lock.json`
+- `webpack.config.js`, `phpcs.xml`, `phpstan.neon`
+
+Exclude from zip (dev-only):
+
+- `.git`, `.github`, `node_modules`
+- `tests/`, `bin/`, `coverage/`
+- `.wordpress-org/` — **never** in the zip; assets ship via SVN `/assets/` only
+- `CLAUDE.md`, `.editorconfig`, `*.log`, `release/`, `docs/`
+
+Minimal `.distignore`:
 
 ```
-# .distignore
 /.git
 /.github
 /node_modules
 /tests
 /bin
-.distignore
-.editorconfig
-phpunit.xml
-phpcs.xml
-phpstan.neon
-composer.json
-composer.lock
-package.json
-package-lock.json
+/release
+/.wordpress-org
+/coverage
+CLAUDE.md
+*.log
 ```
+
+Build check after zip:
 
 ```bash
-wp dist-archive . ./build/<slug>.zip        # respects .distignore
-# or, without WP-CLI:
-git archive --format=zip --prefix=<slug>/ -o build/<slug>.zip HEAD
+# Must return no output
+unzip -l release/<slug>.zip | grep -E '\.wordpress-org/|/tests/|/node_modules/|/\.git/'
 ```
 
-The zip's top-level folder must be the slug, containing the main plugin file at its root.
+## 5. Security pattern
 
-## 5. Submit & review
+```php
+// Every form/AJAX/state-changing action:
+if ( ! isset( $_POST['my_nonce'] )
+    || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['my_nonce'] ) ), 'my_action' )
+) {
+    wp_die( esc_html__( 'Security check failed.', 'my-plugin' ), 403 );
+}
+if ( ! current_user_can( 'manage_options' ) ) {
+    wp_die( esc_html__( 'Forbidden.', 'my-plugin' ), 403 );
+}
 
-- Submit the zip at `https://wordpress.org/plugins/developers/add/`.
-- Review is by a human volunteer team — expect days to weeks, sometimes longer.
-- All correspondence goes to `plugins@wordpress.org` ↔ the account email. Reply in-thread; attach the corrected zip (don't resubmit through the form).
-- On approval, SVN is provisioned at `https://plugins.svn.wordpress.org/<slug>/`. Proceed to `references/svn-deploy.md`.
+// Sanitize early (with wp_unslash first):
+$val = sanitize_text_field( wp_unslash( $_POST['field'] ?? '' ) );
+
+// Escape late — context-appropriate:
+echo esc_html( $plain_text );
+echo esc_attr( $attribute );
+echo esc_url( $url );
+echo wp_kses_post( $html );       // not esc_html() for HTML
+```
+
+Escape function quick reference:
+
+| Context | Function |
+|---|---|
+| Plain text inside HTML | `esc_html()` |
+| HTML attribute | `esc_attr()` |
+| URL in href/src | `esc_url()` |
+| URL to database | `esc_url_raw()` |
+| HTML body content | `wp_kses_post()` |
+| Inline JS | `esc_js()` |
+| Textarea content | `esc_textarea()` |
+
+REST routes must have explicit `permission_callback`; intentionally public routes use `'__return_true'` with an inline comment explaining why.
+
+## 6. Automated verification
+
+```bash
+composer phpcs      # zero errors
+composer phpstan    # zero errors
+composer test       # all pass
+```
+
+Run the [Plugin Check](https://wordpress.org/plugins/plugin-check/) plugin on a clean WordPress install — zero errors, "Plugin Repo" category clean.
+
+URL reachability:
+
+```bash
+for url in 'https://<plugin-uri>' 'https://<author-uri>' 'https://<service>/terms' 'https://<service>/privacy'; do
+    echo "$(curl -o /dev/null -s -w '%{http_code}' --max-time 5 "$url")  $url"
+done
+```
+
+All must return `200`.
+
+## 7. Submit & reply
+
+- Submit zip at `https://wordpress.org/plugins/developers/add/`
+- Reply in the **same email thread** — do not re-submit via the form
+- Replies must be **brief**: 2–4 sentences max. Provide context and clarifications only — no change lists (reviewers re-review the entire plugin every cycle)
+- Slug changes require an explicit line: *"Please change the slug to `new-slug`."*
+- Three-month timeout — unresolved issues = rejected slug (burned permanently)
+
+See `references/review-issues-catalog.md` for the full 17-issue catalog with exact reviewer quotes.
 
 ## References
 
