@@ -77,7 +77,7 @@ Files placed in `/assets/screenshot-1.png` in SVN (not the plugin zip).
 PLUGIN_ROOT=.
 grep -n "Stable tag:\|Requires at least:\|Tested up to:\|Requires PHP:\|Tags:" readme.txt
 # Short description length (line after blank line after License URI)
-awk '/^$/{found++} found==1 && NF{print NR": "$0; exit}' readme.txt | wc -c
+awk '/^$/{found++} found==1 && NF{print length($0); exit}' readme.txt
 # Changelog versions
 grep -n "^= " readme.txt
 # Cross-check Stable tag vs plugin header Version
