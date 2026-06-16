@@ -1,0 +1,279 @@
+---
+name: wp-plugin-testing
+description: Use when setting up or writing tests for a WordPress plugin — PHPUnit integration tests with WP test suite, unit tests with WP_Mock or Brain\Monkey, acceptance tests with wp-browser/Codeception, factory-based fixtures, HTTP request mocking, or multisite test scaffolding.
+---
+
+# WordPress Plugin Testing
+
+Set up and write automated tests for WordPress plugins: PHPUnit integration tests (real WP + DB), pure unit tests (no WP loaded), and acceptance/E2E tests with Codeception.
+
+## When to use
+
+- "Set up PHPUnit tests for my plugin", "bootstrap a WP test suite", "scaffold plugin tests".
+- "Write a unit test for this function", "mock WordPress functions without loading WP".
+- "Set up Codeception / wp-browser", "write acceptance tests".
+- "Test a hook callback", "assert a filter changes the output", "test AJAX handlers".
+- "Add tests to CI", "run tests on GitHub Actions".
+
+**Not for:** PHPStan static analysis — use `wp-phpstan-stubs`. Debugging CI failures on an existing suite — use `wp-ci-qa`.
+
+## Method
+
+### 1. Choose test type
+
+| Type | Tool | WP loaded | DB | Speed |
+|---|---|---|---|---|
+| Integration | PHPUnit + WP test suite | ✅ Full | ✅ Real (temp) | Slow |
+| Unit | PHPUnit + WP_Mock / Brain\Monkey | ❌ | ❌ | Fast |
+| Acceptance | Codeception + wp-browser | ✅ Browser | ✅ Real | Slowest |
+
+Start with integration tests for hooks/filters; unit tests for pure business logic; acceptance only for critical user flows.
+
+### 2. Integration test setup (WP test suite)
+
+**Install test suite:**
+```bash
+# WP-CLI method (recommended)
+wp scaffold plugin-tests my-plugin
+
+# Manual — install WP test library
+bash bin/install-wp-tests.sh wordpress_test root '' localhost latest
+```
+
+`bin/install-wp-tests.sh` creates a temp WP installation and the `wordpress-tests-lib`. Add `tests/` dir to `.gitignore` if downloading WP inline, or commit the bootstrap only.
+
+**`composer.json` additions:**
+```json
+{
+    "require-dev": {
+        "phpunit/phpunit": "^9.0 || ^10.0",
+        "yoast/phpunit-polyfills": "^2.0"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:unit": "phpunit --testsuite=unit",
+        "test:integration": "phpunit --testsuite=integration"
+    }
+}
+```
+
+**`phpunit.xml.dist`:**
+```xml
+<?xml version="1.0"?>
+<phpunit bootstrap="tests/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="integration">
+            <directory>tests/integration</directory>
+        </testsuite>
+        <testsuite name="unit">
+            <directory>tests/unit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
+```
+
+**`tests/bootstrap.php` (integration):**
+```php
+<?php
+$_tests_dir = getenv( 'WP_TESTS_DIR' ) ?: '/tmp/wordpress-tests-lib';
+require_once $_tests_dir . '/includes/functions.php';
+
+tests_add_filter( 'muplugins_loaded', function() {
+    require dirname( __DIR__ ) . '/my-plugin.php';
+} );
+
+require $_tests_dir . '/includes/bootstrap.php';
+```
+
+### 3. Write integration tests
+
+Extend `WP_UnitTestCase` (provided by WP test suite). It wraps each test in a DB transaction and rolls back — no teardown needed for posts/users/terms.
+
+```php
+class Test_My_Feature extends WP_UnitTestCase {
+
+    public function test_filter_changes_title() {
+        $post_id = self::factory()->post->create( [ 'post_title' => 'Original' ] );
+
+        // Activate the plugin feature
+        add_filter( 'the_title', 'my_plugin_modify_title', 10, 2 );
+
+        $title = get_the_title( $post_id );
+
+        $this->assertStringContainsString( 'Modified', $title );
+    }
+
+    public function test_option_saved_on_activation() {
+        do_action( 'activate_my-plugin/my-plugin.php' );
+
+        $this->assertSame( '1.0.0', get_option( 'my_plugin_version' ) );
+    }
+
+    public function test_ajax_handler_returns_json() {
+        // Simulate AJAX call
+        $_POST['_wpnonce'] = wp_create_nonce( 'my_action' );
+        $_POST['data']     = 'test';
+
+        try {
+            $this->_handleAjax( 'my_plugin_action' );
+        } catch ( WPAjaxDieContinueException $e ) {
+            // Normal for wp_send_json_success
+        }
+
+        $response = json_decode( $this->_last_response, true );
+        $this->assertTrue( $response['success'] );
+    }
+}
+```
+
+**Factory helpers:**
+```php
+$user_id    = self::factory()->user->create( [ 'role' => 'editor' ] );
+$term_id    = self::factory()->term->create( [ 'taxonomy' => 'category', 'name' => 'News' ] );
+$post_ids   = self::factory()->post->create_many( 5, [ 'post_status' => 'publish' ] );
+$attachment = self::factory()->attachment->create_upload_object( '/path/to/image.jpg' );
+```
+
+### 4. Unit tests with WP_Mock
+
+For pure functions that don't need a real WP environment.
+
+```bash
+composer require --dev 10up/wp_mock
+```
+
+**`tests/bootstrap-unit.php`:**
+```php
+<?php
+WP_Mock::bootstrap();
+require dirname( __DIR__ ) . '/includes/functions.php'; // file under test
+```
+
+**Test:**
+```php
+use WP_Mock\Tools\TestCase;
+
+class Test_Pure_Function extends TestCase {
+
+    public function setUp(): void {
+        parent::setUp();
+        WP_Mock::setUp();
+    }
+
+    public function tearDown(): void {
+        WP_Mock::tearDown();
+        parent::tearDown();
+    }
+
+    public function test_get_plugin_option_returns_default() {
+        WP_Mock::userFunction( 'get_option' )
+            ->with( 'my_plugin_setting', 'default_value' )
+            ->andReturn( 'default_value' );
+
+        $result = my_plugin_get_setting();
+
+        $this->assertSame( 'default_value', $result );
+        WP_Mock::assertActionsCalled();
+    }
+
+    public function test_action_fires_on_save() {
+        WP_Mock::expectAction( 'my_plugin_after_save', 42 );
+        WP_Mock::userFunction( 'update_option' )->andReturn( true );
+
+        my_plugin_save_data( 42 );
+    }
+}
+```
+
+### 5. HTTP request mocking
+
+Intercept `wp_remote_get/post` in integration tests:
+
+```php
+// In setUp or individual test
+add_filter( 'pre_http_request', function( $preempt, $args, $url ) {
+    if ( str_contains( $url, 'api.example.com' ) ) {
+        return [
+            'response' => [ 'code' => 200, 'message' => 'OK' ],
+            'body'     => wp_json_encode( [ 'status' => 'ok', 'data' => [] ] ),
+            'headers'  => [],
+            'cookies'  => [],
+        ];
+    }
+    return $preempt;
+}, 10, 3 );
+```
+
+### 6. Multisite tests
+
+```php
+class Test_Network_Feature extends WP_UnitTestCase {
+
+    public static function setUpBeforeClass(): void {
+        parent::setUpBeforeClass();
+        if ( ! is_multisite() ) {
+            self::markTestSkipped( 'Multisite required.' );
+        }
+    }
+
+    public function test_option_per_site() {
+        $site_id = self::factory()->blog->create();
+
+        switch_to_blog( $site_id );
+        update_option( 'my_plugin_setting', 'site-value' );
+        restore_current_blog();
+
+        switch_to_blog( $site_id );
+        $value = get_option( 'my_plugin_setting' );
+        restore_current_blog();
+
+        $this->assertSame( 'site-value', $value );
+    }
+}
+```
+
+Run multisite tests: `WP_MULTISITE=1 vendor/bin/phpunit`
+
+### 7. GitHub Actions CI
+
+```yaml
+# .github/workflows/phpunit.yml
+name: PHPUnit
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wordpress_test
+        options: --health-cmd="mysqladmin ping" --health-interval=10s
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mysqli
+          tools: composer, wp-cli
+
+      - run: composer install --no-interaction --prefer-dist
+
+      - name: Install WP test suite
+        run: bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1 latest
+
+      - run: vendor/bin/phpunit --testsuite=integration
+      - run: vendor/bin/phpunit --testsuite=unit
+```
+
+## Notes
+
+- `WP_UnitTestCase` rolls back DB after each test — use `self::factory()`, not raw `wp_insert_post()`, so rollback is tracked.
+- Integration tests require a real MySQL database; they're slow in CI. Separate unit and integration into distinct test suites and run unit suite on every push, integration suite on PRs only.
+- For WooCommerce plugin tests, include WC's test helpers: `require WC_ABSPATH . 'tests/legacy/includes/wc-helper-product.php'`.
+- Codeception + wp-browser is the recommended path for acceptance tests; see `https://wpbrowser.wptestkit.dev` for full docs.
+- The `wp-phpunit-redirect` skill handles the specific pattern of redirecting PHPUnit bootstrap paths — use it when the base WP test suite paths don't resolve.
