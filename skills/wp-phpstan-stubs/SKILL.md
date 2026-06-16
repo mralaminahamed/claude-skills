@@ -1,11 +1,11 @@
 ---
 name: wp-phpstan-stubs
-description: Use when asked to create a new PHPStan stubs package (phrases like "create stubs for X", "new stubs package", "scaffold phpstan stubs", "add stubs for plugin/composer package"). Scaffolds the full standard structure matching the mralaminahamed freemius pattern. NOT for configuring phpstan.neon or generating baselines — use the official wp-phpstan skill for that.
+description: Use when asked to create a new PHPStan stubs package (phrases like "create stubs for X", "new stubs package", "scaffold phpstan stubs", "add stubs for plugin/composer package"). Scaffolds the full standard structure matching the my-org freemius pattern. NOT for configuring phpstan.neon or generating baselines — use the official wp-phpstan skill for that.
 ---
 
 # PHPStan Stubs Scaffold
 
-Scaffold a complete PHPStan stubs package from scratch, following the `mralaminahamed/phpstan-freemius-stubs` standard structure.
+Scaffold a complete PHPStan stubs package from scratch, following the `my-org/phpstan-freemius-stubs` standard structure.
 
 ## References
 
@@ -29,10 +29,10 @@ Before writing any files, collect (ask user if missing):
    - `wp-plugin`: `source/<slug>/`
    - `composer`: `source/vendor/<vendor>/<package>/`
    - `paid`: `source/<slug>/`
-6. **Packagist name** — `mralaminahamed/phpstan-<slug>-stubs`
+6. **Packagist name** — `my-org/phpstan-<slug>-stubs`
 7. **GitHub repo name** — `phpstan-<slug>-stubs`
 8. **Versions to release** — for `wp-plugin`/`composer`: minor version series (e.g. `3.4 3.5 3.6`); for `paid`: manual
-9. **GitHub assignee** — default `mralaminahamed`
+9. **GitHub assignee** — default `my-org`
 
 ## Standard Directory Layout
 
@@ -65,7 +65,7 @@ phpstan-<slug>-stubs/
 
 ```json
 {
-    "name": "mralaminahamed/phpstan-<slug>-stubs",
+    "name": "my-org/phpstan-<slug>-stubs",
     "description": "<PluginName> function and class declaration stubs for static analysis.",
     "type": "library",
     "keywords": [
@@ -75,12 +75,12 @@ phpstan-<slug>-stubs/
         "phpstan",
         "stubs"
     ],
-    "homepage": "https://github.com/mralaminahamed/phpstan-<slug>-stubs",
+    "homepage": "https://github.com/my-org/phpstan-<slug>-stubs",
     "license": "MIT",
     "authors": [
         {
             "name": "Al Amin Ahamed",
-            "homepage": "https://github.com/mralaminahamed"
+            "homepage": "https://github.com/my-org"
         }
     ],
     "require": {
@@ -117,8 +117,8 @@ phpstan-<slug>-stubs/
         "release": "bash bin/release-latest-versions.sh"
     },
     "support": {
-        "issues": "https://github.com/mralaminahamed/phpstan-<slug>-stubs/issues",
-        "source": "https://github.com/mralaminahamed/phpstan-<slug>-stubs"
+        "issues": "https://github.com/my-org/phpstan-<slug>-stubs/issues",
+        "source": "https://github.com/my-org/phpstan-<slug>-stubs"
     }
 }
 ```
@@ -222,7 +222,7 @@ Add `->notPath(...)` calls to exclude test dirs, docs, or large asset dirs that 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 
-HEADER=$'/**\n * Generated stub declarations for <PluginName>.\n * @see <homepage-url>\n * @see https://github.com/mralaminahamed/phpstan-<slug>-stubs\n */'
+HEADER=$'/**\n * Generated stub declarations for <PluginName>.\n * @see <homepage-url>\n * @see https://github.com/my-org/phpstan-<slug>-stubs\n */'
 
 FILE="$ROOT_DIR/<slug>-stubs.php"
 FILE_CONSTANTS="$ROOT_DIR/<slug>-constants-stubs.php"
@@ -432,7 +432,7 @@ jobs:
           labels: |
             update
             automated pr
-          assignees: mralaminahamed
+          assignees: my-org
           draft: false
 ```
 
@@ -505,7 +505,7 @@ After writing all files:
 
 2. **Create GitHub repo** (public):
    ```bash
-   gh repo create mralaminahamed/phpstan-<slug>-stubs \
+   gh repo create my-org/phpstan-<slug>-stubs \
      --public \
      --description "<PluginName> function and class declaration stubs for static analysis." \
      --source=. \
@@ -514,12 +514,12 @@ After writing all files:
    ```
    Then ensure default branch is `main`:
    ```bash
-   gh repo edit mralaminahamed/phpstan-<slug>-stubs --default-branch main
+   gh repo edit my-org/phpstan-<slug>-stubs --default-branch main
    ```
 
 3. **Add GitHub topics:**
    ```bash
-   gh repo edit mralaminahamed/phpstan-<slug>-stubs \
+   gh repo edit my-org/phpstan-<slug>-stubs \
      --add-topic phpstan \
      --add-topic php \
      --add-topic stubs \

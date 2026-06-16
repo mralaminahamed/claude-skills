@@ -19,7 +19,7 @@
       "id": 2,
       "name": "add-third-party-stubs",
       "prompt": "PHPStan can't see Freemius SDK methods — add stubs for it.",
-      "expected_output": "Check if mralaminahamed/freemius-stubs exists on packagist. If yes: composer require --dev mralaminahamed/freemius-stubs, add scanFiles or scanDirectories to phpstan.neon. If not: scaffold stub file with class Freemius { public function can_use_premium_code(): bool {} ... } and reference in phpstan.neon scanFiles.",
+      "expected_output": "Check if my-org/freemius-stubs exists on packagist. If yes: composer require --dev my-org/freemius-stubs, add scanFiles or scanDirectories to phpstan.neon. If not: scaffold stub file with class Freemius { public function can_use_premium_code(): bool {} ... } and reference in phpstan.neon scanFiles.",
       "files": []
     }
   ]

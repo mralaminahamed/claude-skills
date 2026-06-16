@@ -10,7 +10,7 @@ composer require --dev brain/monkey mockery/mockery yoast/phpunit-polyfills
 
 ## Base Unit Test Case
 
-The pattern used in squad-modules-for-divi — a base class that wires up Brain\Monkey and pre-stubs all common WP functions:
+A base class that wires up Brain\Monkey and pre-stubs all common WP functions:
 
 ```php
 <?php

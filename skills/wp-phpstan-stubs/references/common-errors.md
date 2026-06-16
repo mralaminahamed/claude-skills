@@ -78,9 +78,9 @@ bash bin/release-latest-versions.sh
 ```bash
 git branch -m trunk main
 git push origin main
-gh repo edit mralaminahamed/phpstan-<slug>-stubs --default-branch main
+gh repo edit my-org/phpstan-<slug>-stubs --default-branch main
 # Delete trunk branch via API if it was pushed
-gh api repos/mralaminahamed/phpstan-<slug>-stubs/git/refs/heads/trunk -X DELETE
+gh api repos/my-org/phpstan-<slug>-stubs/git/refs/heads/trunk -X DELETE
 ```
 
 ---

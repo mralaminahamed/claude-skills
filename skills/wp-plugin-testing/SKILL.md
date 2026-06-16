@@ -146,7 +146,7 @@ composer require --dev brain/monkey mockery/mockery yoast/phpunit-polyfills
 composer require --dev 10up/wp_mock
 ```
 
-See `references/brain-monkey-patterns.md` for the full base-class pattern (including `ReflectsObjects` for testing private/protected members) that matches real-world plugins like squad-modules-for-divi.
+See `references/brain-monkey-patterns.md` for the full base-class pattern (including `ReflectsObjects` for testing private/protected members) that matches real-world complex plugin structures.
 
 **`tests/bootstrap-unit.php`:**
 ```php

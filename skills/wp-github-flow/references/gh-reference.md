@@ -93,19 +93,19 @@ Label names vary per repo and a wrong `--label` aborts `gh pr create`. **Always 
 
 | Intent | Seen as (varies!) |
 |-------|------------|
-| Ready for QA | `needs-testing` (codesigner-pro) · `needs testing` (EasyCommerce) |
+| Ready for QA | `needs-testing` (acme-blocks-pro) · `needs testing` (ShopFlow) |
 | Something broken | `bug` |
-| Frontend / backend area | `frontend` · `backend` (EasyCommerce; may not exist elsewhere) |
-| QA outcome | `testing done` / `testing failed` / `testing ongoing` (EasyCommerce) |
+| Frontend / backend area | `frontend` · `backend` (ShopFlow; may not exist elsewhere) |
+| QA outcome | `testing done` / `testing failed` / `testing ongoing` (ShopFlow) |
 | Priority | `urgent` |
 
-> `codesigner` / `codesigner-pro` use `needs-testing` + `bug` (no `frontend`/`backend`). EasyCommerce uses `needs testing` + `frontend`/`backend`. Verify before every PR.
+> `acme-blocks` / `acme-blocks-pro` use `needs-testing` + `bug` (no `frontend`/`backend`). ShopFlow uses `needs testing` + `frontend`/`backend`. Verify before every PR.
 
 ---
 
 ## PR Template Sections
 
-Many repos enforce a PR-body template via CI (EasyCommerce's `validate-template` job checks all of these; other repos may not). Filling them is good practice regardless:
+Many repos enforce a PR-body template via CI (ShopFlow's `validate-template` job checks all of these; other repos may not). Filling them is good practice regardless:
 
 | Section | Requirement |
 |---------|-------------|
@@ -120,7 +120,7 @@ Many repos enforce a PR-body template via CI (EasyCommerce's `validate-template`
 
 ## Workflow Failures — Common Causes
 
-(EasyCommerce-style CI; adapt to the target repo's checks.)
+(ShopFlow-style CI; adapt to the target repo's checks.)
 
 
 | Check | Common failure | Fix |

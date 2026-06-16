@@ -68,7 +68,7 @@ async () => {
 ```js
 async () => {
   const nonce = await fetch('/wp-admin/admin-ajax.php?action=rest-nonce', {credentials:'include'}).then(r=>r.text());
-  const res = await fetch('/wp-json/wc-affiliate/v1/affiliates?per_page=5', {
+  const res = await fetch('/wp-json/my-plugin/v1/items?per_page=5', {
     credentials: 'include',
     headers: { 'X-WP-Nonce': nonce }
   });

@@ -18,7 +18,7 @@ wp i18n make-pot . languages/my-plugin.pot \
 # With custom headers
 wp i18n make-pot . languages/my-plugin.pot \
   --domain=my-plugin \
-  --headers='{"Project-Id-Version":"My Plugin 1.0.0","Report-Msgid-Bugs-To":"https://github.com/mralaminahamed/my-plugin/issues","Last-Translator":"FULL NAME <EMAIL>","Language-Team":"LANGUAGE <LL@li.org>"}'
+  --headers='{"Project-Id-Version":"My Plugin 1.0.0","Report-Msgid-Bugs-To":"https://github.com/my-org/my-plugin/issues","Last-Translator":"FULL NAME <EMAIL>","Language-Team":"LANGUAGE <LL@li.org>"}'
 
 # Merge with existing POT (marks removed strings as obsolete)
 wp i18n make-pot . languages/my-plugin.pot \

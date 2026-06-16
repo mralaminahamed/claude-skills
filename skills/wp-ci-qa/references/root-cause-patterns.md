@@ -32,7 +32,7 @@ memory that makes each round faster than the last.
 
 - **Symptom:** An email/notification fires for some flows but is silently
   dropped for another that reaches the same end state.
-- **Root cause:** `do_action( 'wc_affiliate_payout_processed', ... )` lived only
+- **Root cause:** `do_action( 'my_plugin_payout_processed', ... )` lived only
   inside `update_status('completed')`. The payout path inserts a row directly
   with `status = 'completed'` via `create()`, never calling `update_status()`,
   so the hook never fires.
@@ -42,7 +42,7 @@ memory that makes each round faster than the last.
 - **Fix:** Fire the hook in `create()` too when the persisted status matches:
   ```php
   if ( self::STATUS_COMPLETED === $transaction->get_status() ) {
-      do_action( 'wc_affiliate_payout_processed', ... );
+      do_action( 'my_plugin_payout_processed', ... );
   }
   ```
 - **Seen in:** PR #343 (Transaction::create).
@@ -65,8 +65,8 @@ memory that makes each round faster than the last.
   ```
 - **Fix:** Add the missing keys to the context (keep old keys for back-compat).
   Note: numeric values get `number_format`; to prepend the currency symbol the
-  key must be in the `wc_affiliate_email_currency_fields` filter list.
-- **Seen in:** PR #135 (wc-affiliate-pro bonus emails — `bonus_amount`,
+  key must be in the `my_plugin_email_currency_fields` filter list.
+- **Seen in:** PR #135 (ref-tracker-pro bonus emails — `bonus_amount`,
   `referred_affiliate_name`, `referred_affiliate_email`).
 
 ### P4 — Pro/add-on bug actually lives in the base plugin
@@ -79,7 +79,7 @@ memory that makes each round faster than the last.
 - **Detect:** `grep -rn "<feature>" app legacy` in the add-on repo. Zero hits →
   not the add-on's concern. Check the base repo for an open fix PR.
 - **Fix:** Don't patch the add-on. In the QA comment, point to the base PR and
-  note it must merge first. (Paid Referral on PR #135 → base wc-affiliate#343.)
+  note it must merge first. (Paid Referral on PR #135 → base ref-tracker#343.)
 
 ---
 

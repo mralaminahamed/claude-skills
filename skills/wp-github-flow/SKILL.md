@@ -34,7 +34,7 @@ Both end at **§6 Branch, Commit, PR**, which is shared.
 ## References
 
 - `references/gh-reference.md` — `gh` CLI commands, branch naming rules, label discovery, PR template sections, common CI failures
-- `references/codesigner-entry-points.md` — CoDesigner free/pro layout, repos, registry + render paths, project conventions
+- `references/project-entry-points.md` — AcmeBlocks free/pro layout, repos, registry + render paths, project conventions
 - `references/conventional-commits.md` — type/scope table, WP-specific scope list, summary rules, multi-commit PR rules, footer conventions, rebase reword
 
 ## Repo ≠ where the issue lives
@@ -46,7 +46,7 @@ The repo that **hosts the issue** is often NOT the repo that **holds the code / 
 
 When they differ, the PR's close footer must be **cross-repo**: `Closes ISSUE_OWNER/ISSUE_REPO#N` (a bare `Closes #N` only closes an issue in the same repo).
 
-Real example (this org): issues live in `codexpertio/codesigner`, but the buggy widget code + PR live in `codexpertio/codesigner-pro` → PR opens on `codesigner-pro`, body says `Closes codexpertio/codesigner#247`.
+Real example (this org): issues live in `acme-org/acme-blocks`, but the buggy widget code + PR live in `acme-org/acme-blocks-pro` → PR opens on `acme-blocks-pro`, body says `Closes acme-org/acme-blocks#247`.
 
 ---
 
@@ -67,8 +67,8 @@ Read the **full diff**, not just the file list — a single file can contain edi
 ### B. Group changes by scope
 
 Map each change to one conventional-commit scope. **Scopes are project-defined — read the repo's CLAUDE.md for the list, don't assume.**
-- EasyCommerce: `api, cart, checkout, orders, products, customers, payments, shipping, taxes, coupons, inventory, admin, dashboard, blocks, spa, database, templates, email, reports, build, i18n`.
-- CoDesigner: per-widget/module scope, e.g. `product-barcode, recently-viewed-products, product-countdown, shop, library, widgets, modules, build, i18n` (see `references/codesigner-entry-points.md`).
+- ShopFlow: `api, cart, checkout, orders, products, customers, payments, shipping, taxes, coupons, inventory, admin, dashboard, blocks, spa, database, templates, email, reports, build, i18n`.
+- AcmeBlocks: per-widget/module scope, e.g. `product-barcode, recently-viewed-products, product-countdown, shop, library, widgets, modules, build, i18n` (see `references/project-entry-points.md`).
 
 Group by **what the change is about**, not just which directory it lives in. Examples from real sessions:
 - `pages/Coupons/index.jsx` + `pages/Coupons/CouponList/index.jsx` → both `coupons`
@@ -119,7 +119,7 @@ git remote set-url origin $(gh repo view --json cloneUrl -q .cloneUrl)
 
 Store BOTH names — they may be the same, but never assume it:
 ```bash
-ISSUE_REPO=codexpertio/codesigner          # where the issue is tracked
+ISSUE_REPO=acme-org/acme-blocks            # where the issue is tracked
 CODE_REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner)  # where you'll PR
 ```
 
@@ -138,7 +138,7 @@ Extract: title, description, screenshots, reproduction steps, error messages, **
 - Check recent commits: `git log --oneline -- <file>`
 - **Find the code's repo.** It may not be the issue repo, and not even the same plugin (free vs pro). `git -C <plugin-dir> remote get-url origin` to confirm which GitHub repo each path maps to → that's `CODE_REPO`.
 
-For CoDesigner — see `references/codesigner-entry-points.md`.
+For AcmeBlocks — see `references/project-entry-points.md`.
 
 ### 4. Root Cause Investigation
 
@@ -184,7 +184,7 @@ git add <files-for-scope>
 git commit -m "fix(<scope>): <imperative summary>"   # +blank line + why + Closes when issue-driven
 ```
 
-Follow project conventions in the repo's CLAUDE.md. For CoDesigner: **never introduce deprecated `wcd_*` aliases — use the canonical `codesigner_*` functions** (and convert any deprecated call inside a hunk you're already editing). See `references/codesigner-entry-points.md`.
+Follow project conventions in the repo's CLAUDE.md. For AcmeBlocks: **never introduce deprecated `ab_*` aliases — use the canonical `acme_blocks_*` functions** (and convert any deprecated call inside a hunk you're already editing). See `references/project-entry-points.md`.
 
 **6.3 — Push (must happen before the PR).** `gh pr create` fails with *"must first push the current branch"* if you skip this.
 
@@ -319,7 +319,7 @@ A PR body that lists only half the commits reads as "the rest snuck in."
 | Hardcoded label aborts PR | `gh label list` first; one unknown `--label` fails the whole `gh pr create` |
 | Lumping multiple issues in one branch | One branch + PR per issue, each from fresh `origin/<base>` |
 | Claiming an automated test you didn't write | If a test isn't feasible, say so; rely on lint + manual steps, stated plainly |
-| Introducing deprecated `wcd_*` (CoDesigner) | Use canonical `codesigner_*`; convert deprecated calls inside hunks you touch |
+| Introducing deprecated `ab_*` (AcmeBlocks) | Use canonical `acme_blocks_*`; convert deprecated calls inside hunks you touch |
 | One lumped commit for mixed changes | Changes mode: split by scope, one commit each |
 | Reading only the file list | Read full `git diff` — a file can mix scopes, and the "why" needs the actual change |
 | Sweeping in unrelated files | Only stage what the user asked for; flag stray changes, leave them unstaged |

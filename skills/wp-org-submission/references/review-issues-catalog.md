@@ -1,6 +1,6 @@
 # WordPress.org Plugin Review — Issues Catalog
 
-Distilled from 8 real plugin submissions (Squad Modules for Divi, Author Profile Blocks, EasyCommerce FakerPress, Warranty Cart, Swift Menu Duplicator, Alamin AI Provider for OpenCode Zen, Alamin AI Provider for MiniMax, Multi-Account for GiveWP PayPal Donations — June 2023 to May 2026). Each entry includes the exact reviewer language, the rule, and the corrective action.
+Distilled from 8 real plugin submissions (Plugin A, Plugin B, Plugin C, Plugin D, Plugin E, Plugin F, Plugin G, Plugin H — June 2023 to May 2026). Each entry includes the exact reviewer language, the rule, and the corrective action.
 
 ## Issue 1 — Invalid Plugin / Author / Privacy URLs
 
@@ -8,8 +8,8 @@ Distilled from 8 real plugin submissions (Squad Modules for Divi, Author Profile
 
 **Reviewer quote:**
 > *Plugin URI: `https://github.com/…` — This URL replies us with a 404 HTTP code.*
-> *Author URI: `https://alaminahamed.com` — Resolving timed out after 5001 milliseconds.*
-> *Terms/Privacy URL: `https://opencode.ai/privacy` — This URL replies us with a 404 HTTP code.*
+> *Author URI: `https://author.example.com` — Resolving timed out after 5001 milliseconds.*
+> *Terms/Privacy URL: `https://myservice.example.com/privacy` — This URL replies us with a 404 HTTP code.*
 
 **Fix:**
 
@@ -37,17 +37,17 @@ done
 ```
 == External services ==
 
-This plugin connects to the OpenCode Zen API to:
+This plugin connects to the MyAI Service API to:
 
 1. Retrieve the list of available AI models (cached for one hour via WordPress transients)
 2. Send text-generation requests using the configured AI model
 
-Service: OpenCode Zen
-API endpoint: https://opencode.ai/zen/v1
+Service: MyAI Service
+API endpoint: https://api.myaiservice.example.com/v1
 When data is sent: When a WordPress feature triggers a text-generation request, or when the model cache is refreshed.
 Data sent: The API key (in the Authorization header) and the prompt / conversation content.
-Terms of Service: https://opencode.ai/terms
-Privacy Policy: https://opencode.ai/privacy
+Terms of Service: https://myaiservice.example.com/terms
+Privacy Policy: https://myaiservice.example.com/privacy
 ```
 
 Both Terms and Privacy URLs must return HTTP 200 (see Issue 1). No marketing copy — plain data-flow language only.
@@ -64,8 +64,8 @@ Both Terms and Privacy URLs must return HTTP 200 (see Issue 1). No marketing cop
 
 **Fix:**
 
-1. Distinctive term at the start — personal brand prefix (`Alamin`, `Codexpert`, coined name).
-2. Trademarks at the end: `Alamin AI Provider for OpenCode Zen` ✓ — `OpenCode Zen AI Provider` ✗
+1. Distinctive term at the start — personal brand prefix (coined name or brand).
+2. Trademarks at the end: `MyBrand AI Provider for ServiceName` ✓ — `ServiceName AI Provider` ✗
 3. Search Google + DuckDuckGo + `wordpress.org/plugins/` before submitting.
 4. No portmanteaus (`PricesPress` → rejected).
 5. Slug changes during review: reply explicitly — *"Please change the slug to `<new-slug>`."* Slug is permanent after approval.
@@ -119,7 +119,7 @@ Option B — public repo + readme note (the section name is a suggestion, not a 
 == Source code ==
 
 Minified files in `build/` are generated from `src/`. Source:
-https://github.com/mralaminahamed/<plugin-slug>
+https://github.com/my-org/<plugin-slug>
 
 Build: composer install && yarn install && yarn build
 ```
@@ -355,7 +355,7 @@ Dismissals stored in user meta via AJAX; activation redirects fire once (transie
 
 ## Issue occurrence matrix
 
-| Issue | Squad Modules | Author Profiles | OpenCode Zen | MiniMax | Swift Menu | Warranty Cart | EasyCommerce | GiveWP Multi |
+| Issue | Plugin A | Plugin B | Plugin C | Plugin D | Plugin E | Plugin F | Plugin G | Plugin H |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | 1 Invalid URLs | | | ✓ | ✓ | ✓ | | ✓ | |
 | 2 Undisclosed service | | | | ✓ | | | | |

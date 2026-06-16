@@ -75,7 +75,7 @@ For WP.org plugins, language packs are auto-loaded from `translate.wordpress.org
 wp i18n make-pot . languages/my-plugin.pot \
   --domain=my-plugin \
   --exclude=vendor,node_modules,tests,build \
-  --headers='{"Project-Id-Version":"My Plugin 1.0.0","Report-Msgid-Bugs-To":"https://github.com/mralaminahamed/my-plugin/issues"}'
+  --headers='{"Project-Id-Version":"My Plugin 1.0.0","Report-Msgid-Bugs-To":"https://github.com/my-org/my-plugin/issues"}'
 
 # Update existing POT (merges new strings, marks removed as obsolete)
 wp i18n make-pot . languages/my-plugin.pot --domain=my-plugin

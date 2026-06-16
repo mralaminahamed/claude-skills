@@ -5,7 +5,7 @@ Standard commands for creating and configuring a new phpstan-stubs repo.
 ## Create repo
 
 ```bash
-gh repo create mralaminahamed/phpstan-<slug>-stubs \
+gh repo create my-org/phpstan-<slug>-stubs \
   --public \
   --description "<PluginName> function and class declaration stubs for static analysis." \
   --source=. \
@@ -21,17 +21,17 @@ git branch -m trunk main
 git push origin main
 
 # Set default branch on GitHub
-gh repo edit mralaminahamed/phpstan-<slug>-stubs --default-branch main
+gh repo edit my-org/phpstan-<slug>-stubs --default-branch main
 
 # Delete trunk ref if it was pushed
-gh api repos/mralaminahamed/phpstan-<slug>-stubs/git/refs/heads/trunk -X DELETE 2>/dev/null || true
+gh api repos/my-org/phpstan-<slug>-stubs/git/refs/heads/trunk -X DELETE 2>/dev/null || true
 ```
 
 ## Add topics
 
 Standard topics for all phpstan-stubs packages:
 ```bash
-gh repo edit mralaminahamed/phpstan-<slug>-stubs \
+gh repo edit my-org/phpstan-<slug>-stubs \
   --add-topic phpstan \
   --add-topic php \
   --add-topic stubs \
@@ -47,7 +47,7 @@ Extra topics by type:
 ## Update description and topics on existing repo
 
 ```bash
-gh repo edit mralaminahamed/phpstan-<slug>-stubs \
+gh repo edit my-org/phpstan-<slug>-stubs \
   --description "<PluginName> function and class declaration stubs for static analysis."
 ```
 
@@ -62,19 +62,19 @@ git push origin --tags
 ## Verify tags on remote
 
 ```bash
-gh api repos/mralaminahamed/phpstan-<slug>-stubs/tags --jq '.[].name' | sort -V
+gh api repos/my-org/phpstan-<slug>-stubs/tags --jq '.[].name' | sort -V
 ```
 
 ## Set PERSONAL_TOKEN secret (for release workflow PR creation)
 
 ```bash
-gh secret set PERSONAL_TOKEN --repo mralaminahamed/phpstan-<slug>-stubs
+gh secret set PERSONAL_TOKEN --repo my-org/phpstan-<slug>-stubs
 ```
 
-## List all mralaminahamed phpstan-stubs repos
+## List all my-org phpstan-stubs repos
 
 ```bash
-gh repo list mralaminahamed --json name,description,url \
+gh repo list my-org --json name,description,url \
   --jq '.[] | select(.name | startswith("phpstan-")) | [.name, .url] | @tsv'
 ```
 
@@ -87,7 +87,7 @@ gh repo list mralaminahamed --json name,description,url \
 | phpstan-fluent-forms-stubs | wp-plugin |
 | phpstan-forminator-stubs | wp-plugin |
 | phpstan-ninja-forms-stubs | wp-plugin |
-| phpstan-squad-modules-lite-stubs | wp-plugin |
+| phpstan-my-plugin-lite-stubs | wp-plugin |
 | phpstan-wpforms-lite-stubs | wp-plugin |
 | phpstan-woocommerce-product-addons-stubs | paid |
 | phpstan-woocommerce-subscriptions-stubs | paid |
