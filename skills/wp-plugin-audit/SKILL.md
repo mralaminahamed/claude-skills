@@ -27,7 +27,7 @@ Dispatch one read-only agent per dimension (Explore or general-purpose), in a si
    *
    * @package           PluginPackage
    * @author            Your Name
-   * @copyright         2019 Your Name or Company Name
+   * @copyright         2024 Your Name or Company Name
    * @license           GPL-2.0-or-later
    *
    * @wordpress-plugin
@@ -46,7 +46,7 @@ Dispatch one read-only agent per dimension (Explore or general-purpose), in a si
    * Requires Plugins:  my-plugin, yet-another-plugin
    */
   ```
-  Flag: missing `@wordpress-plugin` marker (distinguishes WP header from plain PHPDoc); missing `@package`/`@author`/`@copyright`/`@license` PHPDoc fields; `Description` over 140 characters; `License` slug not matching `License URI`; missing `Text Domain` when plugin has translated strings; using a plain `/* */` block instead of `/** */` PHPDoc block.
+  Flag: missing `@wordpress-plugin` marker (distinguishes WP header from plain PHPDoc); missing `@package`/`@author`/`@copyright`/`@license` PHPDoc fields; `Description` over 140 characters; `License` slug not matching `License URI`; missing `Text Domain` when plugin has translated strings (requires Dimension B `__()` detection to confirm strings exist); using a plain `/* */` block instead of `/** */` PHPDoc block.
 - **B — Naming / prefix / i18n.** Canonical prefix (e.g. `myplugin_` / `_myplugin_`) — flag legacy prefixes outside the migration file. Text-domain consistency on every `__()`/`_e()`/`esc_html__()`/`_n()`; missing translator comments on `sprintf`/`printf` with placeholders. `@package` tag variants. Option/transient/hook/REST/cookie/nonce/AJAX/asset-handle/CSS-class prefix uniformity.
 - **C — Docs ↔ code.** Path references (renamed dirs), function/class/option/table names referenced in docs that no longer match code, documented commands that don't exist (`composer test:unit` etc.), test counts, architecture trees vs real files, behavior claims that contradict code. Distinguish *historical* docs (point-in-time, leave) from *current* docs (must match).
 - **D — Code conventions.** DB-write style (ORM vs `$wpdb` per the repo's CLAUDE.md), docblock style, `@since` tags, capability/nonce coverage, return-type consistency, leftover renamed-dir refs, duplicated logic, escaping/sanitization uniformity. Tag each: bug-risk / convention / cosmetic.
