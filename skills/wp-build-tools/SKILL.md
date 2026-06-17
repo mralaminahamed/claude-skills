@@ -1,6 +1,6 @@
 ---
 name: wp-build-tools
-description: Use when setting up or debugging the JavaScript/CSS build pipeline for a WordPress plugin — @wordpress/scripts, webpack, Vite, block editor assets, asset enqueuing with .asset.php files, or compiling Sass/PostCSS. Not for block registration logic — use the official wp-block-development skill.
+description: Use when setting up or debugging the JavaScript/CSS build pipeline for a WordPress plugin — @wordpress/scripts, webpack, Vite, block editor assets, asset enqueuing with .asset.php files, compiling Sass/PostCSS, or reusing a JS/CSS library bundled by a dependency plugin (e.g. EDD/WooCommerce) instead of vendoring your own. Not for block registration logic — use the official wp-block-development skill.
 ---
 
 # WordPress Plugin Build Tools
@@ -204,8 +204,44 @@ CI build step for GitHub Actions:
 - run: npm run build
 ```
 
+### 8. Reuse a dependency's bundled library instead of vendoring your own
+
+When a plugin you already hard-depend on (e.g. EDD, WooCommerce) ships a front-end library you need — Tom Select, Select2, Choices, flatpickr — enqueue *its* copy rather than vendoring a second one. Saves bundle size and a maintenance surface, at the cost of coupling to the host's file paths.
+
+```php
+function my_plugin_enqueue_tom_select(): bool {
+    if ( ! defined( 'EDD_PLUGIN_URL' ) ) {
+        return false; // dependency not active — caller falls back to native <select>
+    }
+    $url = EDD_PLUGIN_URL;
+    $dir = defined( 'EDD_PLUGIN_DIR' ) ? EDD_PLUGIN_DIR : '';
+    $js  = 'assets/vendor/js/tom-select.complete.min.js';
+    $css = 'assets/build/css/admin/chosen.min.css'; // host's TS skin lives here
+
+    // Guard the paths so a host restructure degrades gracefully, never fatals.
+    if ( $dir && ( ! file_exists( $dir . $js ) || ! file_exists( $dir . $css ) ) ) {
+        return false;
+    }
+    $ver = defined( 'EDD_VERSION' ) ? EDD_VERSION : MY_PLUGIN_VERSION;
+    wp_enqueue_script( 'my-plugin-tom-select', $url . $js, [], $ver, true );
+    wp_enqueue_style( 'my-plugin-tom-select', $url . $css, [], $ver );
+    return true;
+}
+// Make your own script depend on it only when present:
+$dep = my_plugin_enqueue_tom_select() ? [ 'my-plugin-tom-select' ] : [];
+wp_enqueue_script( 'my-plugin-admin', $assets . 'js/admin.js', $dep, MY_PLUGIN_VERSION, true );
+```
+
+Rules that make this hold up:
+
+- **Build against the host's own constant/handle**, not a hardcoded URL into another plugin's directory. Prefer reusing a registered handle (`wp_enqueue_script('edd-tom-select')`) when the host registers it on *all* admin pages; if registration is page-scoped or order-dependent, register your own handle pointing at the bundled file (as above) for deterministic loading.
+- **Always degrade.** Return a flag; init JS behind `if (typeof TomSelect !== 'undefined')`; leave the markup a real `<select>` so it works with the library absent.
+- **Initialise in JS, don't fight the host's skin in markup.** For a remote/AJAX field, give the library a `load` callback hitting your `wp_ajax_*` endpoint and sync any hidden companion field (e.g. a stored label) on change.
+- **Expect to override the host's styling.** The bundled skin is themed for the host. Re-skin the library's classes (`.ts-control`, `.ts-dropdown`, etc.) to your design system. WordPress admin skins carry version-gated, high-specificity selectors — EDD's `body[class*="branch-7"]` rules (WP 6.7+) out-specify a plain `.my-wrap` scope — so targeted `!important` is often required to win, and load your stylesheet after the host's.
+
 ## Notes
 
+- When borrowing a host plugin's bundled library, pin nothing about its internal version; treat the file paths as the contract and guard them (see §8). Document the coupling in the PR so a host upgrade that moves the files is easy to trace.
 - Always use `npm ci` (not `npm install`) in CI — respects `package-lock.json` exactly.
 - `@wordpress/scripts` pins its webpack/babel versions; don't add conflicting `webpack` or `babel-loader` to `devDependencies`.
 - For TypeScript: `@wordpress/scripts` supports `.ts`/`.tsx` out of the box — just rename files and add `tsconfig.json`.
