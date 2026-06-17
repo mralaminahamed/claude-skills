@@ -59,15 +59,15 @@ Skills activate automatically when their description matches your task. No slash
 ## Install
 
 ```
-/plugin marketplace add mralaminahamed/wp-dev-skills
-/plugin install wp-dev-skills@wp-dev-skills
+claude plugin marketplace add mralaminahamed/wp-dev-skills
+claude plugin install wp-dev-skills@wp-dev-skills
 ```
 
 Or from a local clone:
 
 ```
-/plugin marketplace add ~/path/to/wp-dev-skills
-/plugin install wp-dev-skills@wp-dev-skills
+claude plugin marketplace add ~/path/to/wp-dev-skills
+claude plugin install wp-dev-skills@wp-dev-skills
 ```
 
 ## Layout
