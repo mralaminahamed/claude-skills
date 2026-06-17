@@ -3,7 +3,7 @@
 [![Validate](https://github.com/mralaminahamed/wp-dev-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/mralaminahamed/wp-dev-skills/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-17 WordPress plugin development [skills](https://docs.claude.com/en/docs/claude-code/skills) for [Claude Code](https://claude.com/claude-code) — shipped as an installable plugin and a standalone marketplace.
+18 WordPress plugin development [skills](https://docs.claude.com/en/docs/claude-code/skills) for [Claude Code](https://claude.com/claude-code) — shipped as an installable plugin and a standalone marketplace.
 
 Skills activate automatically when their description matches your task. No slash commands needed.
 
@@ -55,6 +55,7 @@ Skills activate automatically when their description matches your task. No slash
 | Skill | Activates when |
 |-------|----------------|
 | **wp-admin-browser** | Driving a WordPress admin panel via Chrome DevTools MCP — login, navigate menus, submit forms, CRUD through the UI, debug JS/network errors. |
+| **wp-guided-tour** | Implementing a guided tour in a WP admin plugin using Driver.js — IIFE bundle setup, PHP tour configs, JS scope detection from URL + hash, completion tracking, selector testing. |
 
 ## Install
 

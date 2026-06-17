@@ -23,38 +23,38 @@ window.driver.js.driver({ ... })
 ```php
 // Enqueue on all admin pages (is_admin() block)
 $this->enqueue_script(
-    'easycommerce_guided_tour_driverjs',
-    EASYCOMMERCE_ASSETS_URL . 'admin/js/driverjs/driver.js.iife.js',
+    'shopflow_guided_tour_driverjs',
+    SHOPFLOW_ASSETS_URL . 'admin/js/driverjs/driver.js.iife.js',
     array()
 );
 $this->enqueue_style(
-    'easycommerce_guided_tour_driverjs',
-    EASYCOMMERCE_ASSETS_URL . 'admin/js/driverjs/driver.css',
+    'shopflow_guided_tour_driverjs',
+    SHOPFLOW_ASSETS_URL . 'admin/js/driverjs/driver.css',
     array()
 );
 $this->enqueue_script(
-    'easycommerce_guided_tour',
-    EASYCOMMERCE_ASSETS_URL . 'admin/js/guided-tour.js',
-    array( 'easycommerce_guided_tour_driverjs' )
+    'shopflow_guided_tour',
+    SHOPFLOW_ASSETS_URL . 'admin/js/guided-tour.js',
+    array( 'shopflow_guided_tour_driverjs' )
 );
 
 // Add tour configs to the main localized object
-$localized['tours'] = easycommerce_get_tour_configs();
+$localized['tours'] = shopflow_get_tour_configs();
 ```
 
-The `$localized` array must be passed to `localize_script()` on the **main SPA script** (not the tour script) so `window.EASYCOMMERCE.tours` is available before `guided-tour.js` runs.
+The `$localized` array must be passed to `localize_script()` on the **main SPA script** (not the tour script) so `window.SHOPFLOW.tours` is available before `guided-tour.js` runs.
 
 ---
 
 ## PHP Tour Config (`functions.php`)
 
 ```php
-function easycommerce_get_tour_configs() {
-    return apply_filters( 'easycommerce_tour_configs', array(
+function shopflow_get_tour_configs() {
+    return apply_filters( 'shopflow_tour_configs', array(
 
         'dashboard' => array(
             'autoStart' => true,          // only one scope should be true
-            'pages'     => array( 'easycommerce' ),
+            'pages'     => array( 'shopflow' ),
             'steps'     => array(
                 array(
                     // Centered popover — no element key
@@ -139,11 +139,11 @@ function startTour(scope = null) {
     }
 
     const targetScope = scope || getCurrentScope();
-    if (!targetScope || !window.EASYCOMMERCE?.tours[targetScope]) return false;
+    if (!targetScope || !window.SHOPFLOW?.tours[targetScope]) return false;
 
     if (currentTour) currentTour.destroy();
 
-    const steps     = window.EASYCOMMERCE.tours[targetScope].steps;
+    const steps     = window.SHOPFLOW.tours[targetScope].steps;
     const lastIndex = steps.length - 1;
 
     // Inject completion tracking ONLY on the final step's Next/Done click.
@@ -212,13 +212,13 @@ After implementing tours, verify in browser:
 
 ```js
 // 1. All tours loaded
-Object.keys(window.EASYCOMMERCE.tours)  // should list all scopes
+Object.keys(window.SHOPFLOW.tours)  // should list all scopes
 
 // 2. Scope detection works on current page
 getCurrentScope()  // should return expected scope string
 
 // 3. All selectors resolve (run on EACH tour's own page)
-window.EASYCOMMERCE.tours['my-scope'].steps
+window.SHOPFLOW.tours['my-scope'].steps
   .filter(s => s.element)
   .map(s => ({ el: s.element, found: !!document.querySelector(s.element) }))
 
@@ -238,7 +238,7 @@ localStorage.getItem('myprefix_my-scope_tour_completed')  // → "true"
 ## Post-Implementation Checklist
 
 - [ ] Run `composer run makepot` — all `__()` strings in tour configs must be in `.pot`
-- [ ] Every scope in `easycommerce_get_tour_configs()` has a matching case in `getCurrentScope()`
+- [ ] Every scope in `shopflow_get_tour_configs()` has a matching case in `getCurrentScope()`
 - [ ] Only one scope has `autoStart: true`
 - [ ] All element selectors verified on their own pages via browser console
 - [ ] Completion fires on Done, not on X/close

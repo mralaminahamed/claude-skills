@@ -1,0 +1,33 @@
+{
+  "skill_name": "wp-guided-tour",
+  "evals": [
+    {
+      "id": 0,
+      "name": "setup-from-scratch",
+      "prompt": "Add a guided tour to my WordPress admin plugin using Driver.js. The plugin has an SPA main page at ?page=myplugin and a settings page at ?page=myplugin-settings. I want a welcome tour that auto-starts on the main page.",
+      "expected_output": "Vendor the Driver.js IIFE build (not ESM) to assets/admin/js/driverjs/. Enqueue driver.js.iife.js and driver.css without dependencies. Enqueue the main guided-tour.js with the driverjs handle as a dependency. Localize tour configs via wp_localize_script on the main SPA script (not the tour script) so window.MYPLUGIN.tours is available. Define a PHP function returning apply_filters('myplugin_tour_configs', [...]) with a 'dashboard' scope having autoStart:true and steps array using __() for i18n strings. Write getCurrentScope() in JS that reads URLSearchParams page param and checks startsWith('myplugin') — NOT 'myplugin-' — and maps ?page=myplugin-settings to 'settings'. Implement startTour() using window.driver.js.driver() (double namespace). Inject markTourCompleted() into last step's onNextClick only — NOT onDestroyed. Add hashchange listener for SPA navigation. Run composer run makepot after adding __() strings.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "fix-completion-tracking",
+      "prompt": "The guided tour marks completion even when the user clicks the X to close early. The completion fires in the onDestroyed callback. Fix it.",
+      "expected_output": "Explain that onDestroyed fires for BOTH early dismiss AND completion — it cannot distinguish between the two. Remove markTourCompleted() from onDestroyed. Instead, inject an onNextClick callback into the LAST step only (index === steps.length - 1). In that callback, call markTourCompleted(targetScope) then currentTour.destroy(). Show the steps.map() pattern that clones only the final step with the added onNextClick. Keep onDestroyed only for nulling currentTour ref.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "debug-broken-selector",
+      "prompt": "My guided tour step targeting .my-nav-item is not highlighting the element — the popover appears but no element is highlighted. How do I debug and fix this?",
+      "expected_output": "Run !!document.querySelector('.my-nav-item') in browser console ON THE SPECIFIC PAGE where the tour runs — not a different page. If false: check for dynamic rendering (element may not exist at tour start time), Tailwind responsive class escaping (if using bracket notation like border-[#F0EDFB] the PHP string needs double backslash escaping: '.border-\\\\[\\\\#F0EDFB\\\\]'), or :first-of-type/:nth-child selectors (unstable — replace with ID or unique class combo). If true but still broken: check if the selector matches multiple elements. Use #stable-id (most stable) or a unique class combination. Never use :first-of-type (matches by tag not class) or :nth-child (breaks on DOM reorder). Test each selector on its own page — a selector for orders tour returning false on dashboard is expected.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "multi-scope-spa",
+      "prompt": "My plugin SPA uses hash-based routing — the main page is ?page=myplugin and routes like #/products, #/orders, #/orders/new. Set up scope detection so each route gets its own tour.",
+      "expected_output": "Write getCurrentScope() that first checks URLSearchParams for page param starting with 'myplugin'. For the main SPA page, read window.location.hash, strip the leading '#', and strip pagination suffix (/page/\\d+$). Map: empty hash or '/' or '/dashboard' → 'dashboard'; '/products/add' (startsWith) → 'add-product'; '/orders/new' → 'create-order'; '/orders' (exact) → 'orders'. Use startsWith for routes with sub-paths, exact === for leaf routes. Add hashchange listener that calls setTimeout(autoStartTours, 500) to re-run scope detection on SPA navigation. Only one scope should have autoStart:true in PHP configs.",
+      "files": []
+    }
+  ]
+}

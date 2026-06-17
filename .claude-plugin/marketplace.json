@@ -11,8 +11,8 @@
     {
       "name": "wp-dev-skills",
       "source": "./",
-      "description": "17 WordPress plugin development skills: GitHub flow (scoped commits, PR, hotfix, revert), WooCommerce extensions, plugin testing (PHPUnit/Brain\\Monkey/redirect harness), coding standards (PHPCS/WPCS), CI/QA triage, PHPStan stubs scaffolding, build tools (@wordpress/scripts), background processing (Action Scheduler), multisite, i18n workflow, database (dbDelta/migrations), email templates, Freemius SDK, plugin audit, release versioning, WP.org submission/SVN deploy, and WP admin browser automation.",
-      "version": "1.1.0",
+      "description": "18 WordPress plugin development skills: GitHub flow (scoped commits, PR, hotfix, revert), WooCommerce extensions, plugin testing (PHPUnit/Brain\\Monkey/redirect harness), coding standards (PHPCS/WPCS), CI/QA triage, PHPStan stubs scaffolding, build tools (@wordpress/scripts), background processing (Action Scheduler), multisite, i18n workflow, database (dbDelta/migrations), email templates, Freemius SDK, plugin audit, release versioning, WP.org submission/SVN deploy, WP admin browser automation, and guided tours (Driver.js).",
+      "version": "1.2.0",
       "category": "development",
       "strict": true
     }
