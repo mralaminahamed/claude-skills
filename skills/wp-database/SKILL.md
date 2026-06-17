@@ -1,6 +1,6 @@
 ---
 name: wp-database
-description: Use when creating custom database tables with dbDelta, writing schema migrations and upgrade routines, querying with $wpdb prepared statements, optimising slow queries, handling custom table data with CRUD patterns, or migrating data between plugin versions.
+description: Use when creating custom database tables with dbDelta, writing schema migrations and upgrade routines, querying with $wpdb prepared statements, optimising slow queries, handling custom table data with CRUD patterns, migrating data between plugin versions, or seeding sample/preview data into custom tables for local development.
 ---
 
 # WordPress Custom Database Tables
@@ -268,6 +268,38 @@ if ( is_multisite() ) {
     delete_option( 'my_plugin_db_version' );
 }
 ```
+
+### 7. Seeding sample / preview data (dev only)
+
+To populate custom tables with realistic data for local preview, write a standalone script run via WP-CLI's `wp eval-file` — never auto-loaded by the plugin. Keep it in a `tools/` dir and document it in `tools/README.md`.
+
+```php
+<?php
+// tools/seed-dev-data.php — run: wp eval-file tools/seed-dev-data.php [--fresh]
+if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) { exit( "Run via: wp eval-file <this file>\n" ); }
+global $wpdb;
+$table = $wpdb->prefix . 'my_plugin_log';
+
+// --fresh truncates first. TRUNCATE is destructive — gate it, and expect the
+// agent permission classifier to block it unless tables are already empty.
+if ( in_array( '--fresh', (array) ( $args ?? [] ), true ) ) {
+    $wpdb->query( "TRUNCATE TABLE {$table}" ); // phpcs:ignore
+}
+
+foreach ( $rows as $row ) {
+    $wpdb->insert( $table, $row ); // hardcoded columns only
+}
+WP_CLI::success( 'Seeded.' );
+```
+
+Conventions that keep seeders safe and re-runnable:
+
+- **Idempotent where it matters.** A seeder that creates linked records (WP users, EDD payments) should skip rows already linked — e.g. `if ( ! empty( $row->payment_id ) ) continue;` — so reruns don't duplicate. A pure log-filler can be additive; say so in the script header and accept a count arg (`(int) ( $args[0] ?? 0 ) ?: 20`).
+- **Link to real WP objects, not fakes.** Create real users with `wp_insert_user()` and reuse by email (`get_user_by`); mint EDD orders through the plugin's own purchase wrapper (e.g. an `EDD` integration class) rather than raw inserts, so the seeded data exercises the real code path. Write the resulting `user_id` / `payment_id` back onto the custom-table row.
+- **Generate via WP-CLI, verify via `wp db query`.** Confirm row counts/links after seeding.
+- **Dev-only.** Never ship `tools/`; never run against production. Use `current_time('mysql')` / `gmdate()` for timestamps, and seed `extra`/JSON columns with `wp_json_encode()`.
+
+Note on randomness: scripts run by `wp eval-file` may warn on large int math (`$x * 2654435761` overflows to float) — keep PRNG seeds inside `& 0x7fffffff`.
 
 ## Notes
 
