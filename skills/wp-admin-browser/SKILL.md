@@ -124,6 +124,105 @@ Always wait for the page to load after each menu click before interacting with t
 
 ---
 
+## JS State Verification
+
+Use `evaluate_script` to inspect JavaScript state without touching the UI.
+
+### Check scripts loaded + globals present
+
+```js
+() => ({
+    // Verify a localized WP global is available
+    myPlugin: typeof window.MY_PLUGIN,
+    keys: Object.keys(window.MY_PLUGIN || {}),
+    // Verify a library bundle loaded
+    driverLoaded: !!window.driver?.js?.driver,
+    // Check current URL
+    url: location.href,
+    hash: location.hash,
+})
+```
+
+If `typeof window.MY_PLUGIN === 'undefined'` the script may not be enqueued for this screen, or the page is in maintenance mode (`document.title === 'Maintenance'`).
+
+### SPA pages — always wait for React to render
+
+```js
+// Wrong: query DOM immediately after navigate
+() => document.querySelector('.spa-element')  // returns null
+
+// Right: wrap in setTimeout
+() => new Promise(r => setTimeout(() => r(
+    !!document.querySelector('.spa-element')
+), 2000))
+```
+
+### Verify CSS selectors before committing
+
+```js
+() => {
+    const selectors = [
+        '#my-id',
+        '.class-one.class-two',
+        '.border-\\[\\#F0EDFB\\]',   // Tailwind escaped
+    ];
+    return selectors.map(s => ({
+        selector: s,
+        found: !!document.querySelector(s),
+        count: document.querySelectorAll(s).length,
+    }));
+}
+```
+
+**Always test on the page where the selector is expected to exist.** A selector for the orders page returns `false` on the dashboard — that's not a bug.
+
+### localStorage testing
+
+```js
+// Clear feature flags / completion state before testing
+() => {
+    Object.keys(localStorage)
+        .filter(k => k.startsWith('myplugin_'))
+        .forEach(k => localStorage.removeItem(k));
+    return 'cleared';
+}
+
+// Read a specific key after an action
+() => localStorage.getItem('myplugin_feature_completed')  // "true" or null
+```
+
+### Detect maintenance mode / redirect loop
+
+If `navigate_page` lands on a blank page or unexpected content:
+
+```js
+() => ({ title: document.title, url: location.href })
+// "Maintenance" title = WP in maintenance mode (.maintenance file or plugin)
+// Redirected to /wp-login.php = session expired — re-login via fetch
+```
+
+### Re-login when session expires
+
+```js
+async () => {
+    const res = await fetch('/wp-login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            log: 'admin', pwd: 'admin',
+            'wp-submit': 'Log In',
+            redirect_to: '/wp-admin/',
+            testcookie: '1',
+        }),
+        credentials: 'include',
+        redirect: 'follow',
+    });
+    return { ok: res.ok, url: res.url };
+}
+```
+
+---
+
 ## References
 
 - [Chrome DevTools MCP tools](references/chrome-devtools-tools.md) — full tool params, interaction sequence template, priority rules
