@@ -46,9 +46,12 @@ Skills activate automatically when their description matches your task. No slash
 ### Claude Code
 
 ```bash
+claude plugin marketplace add mralaminahamed/wordpress-official-agent-skills
 claude plugin marketplace add mralaminahamed/wp-dev-skills
 claude plugin install wp-dev-skills@wp-dev-skills
 ```
+
+> `wordpress-official-agent-skills` is a declared dependency — adding its marketplace first lets Claude Code auto-install it alongside this plugin.
 
 ### Gemini CLI
 
@@ -92,6 +95,10 @@ Full per-agent install matrix and options → [**INSTALL.md**](./INSTALL.md).
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — how to add or improve a skill
 - [CHANGELOG.md](./CHANGELOG.md) — release history
 - [Issues](https://github.com/mralaminahamed/wp-dev-skills/issues) — bug, feature request, skill idea
+
+## Dependency
+
+Pairs with **[wordpress-official-agent-skills](https://github.com/mralaminahamed/wordpress-official-agent-skills)** — official WordPress skills from the WordPress project (blocks, themes, REST API, WP-CLI, performance, PHPStan, Playground). Declared as a plugin dependency; Claude Code installs it automatically when both marketplaces are configured.
 
 ## License
 
