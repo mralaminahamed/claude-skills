@@ -1,6 +1,6 @@
 # wp-dev-skills — WordPress Plugin Development Skills
 
-This extension provides 18 WordPress plugin development skills. Skills are
+This extension provides WordPress plugin development skills. Skills are
 loaded on demand when you describe a task — you do not need to name them
 explicitly.
 

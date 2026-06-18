@@ -60,7 +60,7 @@ Skills activate automatically — no slash commands needed.
 
 ## Gemini CLI
 
-As a native extension (auto-discovers all 18 skills):
+As a native extension (auto-discovers all skills):
 
 ```bash
 gemini extensions install https://github.com/mralaminahamed/wp-dev-skills
@@ -97,7 +97,7 @@ curl -fsSL https://raw.githubusercontent.com/mralaminahamed/wp-dev-skills/trunk/
   > .github/copilot-instructions.md
 ```
 
-**Option B — npx skills (on-demand).** Installs all 18 SKILL.md files to the agent's skills directory:
+**Option B — npx skills (on-demand).** Installs all SKILL.md files to the agent's skills directory:
 
 ```bash
 npx skills add mralaminahamed/wp-dev-skills -a cursor
@@ -117,7 +117,7 @@ curl -fsSL https://raw.githubusercontent.com/mralaminahamed/wp-dev-skills/trunk/
 npx skills add mralaminahamed/wp-dev-skills -a <agent-slug>
 ```
 
-Run `npx skills add mralaminahamed/wp-dev-skills --list` to preview all 18 skills before installing.
+Run `npx skills add mralaminahamed/wp-dev-skills --list` to preview all skills before installing.
 Run `npx skills find wordpress` to search the public skills registry.
 
 ---

@@ -1,6 +1,6 @@
 # wp-dev-skills — WordPress Plugin Development Skills
 
-You have access to 18 WordPress plugin development skills. When a task matches a skill, follow that skill's methodology.
+You have access to WordPress plugin development skills. When a task matches a skill, follow that skill's methodology.
 
 ## Skills
 

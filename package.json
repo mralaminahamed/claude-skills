@@ -1,7 +1,7 @@
 {
   "name": "@mralaminahamed/wp-dev-skills",
   "version": "1.2.0",
-  "description": "18 WordPress plugin development skills for AI coding agents — GitHub flow, WooCommerce, PHPUnit, PHPCS/WPCS, CI/QA, PHPStan stubs, build tools, background processing, multisite, i18n, database, email templates, Freemius SDK, plugin audit, release versioning, WP.org submission, admin browser automation, and guided tours.",
+  "description": "WordPress plugin development skills for AI coding agents — GitHub flow, WooCommerce, PHPUnit, PHPCS/WPCS, CI/QA, PHPStan stubs, build tools, background processing, multisite, i18n, database, email templates, Freemius SDK, plugin audit, release versioning, WP.org submission, admin browser automation, and guided tours.",
   "license": "MIT",
   "author": {
     "name": "Al Amin Ahamed",

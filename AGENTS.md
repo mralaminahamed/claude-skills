@@ -1,6 +1,6 @@
 # wp-dev-skills — WordPress Plugin Development Skills
 
-18 skills covering the full WordPress plugin development lifecycle.
+Skills covering the full WordPress plugin development lifecycle.
 Trigger any skill by name when the task matches its description.
 
 ## Available Skills
