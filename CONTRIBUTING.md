@@ -92,4 +92,11 @@ python3 .github/scripts/validate_skills.py
 
 ## Releasing
 
-Bump the version in **both** manifests (`plugin.json` and `marketplace.json`), commit, tag `vX.Y.Z`, push.
+Bump the version in **all four** manifests — keep them in sync:
+
+- `.claude-plugin/plugin.json` → `version`
+- `.claude-plugin/marketplace.json` → `plugins[0].version`
+- `gemini-extension.json` → `version`
+- `package.json` → `version`
+
+Commit, tag `vX.Y.Z`, push.
