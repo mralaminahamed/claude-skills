@@ -1,9 +1,9 @@
-# WordPress Dev Skills — Claude Code Plugin
+# WordPress Dev Skills
 
 [![Validate](https://github.com/mralaminahamed/wp-dev-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/mralaminahamed/wp-dev-skills/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-18 WordPress plugin development [skills](https://docs.claude.com/en/docs/claude-code/skills) for [Claude Code](https://claude.com/claude-code) — shipped as an installable plugin and a standalone marketplace.
+18 WordPress plugin development skills for AI coding agents — Claude Code, Gemini CLI, Cursor, Windsurf, Cline, Codex, GitHub Copilot, opencode, and more.
 
 Skills activate automatically when their description matches your task. No slash commands needed.
 
@@ -59,32 +59,81 @@ Skills activate automatically when their description matches your task. No slash
 
 ## Install
 
-```
+### Claude Code
+
+```bash
 claude plugin marketplace add mralaminahamed/wp-dev-skills
 claude plugin install wp-dev-skills@wp-dev-skills
 ```
 
 Or from a local clone:
 
-```
+```bash
 claude plugin marketplace add ~/path/to/wp-dev-skills
 claude plugin install wp-dev-skills@wp-dev-skills
 ```
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/mralaminahamed/wp-dev-skills
+```
+
+### Cursor / Windsurf / Cline / GitHub Copilot
+
+Drop the rule file into your repo — pick the path for your agent:
+
+```bash
+# Cursor
+mkdir -p .cursor/rules && curl -fsSL https://raw.githubusercontent.com/mralaminahamed/wp-dev-skills/main/src/rules/wp-dev-skills.md > .cursor/rules/wp-dev-skills.mdc
+
+# Windsurf
+mkdir -p .windsurf/rules && curl -fsSL https://raw.githubusercontent.com/mralaminahamed/wp-dev-skills/main/src/rules/wp-dev-skills.md > .windsurf/rules/wp-dev-skills.md
+
+# Cline
+curl -fsSL https://raw.githubusercontent.com/mralaminahamed/wp-dev-skills/main/src/rules/wp-dev-skills.md > .clinerules/wp-dev-skills.md
+
+# GitHub Copilot
+curl -fsSL https://raw.githubusercontent.com/mralaminahamed/wp-dev-skills/main/src/rules/wp-dev-skills.md > .github/copilot-instructions.md
+```
+
+### opencode / AGENTS.md-based agents (Codex, Devin, OpenHands, …)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/mralaminahamed/wp-dev-skills/main/AGENTS.md > AGENTS.md
+```
+
+### All other agents (Continue, Roo, Augment, Amp, Warp, …)
+
+```bash
+npx skills add mralaminahamed/wp-dev-skills -a <agent-slug>
+```
+
+Replace `<agent-slug>` with your agent id (e.g. `continue`, `roo`, `augment`, `amp`, `warp`). See `npx skills list` for all supported slugs.
 
 ## Layout
 
 ```
 wp-dev-skills/
 ├── .claude-plugin/
-│   ├── plugin.json          # plugin manifest
-│   └── marketplace.json     # standalone marketplace manifest
+│   ├── plugin.json               # Claude Code plugin manifest
+│   └── marketplace.json          # Claude Code marketplace manifest
+├── .codex/
+│   ├── config.toml               # Codex CLI features
+│   └── hooks.json                # Codex SessionStart hook
+├── src/rules/
+│   └── wp-dev-skills.md          # Rule file for Cursor/Windsurf/Cline/Copilot
+├── AGENTS.md                     # Universal context (opencode, Codex, Devin, …)
+├── GEMINI.md                     # Gemini CLI context (@-include syntax)
+├── gemini-extension.json         # Gemini CLI extension manifest
+├── package.json                  # npx skills compatibility
 └── skills/
     └── <skill-name>/
-        ├── SKILL.md         # required — frontmatter: name, description
-        ├── references/      # supporting docs and code patterns
+        ├── SKILL.md              # required — frontmatter: name, description
+        ├── references/           # supporting docs and code patterns
         ├── evals/
-        │   └── evals.json   # eval scenarios for testing the skill
-        └── scripts/         # optional helper scripts
+        │   └── evals.json        # eval scenarios for testing the skill
+        └── scripts/              # optional helper scripts
 ```
 
 ## Develop
@@ -97,10 +146,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for skill authoring conventions and the v
 
 ## Versioning
 
-Plugin version lives in two manifests — keep them in sync on release:
+Version lives in multiple manifests — keep them in sync on release:
 
 - `.claude-plugin/plugin.json` → `version`
 - `.claude-plugin/marketplace.json` → `plugins[0].version`
+- `gemini-extension.json` → `version`
+- `package.json` → `version`
 
 ## License
 
