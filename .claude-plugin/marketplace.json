@@ -10,10 +10,19 @@
   "plugins": [
     {
       "name": "wp-dev-skills",
+      "displayName": "WordPress Dev Skills",
       "source": "./",
       "description": "WordPress plugin development skills — GitHub flow (scoped commits, PR, hotfix, revert), WooCommerce extensions, plugin testing (PHPUnit/Brain\\Monkey/redirect harness), coding standards (PHPCS/WPCS), CI/QA triage, PHPStan stubs scaffolding, build tools (@wordpress/scripts), background processing (Action Scheduler), multisite, i18n workflow, database (dbDelta/migrations), email templates, Freemius SDK, plugin audit, release versioning, WP.org submission/SVN deploy, WP admin browser automation, and guided tours (Driver.js).",
       "version": "1.2.0",
       "category": "development",
+      "homepage": "https://github.com/mralaminahamed/wp-dev-skills",
+      "author": {
+        "name": "Al Amin Ahamed",
+        "email": "mrabir.ahamed@gmail.com"
+      },
+      "dependencies": [
+        { "name": "wordpress-official-agent-skills", "marketplace": "wordpress-official-agent-skills" }
+      ],
       "strict": true
     }
   ]
