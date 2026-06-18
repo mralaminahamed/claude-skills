@@ -2,6 +2,7 @@
 
 [![Validate](https://github.com/mralaminahamed/wp-dev-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/mralaminahamed/wp-dev-skills/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Cursor Directory](https://img.shields.io/badge/Cursor_Directory-Plugin-0073aa?logo=cursor)](https://cursor.directory/plugins/wp-dev-skills)
 
 WordPress plugin development skills for AI coding agents — Claude Code, Gemini CLI, Cursor, Windsurf, Cline, Codex, GitHub Copilot, opencode, and more.
 
@@ -42,6 +43,14 @@ Skills activate automatically when their description matches your task. No slash
 | **wp-guided-tour** | Implementing a guided tour in a WP admin plugin using Driver.js — IIFE bundle setup, PHP tour configs, JS scope detection, completion tracking. |
 
 ## Install
+
+### Cursor Directory
+
+Browse and install directly from [cursor.directory](https://cursor.directory/plugins/wp-dev-skills):
+
+```
+https://cursor.directory/plugins/wp-dev-skills
+```
 
 ### Claude Code
 
