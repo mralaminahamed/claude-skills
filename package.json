@@ -25,30 +25,11 @@
     "freemius",
     "github",
     "skills",
+    "agent-skills",
     "ai",
     "claude",
     "gemini",
     "cursor",
     "codex"
-  ],
-  "skills": [
-    "skills/wp-github-flow",
-    "skills/wp-woocommerce",
-    "skills/wp-plugin-testing",
-    "skills/wp-coding-standards",
-    "skills/wp-ci-qa",
-    "skills/wp-phpstan-stubs",
-    "skills/wp-build-tools",
-    "skills/wp-background-processing",
-    "skills/wp-multisite",
-    "skills/wp-i18n-workflow",
-    "skills/wp-database",
-    "skills/wp-email-templates",
-    "skills/wp-freemius",
-    "skills/wp-plugin-audit",
-    "skills/wp-plugin-release",
-    "skills/wp-org-submission",
-    "skills/wp-admin-browser",
-    "skills/wp-guided-tour"
   ]
 }
