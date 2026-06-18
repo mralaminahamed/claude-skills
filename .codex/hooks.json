@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'wp-dev-skills loaded. 18 WordPress plugin development skills available. Skills: wp-github-flow (commits/PRs/issues), wp-woocommerce (WC extensions), wp-plugin-testing (PHPUnit/Brain\\Monkey), wp-coding-standards (PHPCS/WPCS), wp-ci-qa (fix QA failures), wp-phpstan-stubs (stubs scaffold), wp-build-tools (@wordpress/scripts/Vite), wp-background-processing (Action Scheduler/WP Cron), wp-multisite (network), wp-i18n-workflow (POT/PO/MO), wp-database (dbDelta/migrations), wp-email-templates (HTML mail), wp-freemius (SDK/licensing), wp-plugin-audit (consistency check), wp-plugin-release (version sync), wp-org-submission (SVN/WP.org), wp-admin-browser (DevTools MCP), wp-guided-tour (Driver.js). Read skills/<name>/SKILL.md before working in that domain.'",
+            "timeout": 5,
+            "statusMessage": "Loading wp-dev-skills"
+          }
+        ]
+      }
+    ]
+  }
+}
