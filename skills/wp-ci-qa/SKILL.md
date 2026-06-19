@@ -5,6 +5,8 @@ description: Use when a PR has QA-reported failures, a "Testing Failed" label, o
 
 # Fix PR QA Failures
 
+> **Model note:** This skill traces non-obvious root causes across PHP, JS, and CI — run on `sonnet` or `opus`. Do not downgrade to `haiku`; cause identification requires reasoning across multiple files.
+
 ## Overview
 
 Full workflow for diagnosing and fixing bugs reported by QA on an open PR. Starts from the GitHub PR URL, ends with labels updated and a QA re-test comment posted.

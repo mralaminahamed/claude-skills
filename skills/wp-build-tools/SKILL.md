@@ -5,6 +5,8 @@ description: Use when setting up or debugging the JavaScript/CSS build pipeline 
 
 # WordPress Plugin Build Tools
 
+> **Model note:** Config setup and `.asset.php` enqueue patterns are mechanical — `haiku` covers most cases. Debugging webpack entry-point conflicts or reusing a dependency plugin's bundled library may need `sonnet`.
+
 Configure and operate the JS/CSS build pipeline for WordPress plugins: `@wordpress/scripts` (webpack-based), Vite alternative, asset manifest handling, and correct enqueuing with the generated `.asset.php` dependency file.
 
 ## When to use

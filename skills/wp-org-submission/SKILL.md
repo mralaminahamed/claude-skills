@@ -5,6 +5,8 @@ description: Use when submitting a plugin to the WordPress.org plugin directory 
 
 # WordPress.org Plugin Submission & SVN Deploy
 
+> **Model note:** SVN deploy steps and asset setup are mechanical (`haiku`). Pre-submission rejection-pattern scan across a real codebase (17 patterns) requires code judgment — use `sonnet`. Responding to a human reviewer rejection also needs `sonnet`.
+
 Get a plugin into the WP.org directory and keep releasing to it. Two distinct phases — know which one applies:
 
 - **Phase 1 — Initial submission.** Plugin not yet in the directory. One-time human review, then SVN access is granted.

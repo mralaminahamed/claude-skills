@@ -4,6 +4,8 @@ All notable changes to **wp-dev-skills** are documented here. This project adher
 
 ## [Unreleased]
 
+## [1.2.1]
+
 ### Added
 
 - `wp-guided-tour` skill — Driver.js v1 IIFE setup, PHP backend tour configs, JS scope detection from URL query + hash routing, completion tracking via last-step `onNextClick` (not `onDestroyed`), selector rules (`:first-of-type` pitfall, Tailwind escaping), browser verification checklist, and post-impl POT regeneration reminder.
@@ -11,6 +13,7 @@ All notable changes to **wp-dev-skills** are documented here. This project adher
 ### Changed
 
 - `wp-admin-browser` — added "JS State Verification" section: checking WP globals/scripts loaded, SPA React render timing (2 s wait pattern), batch CSS selector testing, localStorage manipulation for feature testing, maintenance mode detection, and session expiry re-login snippet.
+- All 18 skills — added `Model note` block at the top of each skill body indicating the appropriate model tier (`haiku` / `sonnet` / `opus`) for that skill's tasks. `wp-plugin-audit` dimension agents now explicitly dispatch with `model: haiku`.
 
 ## [1.1.0]
 

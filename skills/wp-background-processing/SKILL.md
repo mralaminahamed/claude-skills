@@ -5,6 +5,8 @@ description: Use when implementing background jobs, queued tasks, or long-runnin
 
 # WordPress Background Processing
 
+> **Model note:** Scaffolding a new Action Scheduler or `WP_Background_Process` implementation is pattern-matching — `haiku` handles it well. Debugging a stuck queue or race condition across async jobs requires reasoning; use `sonnet`.
+
 Implement background jobs and queued tasks in WordPress plugins. Three primary tools with distinct trade-offs: Action Scheduler (persistent, battle-tested), `WP_Background_Process` (lightweight, no DB table), WP Cron (built-in, unreliable timing).
 
 ## When to use

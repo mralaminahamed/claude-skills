@@ -5,6 +5,8 @@ description: Use when integrating the Freemius SDK into a WordPress plugin for m
 
 # Freemius SDK Integration
 
+> **Model note:** SDK bootstrap and basic feature-gating are pattern-matching (`haiku`). Trialware compliance audit and pricing-plan architecture decisions require careful judgment — use `sonnet` for those.
+
 Integrate Freemius into a WordPress plugin for commercial distribution: SDK bootstrap, free/pro feature gating, license management, trials, pricing page, and the Freemius dashboard. Freemius handles payments, license keys, update delivery, and analytics.
 
 ## When to use

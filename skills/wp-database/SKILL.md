@@ -5,6 +5,8 @@ description: Use when creating custom database tables with dbDelta, writing sche
 
 # WordPress Custom Database Tables
 
+> **Model note:** `dbDelta` schema and CRUD patterns are mechanical (`haiku`). Query optimisation and multi-version data migrations require cross-file reasoning — use `sonnet` for those sub-tasks.
+
 Create and manage custom database tables in WordPress plugins: `dbDelta()` for schema definition, versioned upgrade routines, `$wpdb` CRUD with prepared statements, and data migration strategies.
 
 ## When to use

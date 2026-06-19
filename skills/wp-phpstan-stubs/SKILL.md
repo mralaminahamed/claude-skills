@@ -5,6 +5,8 @@ description: Use when asked to create a new PHPStan stubs package (phrases like 
 
 # PHPStan Stubs Scaffold
 
+> **Model note:** File scaffolding from a fixed template — `haiku` handles end-to-end. Only reach for `sonnet` if the source plugin has complex namespace hierarchies needing stub organization decisions.
+
 Scaffold a complete PHPStan stubs package from scratch, following the `my-org/phpstan-freemius-stubs` standard structure.
 
 ## References

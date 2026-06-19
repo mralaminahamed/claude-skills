@@ -5,6 +5,8 @@ description: Use when building or adapting a WordPress plugin for multisite/netw
 
 # WordPress Multisite Plugin Development
 
+> **Model note:** Adapting an existing plugin for multisite involves scattered conditional changes — requires reading across many files to find all `get_option`/`update_option` and activation hooks. Use `sonnet`; `haiku` may miss indirect callers. New builds with multisite in mind from the start are straightforward and can use `haiku`.
+
 Adapt and build plugins that work correctly on WordPress multisite networks. Covers activation scope, option storage, network admin UI, capability model, and safe site-switching patterns.
 
 ## When to use

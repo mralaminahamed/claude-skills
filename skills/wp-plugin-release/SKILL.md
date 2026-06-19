@@ -5,6 +5,8 @@ description: Use when bumping or releasing a WordPress plugin version, syncing v
 
 # WordPress Plugin Release / Version Sync
 
+> **Model note:** Mechanical file edits — works well on `haiku`. No reasoning across ambiguous code; all sources are explicit (header, constant, readme.txt, changelog).
+
 Bump a WP plugin version coherently. Prevents the classic drift where the plugin header says one version, the `readme.txt` `Stable tag` another, and the `.pot` a third.
 
 ## When to use

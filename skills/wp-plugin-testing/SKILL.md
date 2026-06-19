@@ -5,6 +5,8 @@ description: Use when setting up or writing tests for a WordPress plugin — PHP
 
 # WordPress Plugin Testing
 
+> **Model note:** Bootstrap and CI config setup are mechanical (`haiku`). Writing meaningful test cases (choosing fixtures, mocking the right layer, testing edge cases) requires understanding the plugin's code — use `sonnet`. Redirect/exit harness setup is a one-time pattern and works on `haiku`.
+
 Set up and write automated tests for WordPress plugins: PHPUnit integration tests (real WP + DB), pure unit tests (no WP loaded), and acceptance/E2E tests with Codeception.
 
 ## When to use

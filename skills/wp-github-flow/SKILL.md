@@ -5,6 +5,8 @@ description: Use when shipping a contribution through GitHub — either (a) debu
 
 # GitHub Contribution Flow
 
+> **Model note:** Issue-driven mode (root-cause tracing + fix) requires `sonnet` or `opus`. Changes-driven mode (group + commit existing edits) is mechanical and works well on `haiku`.
+
 ## Overview
 
 Two entry modes that converge on the same shipping flow (branch → scoped commits → push → PR):

@@ -5,6 +5,8 @@ description: Use when managing the full translation workflow for a WordPress plu
 
 # WordPress Plugin i18n Workflow
 
+> **Model note:** Fully mechanical — POT generation, PO/MO compilation, and script registration are tool invocations. `haiku` handles all steps; no cross-file reasoning needed.
+
 Full translation pipeline for WordPress plugins: POT generation, PO/MO compilation, JavaScript translations, translate.wordpress.org GlotPress, and language pack distribution. Covers the coding conventions and the tooling workflow.
 
 ## When to use

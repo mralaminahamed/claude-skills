@@ -16,7 +16,9 @@ Read-only audit that surfaces inconsistencies across a WP plugin's code, config,
 
 ### 1. Fan out — 4 independent dimensions (parallel agents)
 
-Dispatch one read-only agent per dimension (Explore or general-purpose), in a single message so they run concurrently. Each returns findings with `file:line`, the inconsistent value, and the expected/canonical form.
+Dispatch one read-only agent per dimension (`Explore` type, `model: haiku`), in a single message so they run concurrently. Each returns findings with `file:line`, the inconsistent value, and the expected/canonical form.
+
+> **Model note:** Dimension agents are pure grep/read with no synthesis — `haiku` is faster and cheaper. The main thread (whatever model the user has active) does all verification and reporting.
 
 - **A — Version & metadata.** Cross-reference every version/metadata source: plugin header (`Version`, `Requires at least`, `Requires PHP`, `Tested up to`, `Text Domain`), the version constant, `readme.txt` (`Stable tag` + Changelog + Upgrade Notice), `composer.json`, the `.pot` `Project-Id-Version`, and the schema/DB version. Flag every mismatch; note fields that are *intentionally* independent (schema `$db_version` ≠ plugin version) so they aren't flagged.
 

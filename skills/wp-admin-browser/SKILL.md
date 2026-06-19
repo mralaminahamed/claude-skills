@@ -5,6 +5,8 @@ description: Use when interacting with a WordPress admin panel via Chrome DevToo
 
 # WordPress Admin via Browser (Chrome DevTools MCP)
 
+> **Model note:** Primarily MCP tool calls — navigate, fill, click. `haiku` works for simple CRUD flows. Complex UI sequences (multi-step forms, dynamic AJAX state) use `sonnet` to handle unexpected DOM states.
+
 ## Core Rules — Non-Negotiable
 
 1. **Never touch the main admin user.** Always create a temporary admin for testing.

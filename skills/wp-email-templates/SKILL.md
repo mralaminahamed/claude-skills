@@ -5,6 +5,8 @@ description: Use when adding or refactoring transactional emails in a WordPress 
 
 # Reusable HTML Email Templates (WordPress plugin)
 
+> **Model note:** Mechanical refactoring — extract strings, create template files, wire `wp_mail()`. `haiku` handles end-to-end.
+
 Move email bodies out of inline PHP strings into `templates/emails/`, where every message reuses one branded shell. Adding a new email = adding one content file.
 
 ## When to use

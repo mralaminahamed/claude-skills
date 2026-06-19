@@ -5,6 +5,8 @@ description: Use when setting up PHPCS with WordPress Coding Standards (WPCS), c
 
 # WordPress Coding Standards (PHPCS + WPCS)
 
+> **Model note:** Setup and config steps are mechanical (`haiku`). Fixing sniff violations across many files works fine on `haiku`. Only reach for `sonnet`/`opus` when violations involve subtle logic (e.g. escaping inside complex SQL builders).
+
 Configure and enforce the WordPress Coding Standards via PHP_CodeSniffer. WPCS is required for WP.org submission and is the canonical style guide for all WordPress PHP code.
 
 ## When to use

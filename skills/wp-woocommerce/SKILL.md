@@ -5,6 +5,8 @@ description: Use when building, extending, or debugging a WooCommerce plugin —
 
 # WooCommerce Extension Development
 
+> **Model note:** Complex — payment gateways, HPOS compatibility, and block cart/checkout require multi-file reasoning. Use `sonnet` or `opus`. `haiku` for isolated CRUD or hook lookups only.
+
 Guide for building WooCommerce extensions: custom product types, payment gateways, hooks, CRUD, REST, and admin UI. Assumes the host plugin passes the `wp-plugin-audit` baseline and the official `wp-plugin-development` security conventions.
 
 ## When to use

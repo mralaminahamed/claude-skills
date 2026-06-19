@@ -5,6 +5,8 @@ description: Use when implementing a guided tour system in a WordPress admin plu
 
 # WordPress Admin Guided Tours (Driver.js)
 
+> **Model note:** IIFE bundle setup and PHP config scaffolding are mechanical (`haiku`). JS scope detection from URL + hash, and debugging selector mismatches against live DOM, need `sonnet`.
+
 ## Setup
 
 ### 1 — Vendor Driver.js
