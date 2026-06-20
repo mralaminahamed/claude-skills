@@ -1,6 +1,6 @@
 ---
 name: wp-phpstan-stubs
-description: Use when asked to create a new PHPStan stubs package (phrases like "create stubs for X", "new stubs package", "scaffold phpstan stubs", "add stubs for plugin/composer package"). Scaffolds the full standard structure matching the my-org freemius pattern. NOT for configuring phpstan.neon or generating baselines — use the official wp-phpstan skill for that.
+description: Use when asked to create a new PHPStan stubs package (phrases like "create stubs for X", "new stubs package", "scaffold phpstan stubs", "add stubs for plugin/composer package"). Scaffolds the full standard structure matching the my-org freemius pattern. Not for: configuring phpstan.neon or generating baselines — use the official wp-phpstan skill for that.
 ---
 
 # PHPStan Stubs Scaffold
@@ -8,6 +8,12 @@ description: Use when asked to create a new PHPStan stubs package (phrases like 
 > **Model note:** File scaffolding from a fixed template — `haiku` handles end-to-end. Only reach for `sonnet` if the source plugin has complex namespace hierarchies needing stub organization decisions.
 
 Scaffold a complete PHPStan stubs package from scratch, following the `my-org/phpstan-freemius-stubs` standard structure.
+
+## When to use
+
+- "Create stubs for X", "new stubs package", "scaffold phpstan stubs", "add stubs for plugin/composer package".
+
+**Not for:** Configuring `phpstan.neon` or generating baselines — use the official `wp-phpstan` skill. Adding PHPStan to a plugin that already has stubs installed.
 
 ## References
 

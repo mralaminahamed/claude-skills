@@ -1,11 +1,20 @@
 ---
 name: wp-admin-browser
-description: Use when interacting with a WordPress admin panel via Chrome DevTools MCP — logging in, creating users, navigating menus, submitting forms, or performing any data operations (create/update/delete) through the browser. Also use when needing a temporary admin user for testing instead of the main admin account.
+description: Use when interacting with a WordPress admin panel via Chrome DevTools MCP — logging in, creating users, navigating menus, submitting forms, or performing any data operations (create/update/delete) through the browser. Also use when needing a temporary admin user for testing instead of the main admin account. Not for: headless automated testing without a real browser — use `wp-plugin-testing`; PHP code changes or plugin logic that don't require browser interaction.
 ---
 
 # WordPress Admin via Browser (Chrome DevTools MCP)
 
 > **Model note:** Primarily MCP tool calls — navigate, fill, click. `haiku` works for simple CRUD flows. Complex UI sequences (multi-step forms, dynamic AJAX state) use `sonnet` to handle unexpected DOM states.
+
+## When to use
+
+- "Log in to the WordPress admin", "navigate to Settings > General", "create a test user".
+- "Submit a form in WP admin", "upload a file via the media library", "save plugin settings".
+- "Create a temporary admin account for testing instead of using the main admin user".
+- "Verify a feature works end-to-end through the browser UI".
+
+**Not for:** Headless automated testing without a real browser — use `wp-plugin-testing`. PHP code changes and plugin logic that don't require browser interaction.
 
 ## Core Rules — Non-Negotiable
 

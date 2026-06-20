@@ -3,7 +3,7 @@
 ## Adding a skill
 
 1. Create `skills/<skill-name>/SKILL.md` (kebab-case directory name).
-2. Add frontmatter — `name` and `description` are required:
+2. Add frontmatter — `name` and `description` are required. `version` and `compatibility` are optional and not enforced by CI:
 
    ```markdown
    ---
@@ -81,7 +81,7 @@ Rules:
 CI ([`.github/workflows/validate.yml`](.github/workflows/validate.yml)) runs on every push/PR and checks:
 
 - both `.claude-plugin/*.json` manifests are valid JSON,
-- `plugin.json` and `marketplace.json` versions match,
+- `plugin.json`, `marketplace.json`, `gemini-extension.json`, and `package.json` versions all match,
 - every `skills/*/` has a `SKILL.md` with `name` + `description` frontmatter.
 
 Run it locally before pushing:

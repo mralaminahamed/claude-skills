@@ -1,6 +1,6 @@
 ---
 name: wp-email-templates
-description: Use when adding or refactoring transactional emails in a WordPress plugin — extract inline email strings into reusable HTML templates that share one branded base wrapper, sent as HTML via wp_mail().
+description: Use when adding or refactoring transactional emails in a WordPress plugin — extract inline email strings into reusable HTML templates that share one branded base wrapper, sent as HTML via wp_mail(). Not for: REST API webhooks, push notifications, or transactional email in themes (not plugins).
 ---
 
 # Reusable HTML Email Templates (WordPress plugin)
@@ -13,6 +13,8 @@ Move email bodies out of inline PHP strings into `templates/emails/`, where ever
 
 - "Move email content to templates", "branded/HTML emails", "reuse an email template".
 - Any plugin building messages inline with `wp_mail()` heredocs.
+
+**Not for:** REST API webhooks, push notifications, or Slack integrations. Transactional email in themes — this skill targets plugin-delivered mail only.
 
 ## Structure
 

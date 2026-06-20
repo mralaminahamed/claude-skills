@@ -42,11 +42,17 @@ plugin = load_json(ROOT / ".claude-plugin/plugin.json")
 market = load_json(ROOT / ".claude-plugin/marketplace.json")
 
 # 2. versions in sync
+gemini = load_json(ROOT / "gemini-extension.json")
+pkg = load_json(ROOT / "package.json")
 if plugin and market:
     pv = plugin.get("version")
     mv = (market.get("plugins") or [{}])[0].get("version")
     if pv != mv:
         fail(f"version mismatch: plugin.json={pv} marketplace.json={mv}")
+if plugin and gemini and gemini.get("version") != plugin.get("version"):
+    fail(f"version mismatch: plugin.json={plugin.get('version')} gemini-extension.json={gemini.get('version')}")
+if plugin and pkg and pkg.get("version") != plugin.get("version"):
+    fail(f"version mismatch: plugin.json={plugin.get('version')} package.json={pkg.get('version')}")
 
 # 3. skills
 skills_dir = ROOT / "skills"

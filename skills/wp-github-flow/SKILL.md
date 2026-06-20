@@ -1,6 +1,6 @@
 ---
 name: wp-github-flow
-description: Use when shipping a contribution through GitHub — either (a) debugging a GitHub issue by URL/number (fetch, root-cause, fix), or (b) shipping uncommitted working-tree changes when the user says "commit my changes", "commit scope by scope", "create a branch and PR", "open a PR for these changes", or similar. Covers grouping changes into scoped conventional commits, creating a branch, pushing, and opening a PR with assignee + labels. Use this whenever the end goal is a commit/branch/PR, even if no issue is mentioned.
+description: Use when shipping a contribution through GitHub — either (a) debugging a GitHub issue by URL/number (fetch, root-cause, fix), or (b) shipping uncommitted working-tree changes when the user says "commit my changes", "commit scope by scope", "create a branch and PR", "open a PR for these changes", or similar. Covers grouping changes into scoped conventional commits, creating a branch, pushing, and opening a PR with assignee + labels. Use this whenever the end goal is a commit/branch/PR, even if no issue is mentioned. Not for: plugin version releases or WP.org SVN deploy — use `wp-plugin-release` and `wp-org-submission` for those.
 ---
 
 # GitHub Contribution Flow
@@ -28,6 +28,8 @@ Both end at **§6 Branch, Commit, PR**, which is shared.
 - "create a branch and PR", "open a PR for these changes"
 - "read all changes from X and commit + create PR"
 - Any request whose end goal is commits/branch/PR from existing working-tree edits
+
+**Not for:** Plugin version releases or WP.org SVN deploy — use `wp-plugin-release` and `wp-org-submission`. QA failure triage on an already-open PR — use `wp-ci-qa`.
 
 ## Required Sub-Skill
 

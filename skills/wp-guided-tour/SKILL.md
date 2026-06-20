@@ -1,11 +1,20 @@
 ---
 name: wp-guided-tour
-description: Use when implementing a guided tour system in a WordPress admin plugin using Driver.js — setting up the IIFE bundle, defining PHP backend tour configs, writing JS scope detection from URL + hash, tracking completion correctly, testing selectors against live DOM, and regenerating the POT file.
+description: Use when implementing a guided tour system in a WordPress admin plugin using Driver.js — setting up the IIFE bundle, defining PHP backend tour configs, writing JS scope detection from URL + hash, tracking completion correctly, testing selectors against live DOM, and regenerating the POT file. Not for: front-end-only SPAs or non-WordPress apps; guided tours in themes.
 ---
 
 # WordPress Admin Guided Tours (Driver.js)
 
 > **Model note:** IIFE bundle setup and PHP config scaffolding are mechanical (`haiku`). JS scope detection from URL + hash, and debugging selector mismatches against live DOM, need `sonnet`.
+
+## When to use
+
+- "Add a guided tour to my plugin", "set up Driver.js in WordPress admin".
+- "Wire up tour scopes by URL/hash", "detect which page the user is on for tour routing".
+- "Track tour completion correctly", "fix tour firing on dismiss instead of Done".
+- "Test tour selectors against live DOM".
+
+**Not for:** Front-end-only SPAs or non-WordPress JS apps — requires WP admin backend context. Guided tours in themes — this skill targets plugin-owned admin pages only.
 
 ## Setup
 
@@ -247,3 +256,9 @@ localStorage.getItem('myprefix_my-scope_tour_completed')  // → "true"
 - [ ] `smoothScroll: true` in driver config (prevents jarring jumps on long pages)
 - [ ] No `align: 'start'` in steps (redundant default)
 - [ ] Update docs file if one exists
+
+## References
+
+- `references/scope-detection.md` — `getCurrentScope()` patterns for URL-only and hash-routed SPA pages, common pitfalls.
+- `references/php-tour-config.md` — Full PHP config shape with all fields, Tailwind selector escaping, and filter pattern.
+- `references/driver-js-lifecycle.md` — `startTour()` implementation with correct completion tracking, `autoStartTours()` pattern, IIFE namespace.

@@ -1,6 +1,6 @@
 ---
 name: wp-plugin-audit
-description: Use when asked to audit a WordPress plugin for inconsistencies, run a consistency/quality sweep, or "find inconsistencies" across code and docs. Fans out parallel checks across dimensions and verifies every finding before reporting.
+description: Use when asked to audit a WordPress plugin for inconsistencies, run a consistency/quality sweep, or "find inconsistencies" across code and docs. Fans out parallel checks across dimensions and verifies every finding before reporting. Not for: PHPStan type analysis — use `wp-phpstan-stubs`; WP.org pre-submission review — use `wp-org-submission`.
 ---
 
 # WordPress Plugin Consistency Audit
@@ -11,6 +11,8 @@ Read-only audit that surfaces inconsistencies across a WP plugin's code, config,
 
 - "Audit the plugin", "find inconsistencies", "consistency/quality sweep".
 - Before a release, or after a large refactor, to catch drift.
+
+**Not for:** PHPStan type checking or baseline generation — use `wp-phpstan-stubs`. WP.org pre-submission review (17 rejection patterns) — use `wp-org-submission` which has that checklist.
 
 ## Method
 

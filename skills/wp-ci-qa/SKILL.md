@@ -1,11 +1,20 @@
 ---
 name: wp-ci-qa
-description: Use when a PR has QA-reported failures, a "Testing Failed" label, or QA comments saying features are broken. Covers reading QA feedback, tracing root causes, applying scoped commits, updating PR labels, and posting a QA re-test comment.
+description: Use when a PR has QA-reported failures, a "Testing Failed" label, or QA comments saying features are broken. Covers reading QA feedback, tracing root causes, applying scoped commits, updating PR labels, and posting a QA re-test comment. Not for: writing new features or routine code review — use `wp-github-flow` for standard contribution flow.
 ---
 
 # Fix PR QA Failures
 
 > **Model note:** This skill traces non-obvious root causes across PHP, JS, and CI — run on `sonnet` or `opus`. Do not downgrade to `haiku`; cause identification requires reasoning across multiple files.
+
+## When to use
+
+- "QA marked my PR as Testing Failed", "fix the bugs in QA comments", "address QA feedback".
+- "A PR has a 'Testing Failed' label", "QA left comments saying features are broken".
+- "Trace the root cause of a QA-reported bug and fix it with scoped commits".
+- "Post a QA re-test comment after fixing the reported issues".
+
+**Not for:** Writing new features or fresh code — use `wp-github-flow`. Setting up a CI pipeline from scratch — this skill triages failures in existing CI.
 
 ## Overview
 
