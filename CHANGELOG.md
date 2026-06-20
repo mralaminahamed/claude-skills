@@ -4,6 +4,18 @@ All notable changes to **wp-dev-skills** are documented here. This project adher
 
 ## [Unreleased]
 
+## [1.2.2]
+
+### Fixed
+
+- `validate_skills.py` — extended version-sync check to cover `gemini-extension.json` and `package.json` (previously only `plugin.json` ↔ `marketplace.json` were checked).
+- 8 skills (`wp-admin-browser`, `wp-ci-qa`, `wp-email-templates`, `wp-github-flow`, `wp-guided-tour`, `wp-plugin-audit`, `wp-plugin-release`, `wp-phpstan-stubs`) — added `Not for:` suffix to frontmatter descriptions and `**Not for:**` body blocks; added missing `## When to use` sections in `wp-admin-browser` and `wp-ci-qa`; fixed `NOT for` → `Not for:` casing in `wp-phpstan-stubs`.
+- `CONTRIBUTING.md` — clarified `version` and `compatibility` frontmatter fields are optional; updated CI section to list all 4 version-checked files.
+
+### Added
+
+- `wp-guided-tour/references/` — 3 new reference files: `scope-detection.md`, `php-tour-config.md`, `driver-js-lifecycle.md`; wired `## References` section in SKILL.md.
+
 ## [1.2.1]
 
 ### Added
