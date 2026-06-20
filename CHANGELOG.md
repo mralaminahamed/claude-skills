@@ -4,6 +4,18 @@ All notable changes to **wp-dev-skills** are documented here. This project adher
 
 ## [Unreleased]
 
+## [1.2.3]
+
+### Added
+
+- `wp-plugin-audit/references/security.md` — advanced security audit patterns: file upload validation, object injection (`unserialize`), SQL injection beyond `$wpdb->prepare()`, secrets storage, REST API auth hardening, open redirect, path traversal, `composer audit`.
+- `wp-plugin-audit/references/skill-routing.md` — finding category → skill routing table covering all 18 skills + official dependency; severity-based fix order rules for Step 4.
+
+### Changed
+
+- `wp-plugin-audit` — expanded Dimension D with 8 explicit security checklist items; added Step 4 (route findings to fix skill) to the method; wired two new reference files; fixed `Not for:` to point to `wp-phpstan` (official) instead of `wp-phpstan-stubs`.
+- `README.md` — rewritten around the full WP plugin development lifecycle (Build / Test & Audit / Ship) instead of a flat alphabetical skill list.
+
 ## [1.2.2]
 
 ### Fixed
