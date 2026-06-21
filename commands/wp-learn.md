@@ -1,6 +1,6 @@
 ---
-description: Extract learnings from the current session and update wp-dev-skills skill files — captures corrections, new rules, edge cases, and Common Mistakes entries discovered during real usage
-argument-hint: "[preview | apply | skill:<name>]"
+description: Extract learnings from the current session and update wp-dev-skills skill files — captures corrections, new rules, edge cases, and Common Mistakes entries discovered during real usage. Use `suggest` to see WP dev topics not yet covered by any skill.
+argument-hint: "[preview | apply | suggest | skill:<name>]"
 ---
 
 # WP Dev Skills — Learn from Session
@@ -8,6 +8,13 @@ argument-hint: "[preview | apply | skill:<name>]"
 Scan the current conversation for corrections, new rules, and edge cases, then propose and apply updates to the relevant skill files in `skills/*/SKILL.md`.
 
 Action: $ARGUMENTS (defaults to `apply`)
+
+| Mode | Behaviour |
+|------|-----------|
+| `apply` | Scan session → show updates table + new skill candidates → confirm → apply edits |
+| `preview` | Show updates table + new skill candidates, no file edits |
+| `suggest` | Skip session scan, only show new skill candidates from gap analysis |
+| `skill:<name>` | Limit session scan and updates to one skill; still show candidates |
 
 ---
 
@@ -43,9 +50,11 @@ Read the full conversation history. For each learning found, extract:
 `wp-freemius`, `wp-i18n-workflow`, `wp-background-processing`, `wp-multisite`,
 `wp-email-templates`, `wp-phpstan-stubs`, `wp-admin-browser`, `wp-guided-tour`
 
-If a learning doesn't map to any existing skill, note it as `unassigned` — do not create a new skill.
+If a learning doesn't map to any existing skill, collect it as a **new skill candidate** (see Step 2b).
 
 ### 2. Preview (always show first)
+
+#### 2a. Existing skill updates
 
 Display a table of all learnings found:
 
@@ -54,6 +63,49 @@ Display a table of all learnings found:
 |---|-------|---------|--------|--------------|
 | 1 | wp-github-flow | Common Mistakes | add-mistake | Never add `bug` label — QA assigns it during triage |
 ```
+
+#### 2b. New skill candidates (from session + known WP dev gaps)
+
+If action is `suggest` — skip the existing-skill update flow entirely and run this section only.
+
+Otherwise always show this section after the updates table, even on `apply`.
+
+**Step 1 — collect from session:** any learnings marked `unassigned` in step 1 become candidates.
+
+**Step 2 — scan known WP dev topic gaps:** compare existing skills against the full WP plugin development surface. Flag topics with no existing skill:
+
+| Topic | Why it's a skill candidate |
+|-------|---------------------------|
+| REST API authentication (JWT / Application Passwords / nonce) | No current skill covers auth patterns |
+| Block editor data layer (`@wordpress/data`, selectors, dispatchers) | wp-block-development covers markup, not data |
+| Gutenberg block transforms & variations | Not covered |
+| Custom post type + taxonomy registration patterns | Core WP, no skill |
+| Settings API / options pages (non-Freemius) | Freemius skill exists but not vanilla options |
+| WordPress Cron (`wp_schedule_event`) vs Action Scheduler | wp-background-processing covers AS, not WP-Cron specifics |
+| Transients, object cache, and persistent caching patterns | No cache skill |
+| Plugin uninstall / deactivation cleanup | No skill covers data teardown |
+| WP CLI custom command development | wp-wpcli-and-ops from official skills covers ops, not building commands |
+| User roles and capabilities | No skill |
+| WordPress REST API endpoints (custom) | No skill (official skill covers consuming, not building) |
+| Plugin update mechanism (self-hosted, non-Freemius) | Not covered |
+| Ajax handlers (admin-ajax.php + REST fallback) | No skill |
+| Nonce security patterns | No skill |
+| Assets enqueueing best practices | No skill |
+
+Show all candidates as a table:
+
+```
+## New Skill Candidates
+
+| # | Suggested Skill Name | WP Dev Topic | Source | Why Needed |
+|---|----------------------|--------------|--------|------------|
+| 1 | wp-rest-endpoints    | Custom REST API endpoint development | session | User hit auth gap not covered by existing skills |
+| 2 | wp-capabilities      | User roles & capabilities            | gap analysis | No existing skill covers this WP core feature |
+```
+
+**Source** values: `session` (came from this chat), `gap-analysis` (known WP topic with no skill).
+
+Do NOT fabricate candidates. Only include topics where there is genuinely no existing skill.
 
 If action is `preview` — stop here. Otherwise continue.
 
