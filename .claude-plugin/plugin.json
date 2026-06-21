@@ -22,6 +22,6 @@
     "skills"
   ],
   "dependencies": [
-    "wordpress-official-agent-skills"
+    "wordpress-official-agent-skills@wordpress-official-agent-skills"
   ]
 }
