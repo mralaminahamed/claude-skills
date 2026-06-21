@@ -21,6 +21,7 @@
     "code-review",
     "skills"
   ],
+  "commands": "./commands/",
   "dependencies": [
     "wordpress-official-agent-skills@wordpress-official-agent-skills"
   ]
