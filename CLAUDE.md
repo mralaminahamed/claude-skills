@@ -102,6 +102,38 @@ Run locally: `python3 .github/scripts/validate_skills.py`
 
 ---
 
+## Relationship to wordpress-official-agent-skills
+
+`wp-dev-skills` is a **complement** to `wordpress-official-agent-skills` — never a replacement or duplicate.
+
+### Hard rules
+
+- **Never duplicate** a skill already covered by `wordpress-official-agent-skills`. If the official plugin covers REST API, block development, or WP-CLI ops, do not create a parallel skill here.
+- **Never copy** content from official skills into this plugin's SKILL.md files — not even paraphrased.
+- **Reference, don't replicate.** If a skill here depends on concepts from an official skill, link to it in a `## References` or `> See also` note. Let the official skill do its job.
+
+### How they fit together
+
+| `wordpress-official-agent-skills` | `wp-dev-skills` |
+|-----------------------------------|-----------------|
+| WP core APIs, block development, REST API, WP-CLI ops, Playground, WPDS | GitHub contribution flow, CI/QA triage, PHPUnit/PHPCS/PHPStan, build tools, release versioning, WP.org submission, Freemius SDK, plugin audit |
+| Official WP.org patterns and standards | Developer lifecycle tooling and workflow |
+| What WP *is* | How to *ship* WP plugins professionally |
+
+### When adding a new skill — check official first
+
+Before creating any skill, grep the official plugin:
+
+```bash
+find ~/.claude/plugins/cache/wordpress-official-agent-skills -name "SKILL.md" | xargs grep -l "<topic>"
+```
+
+If a match exists: **do not create the skill here**. Instead, reference the official skill in any related wp-dev-skills content and use it to enhance efficiency, scalability, and quality in the plugin/theme development lifecycle.
+
+If the official skill covers the topic partially — this plugin may fill the **gap** (e.g. official skill covers REST API *consumption*; this plugin could cover REST endpoint *authoring* patterns for plugin devs). Document the boundary clearly in both skills' `description` and `Not for:` lines.
+
+---
+
 ## What NOT to do
 
 - Don't hardcode skill counts (`18 skills`, `N skills`) — use "WordPress plugin development skills" instead.
@@ -109,3 +141,4 @@ Run locally: `python3 .github/scripts/validate_skills.py`
 - Don't put real plugin/project names in skill content — use generic mock names.
 - Don't reference files Claude won't know about — every `references/` file must be listed in `SKILL.md`.
 - Don't use absolute paths in scripts — use `${CLAUDE_PLUGIN_ROOT}`.
+- Don't duplicate or replicate `wordpress-official-agent-skills` content — see "Relationship to wordpress-official-agent-skills" above.

@@ -22,6 +22,24 @@ Action: $ARGUMENTS (defaults to `apply`)
 
 **This plugin ships rules that apply to ALL WordPress developers across ALL projects.**
 
+### Rule 0 — never duplicate wordpress-official-agent-skills
+
+Before proposing any skill update or new skill, check whether `wordpress-official-agent-skills` already covers the topic:
+
+```bash
+find ~/.claude/plugins/cache/wordpress-official-agent-skills -name "SKILL.md" | xargs grep -li "<topic>"
+```
+
+| Test | Accept | Reject |
+|------|--------|--------|
+| Already fully covered by `wordpress-official-agent-skills`? | ❌ Reject | — |
+| Partially covered — this fills a documented gap? | ✅ Accept (document boundary) | — |
+| Not covered at all by official skills? | ✅ Accept | — |
+
+**If rejected by Rule 0:** note it as "covered by official skills" and suggest referencing `wordpress-official-agent-skills:<skill-name>` instead. `wp-dev-skills` complements official skills — it never replicates them.
+
+### Rule 1 — global WP developer standard
+
 Before proposing any learning, apply this filter:
 
 | Test | Accept | Reject |
@@ -33,20 +51,21 @@ Before proposing any learning, apply this filter:
 | Is it a code style preference that doesn't reflect WP/WPCS standards? | ❌ Reject | — |
 | Does it assume a specific plugin architecture that isn't universal? | ❌ Reject | — |
 
-**When a learning is rejected (project-specific):** do NOT silently drop it. Show it in a **Redirected** section with a suggestion:
+**When a learning is rejected:** do NOT silently drop it. Show it in a **Redirected** section with a suggestion:
 
 ```
-## Redirected (project-specific — not accepted into global plugin)
+## Redirected (not accepted)
 
 | Learning | Reason rejected | Suggestion |
 |----------|----------------|------------|
-| "Never add bug label — QA assigns it" | Internal QA process, not universal WP standard | Add to your project's CLAUDE.md or a project-scoped plugin |
+| "Never add bug label — QA assigns it" | Org-specific QA process, not WP standard | Add to project CLAUDE.md |
+| "Always use wp_remote_get for HTTP" | Already covered by wordpress-official-agent-skills:wp-rest-api | Reference official skill instead |
 ```
 
 Suggestions to offer:
-- Add to project's `CLAUDE.md` as a team rule
-- Create a private project-scoped plugin for org-specific skills
-- Use existing global skills — link the closest match
+- **Covered by official skills** → reference `wordpress-official-agent-skills:<skill>` — don't duplicate here
+- **Org/team-specific** → add to project's `CLAUDE.md` or a private project-scoped plugin
+- **Partially covered** → document the gap boundary; reference official skill + extend here only for the uncovered part
 
 ---
 
@@ -108,7 +127,7 @@ Unassigned global learnings → new skill candidates (Step 2b).
 
 #### 2c. New global skill candidates
 
-Compare unassigned accepted learnings + known WP dev gaps against existing skills:
+Compare unassigned accepted learnings + known WP dev gaps against **both** existing wp-dev-skills AND `wordpress-official-agent-skills`. Only flag topics covered by neither. If `wordpress-official-agent-skills` partially covers a topic, flag the **gap portion only** and note the official skill to reference:
 
 | Topic | Why it's a skill candidate |
 |-------|---------------------------|
