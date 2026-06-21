@@ -202,7 +202,7 @@ git push -u origin <branch>
 gh label list --repo "$CODE_REPO"
 ```
 
-Then create — always pass `--repo "$CODE_REPO"` (gh context can differ from git remote), `--assignee @me`, and only labels that exist. Common mapping: a "ready for QA" label (`needs-testing` / `needs testing`) + a type/area label (`bug`, `frontend`, `backend`). Cross-repo close footer when `ISSUE_REPO ≠ CODE_REPO`.
+Then create — always pass `--repo "$CODE_REPO"` (gh context can differ from git remote), `--assignee @me`, and only labels that exist. Common mapping: a "ready for QA" label (`needs-testing` / `needs testing`) + an area label (`frontend`, `backend`). **Never add `bug` — QA assigns it if they find issues; dev-added `bug` conflicts with QA triage.** Cross-repo close footer when `ISSUE_REPO ≠ CODE_REPO`.
 
 ```bash
 gh pr create \
@@ -334,7 +334,8 @@ A PR body that lists only half the commits reads as "the rest snuck in."
 | Wrong base branch | Ask user; never assume `develop` or `main` |
 | Missing assignee | Always pass `--assignee @me` |
 | Missing QA label | Add the repo's "ready for QA" label (verify exact name via `gh label list`) |
-| Missing area label | Add the repo's area/type label (`bug`/`frontend`/`backend`/…) — whatever exists |
+| Missing area label | Add the repo's area label (`frontend`/`backend`/…) — whatever exists; never add `bug` |
+| Adding `bug` label on a dev PR | **Never.** `bug` is QA's label — they add it only if they find issues during testing. Dev-adding it conflicts with QA triage. |
 | Bundled refactoring in fix | One change only — keep diff minimal |
 | Squash merge | **Never** use `--squash` — destroys per-scope commit history. Use `--merge` always. |
 | Rebase merge without being asked | Never use `--rebase` unless user explicitly requests it — rewrites SHAs, breaks bisect. |
