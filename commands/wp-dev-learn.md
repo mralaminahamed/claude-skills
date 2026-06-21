@@ -11,7 +11,7 @@ Action: $ARGUMENTS (defaults to `apply`)
 
 | Mode | Behaviour |
 |------|-----------|
-| `apply` | Scan session → show updates table + new skill candidates → confirm → apply edits |
+| `apply` | Scan session → show updates table + new skill candidates → confirm → apply edits → ship (owner: direct commit; contributor: fork + branch-per-skill + PR) |
 | `preview` | Show updates table + new skill candidates, no file edits |
 | `suggest` | Skip session scan, only show new skill candidates from gap analysis |
 | `skill:<name>` | Limit session scan and updates to one skill; still show candidates |
@@ -100,7 +100,7 @@ Show all candidates as a table:
 | # | Suggested Skill Name | WP Dev Topic | Source | Why Needed |
 |---|----------------------|--------------|--------|------------|
 | 1 | wp-rest-endpoints    | Custom REST API endpoint development | session | User hit auth gap not covered by existing skills |
-| 2 | wp-capabilities      | User roles & capabilities            | gap analysis | No existing skill covers this WP core feature |
+| 2 | wp-capabilities      | User roles & capabilities            | gap-analysis | No existing skill covers this WP core feature |
 ```
 
 **Source** values: `session` (came from this chat), `gap-analysis` (known WP topic with no skill).
@@ -140,19 +140,113 @@ Rules for edits:
 - Bold the rule keyword (`**Never**`, `**Always**`) for scannability
 - If adding to Common Mistakes, put new row at bottom of that table
 
-### 5. Report
+### 5. Ship — owner vs contributor path
 
-After all edits, show:
-```
-Updated N skill file(s):
-- skills/wp-github-flow/SKILL.md — added 1 mistake entry
-- skills/wp-ci-qa/SKILL.md — refined QA label ownership rule
+**Detect identity first:**
+
+```bash
+GH_USER=$(gh api user -q .login)
+OWNER="mralaminahamed"
 ```
 
-Then show the commit command to run (do NOT auto-commit):
+---
+
+#### 5a. Owner path (`$GH_USER == mralaminahamed`)
+
+Apply edits directly to the working tree. Show commit command — do NOT auto-commit:
+
 ```bash
 git add skills/
 git commit -m "docs(skills): capture session learnings — <brief summary>"
+git push origin trunk
+```
+
+---
+
+#### 5b. Contributor path (`$GH_USER != mralaminahamed`)
+
+One branch + one PR **per skill** that has changes. Each is independent and reviewable alone.
+
+**i. Fork the upstream repo (if not already forked):**
+
+```bash
+gh repo fork mralaminahamed/wp-dev-skills --clone=false
+# Sets up <GH_USER>/wp-dev-skills on GitHub
+```
+
+**ii. Ensure fork remote exists locally:**
+
+```bash
+git remote get-url fork 2>/dev/null || \
+  git remote add fork "https://github.com/$GH_USER/wp-dev-skills.git"
+```
+
+**iii. For each skill with changes — branch → commit → push → PR:**
+
+```bash
+# Fetch fresh base
+git fetch origin trunk
+
+DATE=$(date +%Y-%m-%d)
+SKILL=<skill-name>                              # e.g. wp-github-flow
+BRANCH="docs/${SKILL}-session-learning-${DATE}"
+
+git checkout -b "$BRANCH" origin/trunk
+
+# Apply the edit to skills/<skill>/SKILL.md (already done in Step 4)
+git add "skills/${SKILL}/SKILL.md"
+git commit -m "docs(${SKILL}): <imperative rule summary>"
+
+git push fork "$BRANCH"
+
+gh pr create \
+  --repo "mralaminahamed/wp-dev-skills" \
+  --base "trunk" \
+  --head "${GH_USER}:${BRANCH}" \
+  --assignee "mralaminahamed" \
+  --reviewer "mralaminahamed" \
+  --template ".github/PULL_REQUEST_TEMPLATE/skill-learning.md" \
+  --title "docs(${SKILL}): <imperative rule summary>" \
+  --body "$(cat <<'EOF'
+## Session Learning — Skill Update
+
+## Summary
+<one-line description of the rule discovered>
+
+## Skills Updated
+
+| Skill | File | Change Type | Rule Added |
+|-------|------|-------------|------------|
+| <skill> | skills/<skill>/SKILL.md | <change-type> | <rule summary> |
+
+## Session Context
+<where this was discovered — e.g. "Discovered while working on PR #N — QA label ownership">
+
+## Change Details
+<what changed and why it was non-obvious enough to codify>
+
+## Checklist
+- [x] Rule is minimal — not project-specific, applies broadly
+- [x] Tone matches existing skill (imperative, terse, no filler)
+- [x] Rule keyword bolded (`**Never**` / `**Always**`)
+- [x] Surrounding text unchanged (minimal diff)
+- [x] Common Mistakes row added at bottom of table (not middle)
+- [ ] `python3 .github/scripts/validate_skills.py` passes
+EOF
+)"
+
+# Return to trunk before next skill's branch
+git checkout trunk
+```
+
+Repeat iii for each skill with changes. Each PR is independent — one skill per PR.
+
+**iv. Report all PRs opened:**
+
+```
+Opened N PR(s) on mralaminahamed/wp-dev-skills:
+- PR #<n> — docs(wp-github-flow): never add bug label on dev PR
+- PR #<n> — docs(wp-ci-qa): QA owns bug label assignment
 ```
 
 ---
