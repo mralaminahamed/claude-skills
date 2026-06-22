@@ -1,6 +1,6 @@
 ---
 name: wp-multisite
-description: Use when building or adapting a WordPress plugin for multisite/network — network activation, network admin pages, per-site vs network options, switch_to_blog() patterns, super admin capabilities, table prefix handling, get_sites() loops, or site-aware hook registration.
+description: "Use when building or adapting a WordPress plugin for Multisite/Network — network activation, network admin pages, per-site vs network-wide options, switch_to_blog() patterns, super admin capabilities, table prefix handling, get_sites() loops, or site-aware hook registration. Triggers: \"make my plugin multisite compatible\", \"network activate\", \"network admin page\", \"per-site settings\", \"switch_to_blog\", \"super admin only feature\", \"why does my plugin break on multisite\", \"run this for every site in the network\", \"network-wide option\", \"plugin only on certain sites\", \"blog ID handling\". Not for: single-site installs; MU-plugins auto-load behaviour."
 ---
 
 # WordPress Multisite Plugin Development

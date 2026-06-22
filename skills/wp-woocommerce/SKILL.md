@@ -1,6 +1,6 @@
 ---
 name: wp-woocommerce
-description: Use when building, extending, or debugging a WooCommerce plugin — custom product types, payment gateways, shipping methods, REST API extensions, WC hooks, CRUD with WC_Product/WC_Order/WC_Customer, admin columns/tabs, cart/checkout blocks, or WooCommerce subscription logic.
+description: "Use when building, extending, or debugging a WooCommerce plugin — custom product types, payment gateways, shipping methods, REST API extensions, WC hooks, CRUD with WC_Product/WC_Order/WC_Customer, cart/checkout blocks, HPOS compatibility, or subscription logic. Triggers: \"WooCommerce extension\", \"custom product type\", \"payment gateway\", \"hook into checkout\", \"WC_Order\", \"add a shipping method\", \"WooCommerce REST API\", \"HPOS compatible\", \"cart block\", \"checkout block filter\", \"woocommerce_payment_gateways\", \"WC_Product CRUD\", \"store API\", \"extend WooCommerce\". Not for: Freemius monetisation — use `wp-freemius`; plain WordPress post/taxonomy work."
 ---
 
 # WooCommerce Extension Development

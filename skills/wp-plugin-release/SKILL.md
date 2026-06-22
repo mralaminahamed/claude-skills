@@ -1,6 +1,6 @@
 ---
 name: wp-plugin-release
-description: "Use when bumping or releasing a WordPress plugin version, syncing version numbers, or updating readme.txt / changelog. Keeps every version source coherent so Stable tag, header, and constant never drift. Not for: WP.org SVN deploy or submitting a new plugin — use `wp-org-submission` for that."
+description: "Use when bumping a WordPress plugin version or releasing a new version — syncing version across plugin header, constants, readme.txt, CHANGELOG.md, and Stable tag so nothing drifts. Triggers: \"release version 1.2.3\", \"bump the version\", \"update the changelog\", \"sync version numbers\", \"prepare the release\", \"tag this version\", \"version is out of sync\", \"update stable tag\", \"what needs to change for a release\", \"changelog entry\", \"update readme.txt version\", \"bump to 2.0.0\". Not for: WP.org SVN deploy or first-time submission — use `wp-org-submission`."
 ---
 
 # WordPress Plugin Release / Version Sync

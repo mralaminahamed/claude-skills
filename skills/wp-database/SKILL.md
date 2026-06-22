@@ -1,6 +1,6 @@
 ---
 name: wp-database
-description: Use when creating custom database tables with dbDelta, writing schema migrations and upgrade routines, querying with $wpdb prepared statements, optimising slow queries, handling custom table data with CRUD patterns, migrating data between plugin versions, or seeding sample/preview data into custom tables for local development.
+description: "Use when a WordPress plugin needs a custom database table — creating with dbDelta, writing upgrade/migration routines, querying with $wpdb prepared statements, optimising slow queries, CRUD on custom tables, migrating data between plugin versions, or seeding test data into custom tables. Triggers: \"create a custom table\", \"dbDelta not working\", \"write a migration\", \"$wpdb query\", \"slow query on my custom table\", \"upgrade my database schema\", \"add a column to my table\", \"seed test data\", \"how do I store this in a custom table\", \"database upgrade routine\", \"table not being created\", \"prepare() placeholder\". Not for: WordPress options API or post meta — use those when a custom table is not needed."
 ---
 
 # WordPress Custom Database Tables

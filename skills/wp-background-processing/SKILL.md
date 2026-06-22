@@ -1,6 +1,6 @@
 ---
 name: wp-background-processing
-description: Use when implementing background jobs, queued tasks, or long-running processes in a WordPress plugin — Action Scheduler (WooCommerce queue), WP_Background_Process (Delicious Brains pattern), WP Cron, batch processing with progress tracking, or retry/error handling for async jobs.
+description: "Use when a WordPress plugin needs to run work outside the HTTP request — scheduling jobs with Action Scheduler or WP Cron, batch-processing many records without timeouts, implementing WP_Background_Process queue, handling retries on failure, or tracking async job progress. Triggers: \"schedule this for later\", \"run this without hitting timeout\", \"queue these items for background processing\", \"why is my cron not running\", \"Action Scheduler job keeps failing\", \"process 10000 records in batches\", \"send emails in the background\", \"WP Cron not firing\", \"batch import without timeout\". Not for: real-time AJAX handlers or REST endpoints."
 ---
 
 # WordPress Background Processing

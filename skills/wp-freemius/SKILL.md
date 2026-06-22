@@ -1,6 +1,6 @@
 ---
 name: wp-freemius
-description: Use when integrating the Freemius SDK into a WordPress plugin for monetisation — free/pro feature gating, license management, trials, SaaS pricing plans, SDK bootstrap setup, update mechanism, opt-in analytics, or affiliate program integration.
+description: "Use when integrating Freemius SDK into a WordPress plugin for monetisation — free/pro feature gating, license management, trials, pricing plans, SDK bootstrap, update mechanism, opt-in analytics, or affiliate integration. Triggers: \"add Freemius to my plugin\", \"gate this feature behind pro\", \"show the pricing page\", \"check if user has a license\", \"Freemius not initialising\", \"can_use_premium_code()\", \"set up free and pro versions\", \"Freemius opt-in dialog\", \"trial period\", \"license key validation\", \"monetise my plugin\". Not for: general WooCommerce payments — use `wp-woocommerce`; WP.org trialware compliance — use `wp-org-submission`."
 ---
 
 # Freemius SDK Integration

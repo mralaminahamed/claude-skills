@@ -1,6 +1,6 @@
 ---
 name: wp-build-tools
-description: Use when setting up or debugging the JavaScript/CSS build pipeline for a WordPress plugin — @wordpress/scripts, webpack, Vite, block editor assets, asset enqueuing with .asset.php files, compiling Sass/PostCSS, or reusing a JS/CSS library bundled by a dependency plugin (e.g. EDD/WooCommerce) instead of vendoring your own. Not for block registration logic — use the official wp-block-development skill.
+description: "Use when setting up, configuring, or debugging the JS/CSS build pipeline for a WordPress plugin — @wordpress/scripts, webpack, Vite, block editor asset compilation, enqueueing with .asset.php dependency files, Sass/PostCSS, or reusing a JS/CSS library already bundled by a host plugin. Triggers: \"npm run build fails\", \"webpack config error\", \"my script is not loading\", \"set up @wordpress/scripts\", \"enqueue my block assets\", \"why is my CSS not compiling\", \"asset.php not found\", \"how do I reuse this bundled library\", \"TypeScript in a WP plugin\", \"block.json attributes\", \"missing dependency in build\". Not for: block registration logic — use the official `wp-block-development` skill."
 ---
 
 # WordPress Plugin Build Tools

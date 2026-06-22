@@ -1,6 +1,6 @@
 ---
 name: wp-phpstan-stubs
-description: "Use when asked to create a new PHPStan stubs package (phrases like \"create stubs for X\", \"new stubs package\", \"scaffold phpstan stubs\", \"add stubs for plugin/composer package\"). Scaffolds the full standard structure matching the my-org freemius pattern. Not for: configuring phpstan.neon or generating baselines — use the official wp-phpstan skill for that."
+description: "Use when creating a new PHPStan stubs package for a WordPress plugin, theme, or Composer package — scaffolding the stubs repo structure, stub classes and functions, CI workflow, and Packagist/WP.org API integration. Triggers: \"create stubs for X plugin\", \"scaffold PHPStan stubs\", \"new stubs package\", \"add PHPStan stubs for WooCommerce\", \"stubs repo setup\", \"generate stub file\", \"PHPStan can't find this class\", \"missing type hints for third-party plugin\", \"add stubs for this Composer package\". Not for: configuring phpstan.neon or generating baselines — use the official `wp-phpstan` skill."
 ---
 
 # PHPStan Stubs Scaffold

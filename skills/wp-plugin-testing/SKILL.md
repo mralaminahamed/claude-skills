@@ -1,6 +1,6 @@
 ---
 name: wp-plugin-testing
-description: Use when setting up or writing tests for a WordPress plugin — PHPUnit integration tests with WP test suite, unit tests with WP_Mock or Brain\Monkey, acceptance tests with wp-browser/Codeception, factory-based fixtures, HTTP request mocking, or multisite test scaffolding.
+description: "Use when writing or setting up tests for a WordPress plugin — PHPUnit integration tests with the WP test suite, unit tests with WP_Mock or Brain\\Monkey, acceptance tests with wp-browser/Codeception, factory-based fixtures, HTTP mocking, or multisite test scaffolding. Triggers: \"write a test for this\", \"unit test this function\", \"set up PHPUnit for my plugin\", \"mock this WP function\", \"Brain Monkey setup\", \"WP_Mock\", \"test is failing\", \"how do I test a hook\", \"test my REST endpoint\", \"factory()->post->create()\", \"install the WP test suite\", \"test my wp_mail call\", \"integration test setup\". Not for: E2E browser tests — use `wp-admin-browser` for those."
 ---
 
 # WordPress Plugin Testing

@@ -1,6 +1,6 @@
 ---
 name: wp-ci-qa
-description: "Use when a PR has QA-reported failures, a \"Testing Failed\" label, or QA comments saying features are broken. Covers reading QA feedback, tracing root causes, applying scoped commits, updating PR labels, and posting a QA re-test comment. Not for: writing new features or routine code review — use `wp-github-flow` for standard contribution flow."
+description: "Use when a pull request has QA failures, a \"Testing Failed\" label, or QA comments reporting broken features — covers reading QA feedback, tracing root cause, applying scoped fixes, updating PR labels, and posting a re-test comment. Triggers: \"QA failed my PR\", \"testing failed label on my PR\", \"fix the QA comments on PR\", \"QA says feature X is broken\", \"re-test comment\", \"how do I respond to QA feedback\", \"CI is failing\", \"fix the test failures on this PR\", \"QA reopened the ticket\". Not for: writing new features or standard PR flow — use `wp-github-flow` for that."
 ---
 
 # Fix PR QA Failures

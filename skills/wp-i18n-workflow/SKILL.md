@@ -1,6 +1,6 @@
 ---
 name: wp-i18n-workflow
-description: Use when managing the full translation workflow for a WordPress plugin — generating POT files with wp i18n make-pot, compiling .po to .mo and .json, setting up JavaScript translations with wp_set_script_translations, submitting to translate.wordpress.org, or debugging missing translations.
+description: "Use when managing translations for a WordPress plugin — generating POT files, compiling .po to .mo and .json, wiring up JS translations with wp_set_script_translations, submitting to translate.wordpress.org, or debugging why strings are not translating. Triggers: \"make this string translatable\", \"generate POT file\", \"strings not translating\", \"wp i18n make-pot\", \"JS translations not loading\", \"wp_set_script_translations\", \"how do I translate my block\", \"RTL language support\", \"missing translation\", \"submit to GlotPress\", \"translation missing in JS\", \"update my .po files\". Not for: theme translation — logic is the same but theme paths differ."
 ---
 
 # WordPress Plugin i18n Workflow

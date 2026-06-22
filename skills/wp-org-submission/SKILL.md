@@ -1,6 +1,6 @@
 ---
 name: wp-org-submission
-description: Use when submitting a plugin to the WordPress.org plugin directory for the first time, deploying a new version via SVN, fixing a reviewer rejection, or setting up WP.org assets (banner, icon, screenshots). Covers the pre-submission checklist, 17 recurring rejection patterns with exact reviewer quotes, readme.txt requirements, the git→SVN deploy flow, and how the Stable tag controls what users receive. For pure WP.org guideline compliance review (18 official guidelines, GPL, naming, trialware rules), use the official wp-plugin-directory-guidelines skill instead.
+description: "Use when submitting a plugin to WordPress.org for the first time, deploying a new version via SVN, fixing a reviewer rejection, or setting up WP.org assets (banner, icon, screenshots). Triggers: \"submit my plugin to WP.org\", \"SVN deploy\", \"reviewer rejected my plugin\", \"fix WP.org review feedback\", \"how do I set up the SVN repo\", \"WP.org assets\", \"prepare my plugin for the directory\", \"what does the reviewer want\", \"stable tag\", \"readme.txt requirements\", \"WP.org banner size\", \"fix this reviewer comment\". For WP.org guideline compliance review only, use `wp-plugin-directory-guidelines` instead."
 ---
 
 # WordPress.org Plugin Submission & SVN Deploy

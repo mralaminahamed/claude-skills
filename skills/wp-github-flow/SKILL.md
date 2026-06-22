@@ -1,6 +1,6 @@
 ---
 name: wp-github-flow
-description: "Use when shipping a contribution through GitHub — either (a) debugging a GitHub issue by URL/number (fetch, root-cause, fix), or (b) shipping uncommitted working-tree changes when the user says \"commit my changes\", \"commit scope by scope\", \"create a branch and PR\", \"open a PR for these changes\", or similar. Covers grouping changes into scoped conventional commits, creating a branch, pushing, and opening a PR with assignee + labels. Use this whenever the end goal is a commit/branch/PR, even if no issue is mentioned. Not for: plugin version releases or WP.org SVN deploy — use `wp-plugin-release` and `wp-org-submission` for those."
+description: "Use when shipping work through GitHub — either fixing a GitHub issue by URL/number, or committing and PR-ing existing working-tree changes. Triggers: \"commit my changes\", \"commit scope by scope\", \"create a branch and PR\", \"open a PR for these changes\", \"fix issue #NNN\", \"debug this GitHub issue\", \"group my changes into commits\", \"push and open a PR\", \"what branch should I use\", \"conventional commit for this change\", \"close this issue with a PR\", \"commit these files\", \"write a PR description\". Not for: plugin version releases or WP.org SVN — use `wp-plugin-release` and `wp-org-submission`."
 ---
 
 # GitHub Contribution Flow

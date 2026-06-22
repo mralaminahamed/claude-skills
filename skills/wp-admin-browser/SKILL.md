@@ -1,6 +1,6 @@
 ---
 name: wp-admin-browser
-description: "Use when interacting with a WordPress admin panel via Chrome DevTools MCP — logging in, creating users, navigating menus, submitting forms, or performing any data operations (create/update/delete) through the browser. Also use when needing a temporary admin user for testing instead of the main admin account. Not for: headless automated testing without a real browser — use `wp-plugin-testing`; PHP code changes or plugin logic that don't require browser interaction."
+description: "Use when a WordPress admin panel needs real browser interaction via Chrome DevTools MCP — logging in, navigating menus, clicking buttons, filling forms, creating/editing/deleting content through the admin UI, or creating a temporary test admin user. Triggers: \"open WP admin\", \"navigate to Settings\", \"create a test user in admin\", \"click Save Changes\", \"check what the admin page looks like\", \"fill in this form\", \"upload media through the browser\", \"take a screenshot of the admin\". Not for: headless automated testing without a real browser — use `wp-plugin-testing`; PHP code changes that do not require browser interaction."
 ---
 
 # WordPress Admin via Browser (Chrome DevTools MCP)

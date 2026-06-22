@@ -1,6 +1,6 @@
 ---
 name: wp-coding-standards
-description: Use when setting up PHPCS with WordPress Coding Standards (WPCS), configuring phpcs.xml.dist, running or fixing sniff violations, adding PHPCS to CI, or auditing a plugin's code style against WP.org requirements. Not for PHPStan type analysis — use wp-phpstan-stubs for that.
+description: "Use when setting up PHPCS with WordPress Coding Standards (WPCS), configuring phpcs.xml.dist, fixing sniff violations, adding PHPCS to CI, or checking a plugin against WP.org code style requirements. Triggers: \"phpcs error\", \"WPCS violation\", \"fix my code style\", \"set up PHPCS\", \"configure phpcs.xml\", \"my code fails PHPCS\", \"add linting to CI\", \"WordPress.Security.EscapeOutput sniff\", \"WordPress.WP.I18n error\", \"how do I ignore a phpcs rule\", \"WPCS in GitHub Actions\", \"add PHPCS to pre-commit hook\". Not for: PHPStan type analysis — use `wp-phpstan-stubs` for that."
 ---
 
 # WordPress Coding Standards (PHPCS + WPCS)

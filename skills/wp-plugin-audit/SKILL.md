@@ -1,6 +1,6 @@
 ---
 name: wp-plugin-audit
-description: "Use when asked to audit a WordPress plugin for inconsistencies, run a consistency/quality sweep, or \"find inconsistencies\" across code and docs. Fans out parallel checks across dimensions and verifies every finding before reporting. Not for: PHPStan type analysis — use `wp-phpstan` (official); WP.org pre-submission review — use `wp-org-submission`."
+description: "Use when auditing a WordPress plugin for security issues, code inconsistencies, readme.txt problems, or quality gaps — fans out parallel checks across security, i18n, escaping, capabilities, and nonces. Triggers: \"audit this plugin\", \"find inconsistencies\", \"security review\", \"check my plugin for XSS\", \"is my escaping correct\", \"find missing nonces\", \"check capabilities in my plugin\", \"audit readme.txt\", \"find security issues\", \"plugin quality sweep\", \"are there SQL injection risks\", \"review my plugin before submission\". Not for: PHPStan type analysis — use `wp-phpstan`; WP.org pre-submission checklist — use `wp-org-submission`."
 ---
 
 # WordPress Plugin Consistency Audit
