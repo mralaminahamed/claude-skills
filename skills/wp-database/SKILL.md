@@ -311,3 +311,9 @@ Note on randomness: scripts run by `wp eval-file` may warn on large int math (`$
 - Cache expensive custom queries: `$results = wp_cache_get( $cache_key, 'my_plugin' ); if ( false === $results ) { $results = $wpdb->get_results(...); wp_cache_set( $cache_key, $results, 'my_plugin', 300 ); }`
 - Always include `bigint(20) unsigned NOT NULL AUTO_INCREMENT` as the primary key — matches WP core table conventions.
 - Use `gmdate()` not `date()` for DB timestamps; WP's `current_time('mysql')` returns local time — use it only when you need WP's configured timezone.
+
+## References
+
+- `references/dbdelta-rules.md` — `dbDelta()` rules: strict SQL formatting requirements, column change limitations, and safe schema diff patterns
+- `references/migration-strategies.md` — Versioned upgrade routines: `db_version` pattern, migration function registration, and idempotent migration checklist
+- `references/wpdb-patterns.md` — `$wpdb` prepared statement patterns, insert/update/delete helpers, and custom-table query conventions

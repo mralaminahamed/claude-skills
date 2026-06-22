@@ -218,3 +218,9 @@ Add to GitHub Actions or release workflow:
 - Never use variables as the first argument: `__( $dynamic_string, 'my-plugin' )` — POT extractors can't find these strings.
 - RTL languages (Arabic, Hebrew, Farsi): WordPress detects RTL from the locale and loads `rtl.css` automatically. Mirror your `style.css` in `style-rtl.css` for layout flips.
 - `wp i18n` commands require WP-CLI 2.2+. In CI, install via `curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar`.
+
+## References
+
+- `references/js-i18n-patterns.md` — JavaScript i18n patterns using `@wordpress/i18n`: `__()`, `_n()`, `sprintf()` usage, Gutenberg block translation, and dynamic string handling
+- `references/pot-commands.md` — WP-CLI i18n command reference: `make-pot`, `make-mo`, `make-json`, `update-po` with all options and CI-ready invocations
+- `references/translation-debugging.md` — Translation debugging guide: common failure modes, locale loading order, `.mo` vs `.json` file issues, and `QM` debug tools

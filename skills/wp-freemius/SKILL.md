@@ -231,3 +231,9 @@ Options:
 - Never gate plugin activation behind a license key (Guideline 5 / trialware). Freemius `can_use_premium_code()` returns `false` but the plugin must remain fully functional in free mode.
 - Secret key must never be committed to git. Store in a CI secret or server env var; inject at build time.
 - For WooCommerce extensions sold on WooCommerce.com, consider WooCommerce's own licensing API instead of Freemius.
+
+## References
+
+- `references/feature-gating.md` — Freemius feature gating patterns: `can_use_premium_code()`, `is_paying()`, plan-level checks, and free-tier fallback patterns
+- `references/freemius-config.md` — `fs_dynamic_init()` full parameter reference: all config keys, common configurations, and multi-plugin setup
+- `references/pricing-page.md` — Freemius pricing page URLs, checkout flow, upgrade redirect patterns, and dashboard link generation

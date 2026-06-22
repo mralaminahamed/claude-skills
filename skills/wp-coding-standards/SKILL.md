@@ -206,3 +206,9 @@ jobs:
 - WPCS sniffs for i18n (`WordPress.WP.I18n`) catch missing text domains and non-translatable strings — complement to `wp-plugin-audit` Dimension B.
 - WP.org review does **not** run PHPCS automatically, but reviewers check style manually and will reject poorly formatted code. PHPCS passing is a strong signal of submission readiness.
 - For WooCommerce extensions, add `WooCommerce-Core` ruleset if available (`woocommerce/woocommerce-sniffs`).
+
+## References
+
+- `references/ci-phpcs.md` — PHPCS in GitHub Actions: minimal workflow, PHP×WP matrix, caching, and failure triage
+- `references/phpcs-config-examples.md` — `phpcs.xml.dist` configurations: WP.org-ready minimal, WooCommerce extension, and custom sniff exclusion patterns
+- `references/wpcs-sniffs.md` — WordPress Coding Standards sniff reference: ruleset hierarchy, key sniff descriptions, and common `// phpcs:ignore` patterns

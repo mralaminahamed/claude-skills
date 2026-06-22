@@ -351,3 +351,13 @@ jobs:
 - For WooCommerce plugin tests, include WC's test helpers: `require WC_ABSPATH . 'tests/legacy/includes/wc-helper-product.php'`.
 - Codeception + wp-browser is the recommended path for acceptance tests; see `https://wpbrowser.wptestkit.dev` for full docs.
 - `references/redirect-assertions.md` covers AJAX (`WP_Ajax_UnitTestCase`), REST, and `wp_die()` assertion patterns. `references/phpunit-bootstrap.md` has the full bootstrap + CI setup.
+
+## References
+
+- `references/brain-monkey-patterns.md` — Brain\Monkey unit testing patterns: `when()`, `expect()`, Mockery integration, and WP function stubs without loading WordPress
+- `references/example-test.php` — Complete copy-paste-ready test harness for code that uses `wp_redirect()`, `wp_die()`, and WP AJAX — includes bootstrap and assertion setup
+- `references/factory-methods.md` — `WP_UnitTest_Factory` methods: post, user, term, comment, attachment, and network sub-factories with rollback behaviour
+- `references/phpunit-bootstrap.md` — Full PHPUnit bootstrap setup: `install-wp-tests.sh`, suite configuration, CI matrix, and test runner commands
+- `references/redirect-assertions.md` — Redirect assertion patterns: `WP_Ajax_UnitTestCase`, REST response assertions, `wp_die()` capture, and status-code testing
+- `references/test-patterns.md` — WordPress plugin test patterns: hook/filter tests, option tests, shortcode tests, and cron scheduling assertions
+- `references/wp-mock-patterns.md` — WP_Mock unit testing patterns: mock setup, teardown, function expectations, filter/action mocking, and test isolation

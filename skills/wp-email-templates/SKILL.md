@@ -84,3 +84,5 @@ Force a send failure with `add_filter( 'pre_wp_mail', '__return_false' )` to tes
 
 - `references/base.php` — the full responsive HTML base shell (header/body/footer, inline CSS), copy into `templates/emails/base.php`.
 - `references/content-example.php` — an example content template (greeting, CTA button, optional expiry, fallback link) to copy and adapt per email.
+- `references/html-email-patterns.md` — HTML email patterns: table-based layout rules, inline CSS requirements, dark-mode support, and Outlook-specific fixes
+- `references/wp-mail-api.md` — WordPress mail API reference: `wp_mail()` parameters, `phpmailer_init` hook, SMTP configuration, and deliverability checklist

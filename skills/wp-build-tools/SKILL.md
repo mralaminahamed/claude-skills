@@ -249,3 +249,9 @@ Rules that make this hold up:
 - For TypeScript: `@wordpress/scripts` supports `.ts`/`.tsx` out of the box — just rename files and add `tsconfig.json`.
 - Minimum Node version for `@wordpress/scripts` v27+: Node 20.
 - Use `wp-scripts lint-js` and `wp-scripts lint-style` in CI alongside PHPCS (`wp-coding-standards`) for full code quality coverage.
+
+## References
+
+- `references/block-json-patterns.md` — `block.json` full schema reference: attributes, supports, style variations, view scripts, and interactivity API flags
+- `references/enqueue-patterns.md` — WordPress asset enqueue patterns with `.asset.php` dependency management, conditional loading, deferred scripts, and inline data
+- `references/webpack-config.md` — `@wordpress/scripts` webpack configuration: extending defaults, custom entry points, aliasing, and build output patterns

@@ -57,3 +57,5 @@ Then commit (`docs:`/`chore:` for a pure version+readme bump), and ship via the 
 ## References
 
 - `references/readme-txt-skeleton.txt` — full WP.org `readme.txt` skeleton (all sections) with the release-sync checklist of every version source baked in as a trailing comment.
+- `references/release-checklist.md` — pre-release checklist: code, version sync, changelog, zip hygiene, and post-release verification steps
+- `references/svn-deploy.md` — SVN deploy workflow: initial checkout, trunk update, assets directory, tagging a release, and Stable tag mechanics

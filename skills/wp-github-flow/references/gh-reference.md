@@ -93,13 +93,13 @@ Label names vary per repo and a wrong `--label` aborts `gh pr create`. **Always 
 
 | Intent | Seen as (varies!) |
 |-------|------------|
-| Ready for QA | `needs-testing` (acme-blocks-pro) · `needs testing` (ShopFlow) |
+| Ready for QA | `needs-testing` · `needs testing` · `ready-for-review` |
 | Something broken | `bug` |
-| Frontend / backend area | `frontend` · `backend` (ShopFlow; may not exist elsewhere) |
-| QA outcome | `testing done` / `testing failed` / `testing ongoing` (ShopFlow) |
-| Priority | `urgent` |
+| Frontend / backend area | `frontend` · `backend` (may not exist in all repos) |
+| QA outcome | `testing done` / `testing failed` / `testing ongoing` |
+| Priority | `urgent` · `high-priority` |
 
-> `acme-blocks` / `acme-blocks-pro` use `needs-testing` + `bug` (no `frontend`/`backend`). ShopFlow uses `needs testing` + `frontend`/`backend`. Verify before every PR.
+> Label names are not standardized across WP repos. Always `gh label list` first — a single wrong `--label` aborts the entire `gh pr create` command.
 
 ---
 

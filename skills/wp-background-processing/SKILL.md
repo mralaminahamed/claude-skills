@@ -219,3 +219,9 @@ return; // Don't throw — AS won't auto-retry this run
 - WP Cron events do **not** persist across deactivation — always clear on `register_deactivation_hook`.
 - Background processes that modify many posts/options should run in small chunks (50–100 items) to avoid timeout and memory limits. Use `$process->memory_exceeded()` and `$process->time_exceeded()` checks from `WP_Background_Process` to self-limit.
 - On multisite: Action Scheduler is per-site. For network-wide jobs, run from the main site or loop via `switch_to_blog()`.
+
+## References
+
+- `references/action-scheduler-api.md` — Action Scheduler API: scheduling functions, queue management, batch operations, status constants, and WP Cron integration
+- `references/batch-patterns.md` — Chunked processing patterns: chunk size rules, memory/time guards, `WP_Background_Process` subclass scaffold, and queue drain loop
+- `references/wp-cron-intervals.md` — WP Cron built-in intervals, custom interval registration, debug commands, and cron health-check tools
