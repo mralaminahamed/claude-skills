@@ -1,6 +1,6 @@
 ---
 name: wp-phpstan-stubs
-description: Use when asked to create a new PHPStan stubs package (phrases like "create stubs for X", "new stubs package", "scaffold phpstan stubs", "add stubs for plugin/composer package"). Scaffolds the full standard structure matching the my-org freemius pattern. Not for: configuring phpstan.neon or generating baselines — use the official wp-phpstan skill for that.
+description: "Use when asked to create a new PHPStan stubs package (phrases like \"create stubs for X\", \"new stubs package\", \"scaffold phpstan stubs\", \"add stubs for plugin/composer package\"). Scaffolds the full standard structure matching the my-org freemius pattern. Not for: configuring phpstan.neon or generating baselines — use the official wp-phpstan skill for that."
 ---
 
 # PHPStan Stubs Scaffold

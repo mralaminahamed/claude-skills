@@ -1,6 +1,6 @@
 ---
 name: wp-guided-tour
-description: Use when implementing a guided tour system in a WordPress admin plugin using Driver.js — setting up the IIFE bundle, defining PHP backend tour configs, writing JS scope detection from URL + hash, tracking completion correctly, testing selectors against live DOM, and regenerating the POT file. Not for: front-end-only SPAs or non-WordPress apps; guided tours in themes.
+description: "Use when implementing a guided tour system in a WordPress admin plugin using Driver.js — setting up the IIFE bundle, defining PHP backend tour configs, writing JS scope detection from URL + hash, tracking completion correctly, testing selectors against live DOM, and regenerating the POT file. Not for: front-end-only SPAs or non-WordPress apps; guided tours in themes."
 ---
 
 # WordPress Admin Guided Tours (Driver.js)
