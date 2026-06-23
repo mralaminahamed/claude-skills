@@ -64,12 +64,15 @@ Dispatch one read-only agent per dimension (`Explore` type, `model: haiku`), in 
   - **Path traversal** — filesystem paths constructed from user input without `realpath()` + base-prefix check.
   - **REST auth gaps** — endpoints that write data with `permission_callback: '__return_true'` and no HMAC/nonce verification.
   - **Dependency CVEs** — note if `composer audit` has not been run or if `composer.lock` is missing from the repo.
+  - **Trialware / locked features (Guideline 5)** — a feature whose worker exists in the **free** code but has **no free-side trigger** (e.g. an Action Scheduler handler only scheduled by the pro add-on, or a bulk method with no free REST route) is a locked feature *even though it is unreachable in free*. Grep each hooked handler / bulk method for a free caller and flag those with none. The **rule** is owned by the official `wp-plugin-directory-guidelines` skill — this audit only surfaces the code pattern to route there.
 
 Scale dimensions to the plugin; add domain-specific ones (e.g. WooCommerce hook security, multisite option isolation) when relevant.
 
 ### 2. Verify EVERY candidate before reporting
 
 Do not trust agent output verbatim — agents over-report. For each finding, `grep`/`Read` the exact line and confirm it is real. Kill false positives. Real example caught this way: an `action_links` `sprintf('<a href="%s">%s</a>', …)` flagged for a "missing translator comment" is **not** translatable (pure HTML markup) → drop it.
+
+Verify *claims* the same way you verify *findings*: a changelog or readme entry that says a fix landed is **not** evidence it shipped — `grep`/`Read` the code and confirm. Real example: a `6.3.0` changelog claimed a trialware worker and a phone-home call were removed, but both were still present in the `6.3.1` source.
 
 ### 3. Report (findings only — do NOT fix unless asked)
 
