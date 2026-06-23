@@ -241,6 +241,17 @@ Rules that make this hold up:
 - **Initialise in JS, don't fight the host's skin in markup.** For a remote/AJAX field, give the library a `load` callback hitting your `wp_ajax_*` endpoint and sync any hidden companion field (e.g. a stored label) on change.
 - **Expect to override the host's styling.** The bundled skin is themed for the host. Re-skin the library's classes (`.ts-control`, `.ts-dropdown`, etc.) to your design system. WordPress admin skins carry version-gated, high-specificity selectors — EDD's `body[class*="branch-7"]` rules (WP 6.7+) out-specify a plain `.my-wrap` scope — so targeted `!important` is often required to win, and load your stylesheet after the host's.
 
+### 9. Don't fix a bug inside a regenerated `vendor/`
+
+When the bug lives in a Composer dependency under `vendor/`, check **two** things before editing the vendor file:
+
+1. **Is `vendor/` gitignored?** `git check-ignore vendor/<pkg>/file.php` — if it prints the path, git won't track your edit (so it can't reach a PR).
+2. **Does the release/deploy workflow run `composer install`?** `grep -rn "composer install" .github/workflows` — the WP.org deploy action and most CI regenerate `vendor/` from `composer.lock`, **overwriting any hand-edit**.
+
+If both are true, a vendor edit is futile — it never reaches the shipped zip. **Never** rely on it. Fix it in **tracked consumer code** instead (config you pass into the library, a hook/filter, an unhook), or patch the dependency **upstream** and run `composer update` so the new version is locked.
+
+Real case: a bundled marketing library phoned home via `wp_remote_post()`, guarded by `'' !== $hash`. The hash was supplied from the plugin's own tracked bootstrap, so emptying it there tripped the library's guard and killed the call — surviving the deploy-time `composer install` that a vendor-file edit would not.
+
 ## Notes
 
 - When borrowing a host plugin's bundled library, pin nothing about its internal version; treat the file paths as the contract and guard them (see §8). Document the coupling in the PR so a host upgrade that moves the files is easy to trace.
