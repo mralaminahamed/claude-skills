@@ -344,6 +344,12 @@ jobs:
       - run: vendor/bin/phpunit --testsuite=unit
 ```
 
+## Common Mistakes
+
+| Mistake | Fix |
+|---------|-----|
+| Listing a file containing `defined('ABSPATH') \|\| exit` in Composer `files` autoload | **Never** put WP-guarded files in `files` autoload — Composer loads them before WP bootstraps, silently killing PHPUnit with no output. Use `--prepend` to define `ABSPATH` first (add to `composer.json` test script: `vendor/bin/phpunit --prepend tests/php/prepend.php`), or remove from `files` and require explicitly in the plugin's main file after the ABSPATH guard |
+
 ## Notes
 
 - `WP_UnitTestCase` rolls back DB after each test — use `self::factory()`, not raw `wp_insert_post()`, so rollback is tracked.
