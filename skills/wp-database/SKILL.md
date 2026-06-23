@@ -303,6 +303,12 @@ Conventions that keep seeders safe and re-runnable:
 
 Note on randomness: scripts run by `wp eval-file` may warn on large int math (`$x * 2654435761` overflows to float) — keep PRNG seeds inside `& 0x7fffffff`.
 
+## Common Mistakes
+
+| Mistake | Fix |
+|---------|-----|
+| Wrapper methods that discard `$wpdb->insert()` return value cause silent failures | **Always** check the return value and propagate `$wpdb->last_error` upstream — callers cannot diagnose a failure the wrapper swallowed. Return `null`/`WP_Error` on failure, never silently return as if the insert succeeded |
+
 ## Notes
 
 - `dbDelta()` can ADD columns but cannot remove them. Removing columns requires `ALTER TABLE DROP COLUMN` in a manual migration step.
