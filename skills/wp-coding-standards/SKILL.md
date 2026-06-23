@@ -172,6 +172,22 @@ add_action('init', 'my_fn');             // Bad — no spaces inside parens
 add_action( 'init', 'my_fn' );          // Good
 ```
 
+**Misaligned array `=>` / assignment blocks:**
+```php
+// Bad — WPCS flags Generic.Formatting.MultipleStatementAlignment
+$args = array(
+    'id' => 1,
+    'post_type' => 'post',
+);
+
+// Good — double arrows aligned within the block
+$args = array(
+    'id'        => 1,
+    'post_type' => 'post',
+);
+```
+**Always** keep `=>` (and consecutive `=`) aligned within a block — `phpcbf` fixes this automatically. **Never** hand-collapse them to single spaces to "tidy" the code; WPCS just re-flags it.
+
 ### 6. GitHub Actions CI
 
 ```yaml
