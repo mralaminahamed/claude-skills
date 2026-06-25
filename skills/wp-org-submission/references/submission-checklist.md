@@ -91,6 +91,10 @@ CLAUDE.md
 *.log
 ```
 
+**Never exclude `vendor/` when the plugin loads it at runtime.** A Composer-autoloaded plugin whose bootstrap does `require __DIR__ . '/vendor/autoload.php';` (and bails without it) **must ship `vendor/`** in the distribution. Adding `vendor/` to `.distignore` produces a zip that fatals on activation — the deploy looks clean but every install is broken. Only exclude `vendor/` for plugins that don't autoload at runtime.
+
+**Always anchor patterns with a leading `/`.** `.distignore` feeds `rsync --exclude-from`, so an unanchored `src/` matches `src/` at **any** depth — including `vendor/<pkg>/src` — silently stripping files out of shipped Composer packages. Anchor every top-level entry (`/src`, not `src/`); reserve unanchored patterns for things you genuinely want gone everywhere (`.DS_Store`, `*.log`).
+
 Build check after zip:
 
 ```bash
