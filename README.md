@@ -35,6 +35,7 @@ Set up tooling and implement plugin features.
 | **wp-multisite** | Making a plugin multisite-compatible — network activation, per-site vs network options, `switch_to_blog()`, network admin pages. |
 | **wp-i18n-workflow** | Managing translations — POT generation, PO/MO compilation, JS translations with `wp_set_script_translations`, translate.wordpress.org. |
 | **wp-email-templates** | Adding transactional emails — extract inline strings into reusable branded HTML templates sent via `wp_mail()`. |
+| **wp-structured-data** | Emitting schema.org JSON-LD (FAQPage, HowTo, Product, ItemList, …) for content an SEO plugin can't see — building the `@graph`, escaping with `wp_json_encode`, printing on `wp_head`, and coexisting with Yoast / Rank Math graphs. |
 | **wp-woocommerce** | Building or extending a WooCommerce plugin — custom product types, payment gateways, shipping methods, HPOS, REST API extensions, block cart/checkout. |
 | **wp-freemius** | Integrating the Freemius SDK — free/pro feature gating, license management, trials, pricing page, WP.org trialware compliance. |
 | **wp-admin-browser** | Driving a WordPress admin panel via Chrome DevTools MCP — login, navigate menus, submit forms, CRUD through the UI, JS state verification. |
