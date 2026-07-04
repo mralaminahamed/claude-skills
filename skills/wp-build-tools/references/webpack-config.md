@@ -147,7 +147,7 @@ module.exports = {
 ```json
 {
     "devDependencies": {
-        "@wordpress/scripts": "^30.0.0",
+        "@wordpress/scripts": "^32.0.0",
         "@wordpress/eslint-plugin": "^22.0.0",
         "@wordpress/prettier-config": "^4.0.0",
         "classnames": "^2.3.2"

@@ -27,6 +27,8 @@ Configure and enforce the WordPress Coding Standards via PHP_CodeSniffer. WPCS i
 composer require --dev squizlabs/php_codesniffer wp-coding-standards/wpcs dealerdirect/phpcodesniffer-composer-installer
 ```
 
+Current **WPCS is 3.1** (July 2026) — requires PHP 7.4+ and PHP_CodeSniffer 3.9+. Leave the requirement unpinned (as above) or pin `wp-coding-standards/wpcs:"^3.1"`; the 3.x line recognizes pluggable functions and reserved post types through WP 6.4/6.5 and defaults `minimum_supported_wp_version` to 6.2.
+
 `dealerdirect/phpcodesniffer-composer-installer` auto-registers WPCS paths so no manual `--config-set` is needed. Verify:
 
 ```bash

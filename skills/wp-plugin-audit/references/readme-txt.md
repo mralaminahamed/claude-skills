@@ -6,15 +6,17 @@
 === Plugin Name ===
 Contributors:      wporg-username1, wporg-username2
 Tags:              tag1, tag2, tag3
-Requires at least: 5.2
-Tested up to:      6.5
+Requires at least: 6.5
+Tested up to:      7.0
 Stable tag:        1.0.0
-Requires PHP:      7.2
+Requires PHP:      7.4
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
 Short description here. Keep it under 150 characters. No markup.
 ```
+
+> **Currency (July 2026):** `Tested up to` should equal the current released WordPress major — **7.0** at time of writing. Both a stale value and one *ahead* of the latest release trigger a WP.org warning. `Requires PHP` floor is **7.4** (WP 7.0 dropped 7.2/7.3; 8.3+ recommended). `Requires Plugins` (comma-separated WP.org slugs) is the supported way to declare hard plugin dependencies — verify each slug exists on WP.org.
 
 ## Required Sections
 
