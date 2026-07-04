@@ -101,7 +101,7 @@ Contributors:      myusername
 Donate link:       https://example.com/donate
 Tags:              my-plugin, feature, wordpress
 Requires at least: 6.3
-Tested up to:      6.7
+Tested up to:      7.0
 Stable tag:        1.2.0
 Requires PHP:      8.1
 License:           GPLv2 or later

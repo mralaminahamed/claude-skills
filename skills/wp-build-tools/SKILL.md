@@ -258,7 +258,7 @@ Real case: a bundled marketing library phoned home via `wp_remote_post()`, guard
 - Always use `npm ci` (not `npm install`) in CI — respects `package-lock.json` exactly.
 - `@wordpress/scripts` pins its webpack/babel versions; don't add conflicting `webpack` or `babel-loader` to `devDependencies`.
 - For TypeScript: `@wordpress/scripts` supports `.ts`/`.tsx` out of the box — just rename files and add `tsconfig.json`.
-- Minimum Node version for `@wordpress/scripts` v27+: Node 20.
+- `@wordpress/scripts` is at **v32** (2026) and requires an active Node LTS (**20 or 22**); pin `engines.node` and match it in CI. Note GitHub Actions defaults runners to **Node 24** from June 2026 — use `actions/setup-node@v6` and an explicit `node-version`.
 - Use `wp-scripts lint-js` and `wp-scripts lint-style` in CI alongside PHPCS (`wp-coding-standards`) for full code quality coverage.
 
 ## References

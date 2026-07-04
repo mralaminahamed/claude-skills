@@ -4,6 +4,22 @@ All notable changes to **wp-dev-skills** are documented here. This project adher
 
 ## [Unreleased]
 
+## [1.3.0]
+
+### Changed
+
+- Refreshed WordPress/PHP baselines to **July 2026** across the audit, release, and submission skills: current WP stable **7.0** (7.1 due Aug 2026; 6.9.x maintenance line), PHP floor **7.4** (WP 7.0 dropped 7.2/7.3), officially recommended **8.3+**, and **18** WP.org directory guidelines (page updated 2026-03-11).
+- `wp-plugin-audit` — Dimension A now flags a `Tested up to` that is *ahead of* the latest released WordPress (not only a stale one), a `Requires PHP` below 7.4, and a `Requires Plugins` slug mismatch; added a dated "Version currency" block and bumped the canonical header example off EOL PHP 7.2 (→ 6.5 / 7.4).
+- `wp-plugin-audit/references/readme-txt.md` — example versions bumped to WP 7.0 / PHP 7.4; documented the `Requires Plugins` dependency header and the ahead-or-behind currency rule.
+- `wp-plugin-release` + `wp-org-submission` reference skeletons — `Tested up to` example bumped from 6.7 to 7.0.
+- `wp-coding-standards` — noted current WPCS 3.1 (PHP 7.4+, PHP_CodeSniffer 3.9+).
+- `wp-ci-qa` — CI matrix bumped to current era: WP `['6.9','7.0','latest']`, PHP `['7.4','8.2','8.3','8.4']`, and pinned actions `actions/checkout@v5` + `actions/cache@v5`.
+- `wp-build-tools` — `@wordpress/scripts` example `^30` → `^32`; refreshed Node guidance (v32 needs Node LTS 20/22; GitHub Actions defaults to Node 24 from June 2026; `setup-node@v6`).
+
+### Added
+
+- `wp-plugin-audit` security coverage for the two highest-value WAF-invisible classes: **SSRF** (`wp_safe_remote_*` + host allowlist + `redirection => 0`, DNS-rebinding caveat) and **broken access control / IDOR / privilege escalation** (nonce ≠ authorization; `wp_ajax_nopriv_` privileged actions; ownership checks). Added `phar://` deserialization to Object Injection, renamed Path Traversal → **Path Traversal & LFI**, and added a Patchstack-2025 prevalence note (XSS 35% > CSRF 19% > LFI 13% > broken access control 11% > SQLi 7%; ~43% unauthenticated). Wired both new classes into the Dimension D checklist.
+
 ## [1.2.3]
 
 ### Added

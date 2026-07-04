@@ -17,11 +17,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.1', '8.2', '8.3']
-        wp: ['6.4', '6.5', 'latest']
+        php: ['7.4', '8.2', '8.3', '8.4']   # 7.4 = WP's minimum floor; 8.3 = recommended
+        wp: ['6.9', '7.0', 'latest']         # prior maintenance line + current major (WP 7.0, 2026)
         exclude:
-          - php: '8.3'
-            wp: '6.4'   # WP 6.4 not fully PHP 8.3 compatible
+          - php: '8.4'
+            wp: '6.9'   # 6.9 predates broad PHP 8.4 testing
 
     services:
       mysql:
@@ -33,7 +33,7 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -43,7 +43,7 @@ jobs:
           coverage: none   # use 'xdebug' only when generating coverage
 
       - name: Cache Composer
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: vendor
           key: composer-${{ hashFiles('composer.lock') }}
@@ -71,14 +71,14 @@ jobs:
   phpcs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           tools: cs2pr
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: vendor
           key: composer-${{ hashFiles('composer.lock') }}
@@ -103,12 +103,12 @@ jobs:
   phpstan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           coverage: none
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: vendor
           key: composer-${{ hashFiles('composer.lock') }}
@@ -123,7 +123,7 @@ jobs:
 ```yaml
 # Cache WP test suite download between runs
 - name: Cache WP test suite
-  uses: actions/cache@v4
+  uses: actions/cache@v5
   with:
     path: /tmp/wordpress-tests-lib
     key: wp-tests-${{ matrix.wp }}-${{ hashFiles('bin/install-wp-tests.sh') }}

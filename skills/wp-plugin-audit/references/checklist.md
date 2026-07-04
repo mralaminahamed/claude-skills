@@ -52,8 +52,8 @@ Flag mismatches. **Do not flag** schema `$db_version` for differing from plugin 
  * Plugin URI:        https://example.com/plugin-name
  * Description:       Description of the plugin.
  * Version:           1.0.0
- * Requires at least: 5.2
- * Requires PHP:      7.2
+ * Requires at least: 6.5
+ * Requires PHP:      7.4
  * Author:            Your Name
  * Author URI:        https://example.com
  * Text Domain:       plugin-slug
