@@ -15,10 +15,36 @@ All notable changes to **wp-dev-skills** are documented here. This project adher
 - `wp-coding-standards` — noted current WPCS 3.1 (PHP 7.4+, PHP_CodeSniffer 3.9+).
 - `wp-ci-qa` — CI matrix bumped to current era: WP `['6.9','7.0','latest']`, PHP `['7.4','8.2','8.3','8.4']`, and pinned actions `actions/checkout@v5` + `actions/cache@v5`.
 - `wp-build-tools` — `@wordpress/scripts` example `^30` → `^32`; refreshed Node guidance (v32 needs Node LTS 20/22; GitHub Actions defaults to Node 24 from June 2026; `setup-node@v6`).
+- `wp-org-submission` — ship `vendor/` and anchor `.distignore` patterns.
+- `wp-plugin-audit` — detect trialware dead-workers (a free-side handler with no free trigger) and verify changelog claims against the actual code.
+- `wp-build-tools` — don't patch a regenerated `vendor/`; fix in tracked consumer code instead.
+- `wp-coding-standards` — keep `array =>` / assignment alignment (MultipleStatementAlignment sniff).
+- `README.md` + `plugin.json` / `marketplace.json` / `gemini-extension.json` / `package.json` — added the `wp-structured-data` row and folded it into every description list (the skill shipped in this cycle but was not listed anywhere).
 
 ### Added
 
+- **`wp-structured-data`** — new skill: emit schema.org JSON-LD (`@graph`) from theme/plugin code for content an SEO plugin can't see (FAQPage, HowTo, Product, ItemList, Recipe, Event, Review), escape via `wp_json_encode`, print on `wp_head`, and coexist with Yoast / Rank Math / SEOPress graphs without duplication.
 - `wp-plugin-audit` security coverage for the two highest-value WAF-invisible classes: **SSRF** (`wp_safe_remote_*` + host allowlist + `redirection => 0`, DNS-rebinding caveat) and **broken access control / IDOR / privilege escalation** (nonce ≠ authorization; `wp_ajax_nopriv_` privileged actions; ownership checks). Added `phar://` deserialization to Object Injection, renamed Path Traversal → **Path Traversal & LFI**, and added a Patchstack-2025 prevalence note (XSS 35% > CSRF 19% > LFI 13% > broken access control 11% > SQLi 7%; ~43% unauthenticated). Wired both new classes into the Dimension D checklist.
+
+## [1.2.4] — 2026-06-23
+
+### Added
+
+- `/wp-dev-learn` command (renamed from `/wp-learn`) — session-based skill updates with a `suggest` mode for skill-gap analysis; enforces global-only acceptance, a PR-for-all-changes flow, and an owner-vs-contributor ship path.
+
+### Changed
+
+- Expanded every skill's description with natural WP-dev prompts and comprehensive trigger phrases for discovery.
+- `wp-database` — propagate `$wpdb->last_error`; never swallow a silent insert/update failure.
+- `wp-plugin-testing` — never put `ABSPATH`-guarded files in Composer's `files` autoload.
+- `wp-github-flow` — drop the `bug` label from the dev PR flow.
+- Complement (never duplicate) the official `wordpress-official-agent-skills` — reference them instead.
+
+### Fixed
+
+- Frontmatter: quote `description` fields containing colon-space sequences (YAML parse safety).
+- `wp-plugin-audit` — removed project-specific content; linked all orphaned reference files.
+- Qualified the dependency marketplace to resolve a `claude doctor` error.
 
 ## [1.2.3]
 
