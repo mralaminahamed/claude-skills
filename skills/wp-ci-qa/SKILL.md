@@ -1,6 +1,6 @@
 ---
 name: wp-ci-qa
-description: "Use when a pull request has QA failures, a \"Testing Failed\" label, or QA comments reporting broken features — reading QA feedback and PR comments, tracing root cause using root-cause-patterns.md, applying scoped conventional-commit fixes, swapping labels (Testing Failed to Need Testing), and posting a structured QA re-test comment. Triggers: \"QA failed my PR\", \"Testing Failed label on my PR\", \"fix the QA comments on PR\", \"QA says feature X is broken\", \"post a re-test comment\", \"how do I respond to QA feedback\", \"CI is failing on my PR\", \"QA reopened the ticket\", \"update the PR label after fixing\", \"testing failed label\", \"QA comment says the button is broken\", \"phpcs failing in CI\", \"yarn lint error on the PR\", \"npm run build failing in CI\", \"root cause of the QA failure\", \"write a re-test instruction comment\", \"fix failing checks on this PR\", \"QA triage workflow\". Not for: writing new features or opening a fresh PR — use `wp-github-flow`."
+description: "Use when a pull request has QA failures, a \"Testing Failed\" label, or QA comments reporting broken features — reading QA feedback and PR comments, tracing root cause using root-cause-patterns.md, applying scoped conventional-commit fixes, swapping labels (Testing Failed to Need Testing), and posting a structured QA re-test comment. Triggers: \"QA failed my PR\", \"Testing Failed label on my PR\", \"fix the QA comments on PR\", \"QA says feature X is broken\", \"post a re-test comment\", \"how do I respond to QA feedback\", \"CI is failing on my PR\", \"QA reopened the ticket\", \"update the PR label after fixing\", \"testing failed label\", \"QA comment says the button is broken\", \"phpcs failing in CI\", \"yarn lint error on the PR\", \"npm run build failing in CI\", \"root cause of the QA failure\", \"write a re-test instruction comment\", \"fix failing checks on this PR\", \"QA triage workflow\", \"phpcs prints nothing and exits 0\", \"composer run test produces no output\", \"phpstan workers keep crashing\", \"did my static checks actually run\", \"how do I tell a real pass from a broken tool\", \"compare test failures before and after my change\". Not for: writing new features or opening a fresh PR — use `wp-github-flow`."
 ---
 
 # Fix PR QA Failures
@@ -121,6 +121,60 @@ errors reference your changed files. Pre-existing errors in unrelated files are
 OK to leave — only fix what your change introduced. The build compiling
 successfully is the strongest signal a frontend fix is sound.
 
+**A silent PHP check is a broken check, not a pass.** When `composer run lint`,
+`composer run analyze` or `composer run test` prints *nothing* and exits `0`, treat
+it as a failure to run — not as a clean result. PHP tools bootstrap through
+`vendor/autoload.php`, and if Composer's `autoload.files` eagerly loads a
+WordPress-guarded file:
+
+```php
+defined( 'ABSPATH' ) || exit;
+```
+
+…then `exit` runs during autoload, outside WordPress. `exit` with no argument is
+status `0`, so the tool dies before it analyses a single file and the shell reports
+success. Nothing distinguishes it from a real pass except the missing output.
+
+Define the constant before the tool boots:
+
+```bash
+printf '<?php define( "ABSPATH", "/path/to/wp/" );\n' > /tmp/abspath.php
+php -d auto_prepend_file=/tmp/abspath.php vendor/bin/phpcs   <files>
+php -d auto_prepend_file=/tmp/abspath.php vendor/bin/phpunit --filter MyTest
+php -d auto_prepend_file=/tmp/abspath.php vendor/bin/phpstan analyse <path> --debug
+```
+
+PHPStan needs `--debug` here: its parallel workers re-bootstrap per process and die
+the same way, which surfaces as workers crashing rather than a clean result.
+`--debug` forces single-threaded analysis.
+
+**Prove the tool is live before trusting a clean run.** A canary is faster than
+re-reading the config — feed it something that must fail:
+
+```bash
+printf '<?php\n$x=1;\n if($x){echo "y";}\n' > /tmp/canary.php
+php -d auto_prepend_file=/tmp/abspath.php vendor/bin/phpcs /tmp/canary.php
+# Expect a wall of violations. Silence here means the tool is not running at all.
+```
+
+Same rule for PHPUnit: a run that reports `OK (0 tests)` or prints no summary line
+has not tested your change. Always cite the actual counts when claiming a pass.
+
+**On an already-red suite, diff names not totals.** Where a suite has pre-existing
+failures, the totals shift on their own — a flaky test can mask a regression you
+introduced, or invent one you didn't. Capture the failing test names on both sides
+and diff those instead:
+
+```bash
+run() { vendor/bin/phpunit 2>&1 | grep -E '^[0-9]+\) ' | sed 's/^[0-9]*) //' | sort; }
+run > /tmp/after.txt
+git stash -u && run > /tmp/before.txt && git stash pop
+diff /tmp/before.txt /tmp/after.txt   # only additions matter
+```
+
+Lines added = regressions you own. Lines removed = tests you fixed, or flakes.
+Report it that way rather than as "N failures before, N after".
+
 ## Step 5 — Commit each fix
 
 ```bash
@@ -197,6 +251,9 @@ EOF
 | Not verifying `do_action` call sites | Check ALL places a hook should fire, not just the obvious one |
 | Skipping build on frontend PRs | Lint/tsc may be broken or noisy; `yarn build` compiling is the real proof |
 | Treating noisy lint/tsc as your fault | 60+ errors = env/version drift. Confirm none name your files, then proceed |
+| Reading "no output, exit 0" from a PHP check as a pass | An ABSPATH-guarded autoload file `exit`s with status 0 before the tool runs. Re-run under `auto_prepend_file` and confirm with a canary |
+| Claiming tests pass without citing counts | `OK (0 tests)` and a crashed bootstrap both look like success. Quote the summary line |
+| Comparing a red suite by eyeballing totals | Flaky tests move the count either way. Diff the failing test *names* before and after |
 | Committing gitignored `build/` output | Check `git check-ignore build/`; match prior commits (usually source-only) |
 | Swapping a label that's already correct | If already `Need Testing` on a re-fix round, leave it |
 | Reading only the first QA comment | Read the latest — features confirmed fixed in round 1 shouldn't be re-touched |
