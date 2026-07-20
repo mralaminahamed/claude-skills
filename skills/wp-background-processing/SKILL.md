@@ -1,6 +1,6 @@
 ---
 name: wp-background-processing
-description: "Use when a WordPress plugin needs to run work outside the HTTP request cycle — scheduling async or recurring jobs with Action Scheduler (as_enqueue_async_action, as_schedule_single_action, as_schedule_recurring_action, as_unschedule_action), implementing WP_Background_Process (push_to_queue, save, dispatch, is_queue_empty), registering WP Cron events (wp_schedule_event, wp_clear_scheduled_hook), batch-processing large datasets without hitting PHP timeouts, tracking job progress, handling retries on failure, or debugging the actionscheduler_actions table. Triggers: \"schedule this for later\", \"run this without hitting timeout\", \"queue these items for background processing\", \"why is my cron not running\", \"Action Scheduler job keeps failing\", \"as_enqueue_async_action\", \"WP_Background_Process\", \"push_to_queue\", \"dispatch the queue\", \"DISABLE_WP_CRON\", \"process records in batches\", \"send emails in the background\", \"WP Cron not firing\", \"batch import without timeout\", \"scheduled action not running\", \"background job stuck\", \"wp action-scheduler list\", \"recurring cron event\", \"progress tracking for batch job\", \"retry failed background tasks\", \"chunked processing to avoid timeout\". Not for: real-time AJAX handlers or synchronous REST endpoints."
+description: "Use when a WordPress plugin needs to run work outside the HTTP request cycle — scheduling async or recurring jobs with Action Scheduler (as_enqueue_async_action, as_schedule_single_action, as_schedule_recurring_action, as_unschedule_action), implementing WP_Background_Process (push_to_queue, save, dispatch, is_queue_empty), registering WP Cron events (wp_schedule_event, wp_clear_scheduled_hook), batch-processing large datasets without hitting PHP timeouts, tracking job progress, handling retries on failure, or debugging the actionscheduler_actions table. Triggers: \"schedule this for later\", \"run this without hitting timeout\", \"queue these items for background processing\", \"why is my cron not running\", \"Action Scheduler job keeps failing\", \"as_enqueue_async_action\", \"WP_Background_Process\", \"push_to_queue\", \"dispatch the queue\", \"DISABLE_WP_CRON\", \"process records in batches\", \"send emails in the background\", \"WP Cron not firing\", \"batch import without timeout\", \"scheduled action not running\", \"background job stuck\", \"wp action-scheduler list\", \"recurring cron event\", \"progress tracking for batch job\", \"retry failed background tasks\", \"chunked processing to avoid timeout\", \"scheduled action completes but nothing happens\", \"my hook never fires in cron\", \"handler registered behind is_admin\", \"job runs in admin but not from cron\", \"webhook fired twice\", \"background job double-processed\", \"make my background job idempotent\". Not for: real-time AJAX handlers or synchronous REST endpoints."
 ---
 
 # WordPress Background Processing
@@ -16,6 +16,7 @@ Implement background jobs and queued tasks in WordPress plugins. Three primary t
 - "Implement WP_Background_Process", "chunked batch import".
 - "Background email sending", "async API calls".
 - "Fix a WP Cron job not firing", "make scheduled tasks reliable".
+- "The scheduled action completes but nothing happens", "the handler only runs in the admin".
 
 **Not for:** One-off scheduled events (use `wp_schedule_single_event`). REST API async patterns — use `wp-rest-api`.
 
@@ -213,8 +214,84 @@ as_schedule_single_action( time() + 300, 'my_plugin_process_item', $args, 'my-pl
 return; // Don't throw — AS won't auto-retry this run
 ```
 
+### 7. Register the handler where the job actually runs
+
+Background contexts run with `is_admin() === false`:
+
+| Context | `is_admin()` |
+|---|---|
+| WP-Cron (`wp-cron.php`, system cron) | `false` |
+| Action Scheduler queue runner | `false` |
+| Payment gateway / third-party webhooks | `false` |
+| WP-CLI | `false` |
+| REST API request | `false` |
+| `admin-ajax.php` | `true` |
+
+So a handler registered inside an admin-only bootstrap never fires for the job it
+was written for:
+
+```php
+// Bootstrap — handler is unreachable from the queue
+if ( is_admin() ) {
+    new My_Plugin\Admin\Controller(); // registers the AS handler in its constructor
+}
+```
+
+This fails silently and looks healthy from the admin: the action schedules, the row
+lands in `actionscheduler_actions`, the queue runner claims it, and — with no
+listener attached — marks it complete. Nothing throws, nothing logs.
+
+Register anything a background context must reach from an always-loaded bootstrap:
+
+```php
+// Always loaded — admin, front-end, cron, CLI, webhooks
+new My_Plugin\Common\Queue_Controller();
+
+if ( is_admin() ) {
+    new My_Plugin\Admin\Controller(); // admin screens only
+}
+```
+
+The same trap catches `admin_init` (never fires in cron), `current_screen`, and any
+registration behind a capability check — the queue runner has no logged-in user.
+
+**Detect it.** Grep the callback, then check what loads the file that registers it:
+
+```bash
+grep -rn "add_action( 'my_plugin_process_item'" .
+# → is that class instantiated behind is_admin(), a screen check,
+#   a current_user_can() gate, or hooked to admin_init?
+```
+
+Verify from outside the admin — an admin page load proves nothing here:
+
+```bash
+wp eval "do_action( 'my_plugin_process_item', 123 );"   # is_admin() is false
+wp action-scheduler run --group=my-plugin
+```
+
+**Guard for re-entry.** A context you don't control can deliver the same job more
+than once — webhook retries, a manual and an automatic path both completing, an
+action rescheduled after a partial failure. Make the side effect idempotent with a
+persisted flag instead of assuming one delivery:
+
+```php
+add_action( 'my_plugin_credit_order', function ( $order_id ) {
+    $order = wc_get_order( $order_id );
+    if ( ! $order || $order->get_meta( '_my_plugin_credited' ) ) {
+        return; // already processed
+    }
+    my_plugin_credit( $order );
+    $order->update_meta_data( '_my_plugin_credited', 1 );
+    $order->save();
+} );
+```
+
 ## Notes
 
+- Handlers for background work must be registered outside `is_admin()` — see §7. The
+  failure is silent, so a "the job never runs" report starts by checking *where* the
+  handler is registered, not what it does.
 - Action Scheduler stores pending/failed actions in `{prefix}actionscheduler_actions` table — visible in WC → Status → Scheduled Actions. Check there first when debugging stuck jobs.
 - WP Cron events do **not** persist across deactivation — always clear on `register_deactivation_hook`.
 - Background processes that modify many posts/options should run in small chunks (50–100 items) to avoid timeout and memory limits. Use `$process->memory_exceeded()` and `$process->time_exceeded()` checks from `WP_Background_Process` to self-limit.
