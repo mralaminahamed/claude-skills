@@ -152,6 +152,38 @@ add_action( 'woocommerce_product_data_panels', [ $this, 'render_panel' ] );
 add_action( 'woocommerce_process_product_meta', [ $this, 'save_meta' ] );
 ```
 
+**Where you register these matters.** Product-data hooks are admin-only, but order
+lifecycle hooks are not. `woocommerce_order_status_changed`, subscription renewal
+hooks, and anything a payment gateway triggers all fire from cron, the Action
+Scheduler queue, and webhook requests — contexts where `is_admin()` is `false`.
+Registering them in an admin-only bootstrap makes them work when a human clicks
+through the admin and silently do nothing for automatic transitions:
+
+```php
+// Always loaded — admin, front-end, cron, CLI, gateway webhooks
+new My_Plugin\Common\Order_Controller();      // order status, renewals, gateway callbacks
+
+if ( is_admin() ) {
+    new My_Plugin\Admin\Product_Controller();  // product data tabs, meta boxes
+}
+```
+
+Make the side effect idempotent too — a renewal or gateway callback can arrive more
+than once (retries, or a manual and an automatic path both completing):
+
+```php
+add_action( 'woocommerce_subscription_renewal_payment_complete', function ( $subscription, $order ) {
+    if ( $order->get_meta( '_my_plugin_processed' ) ) {
+        return; // already handled this renewal
+    }
+    my_plugin_handle_renewal( $subscription, $order );
+    $order->update_meta_data( '_my_plugin_processed', 1 );
+    $order->save();
+}, 10, 2 );
+```
+
+Context table, detection steps and verification commands → `wp-background-processing` §7.
+
 ### 7. Blocks (cart/checkout) compatibility
 
 Classic shortcode hooks (`woocommerce_checkout_fields`) do **not** fire for the block-based checkout. Use the Store API extension registry:
@@ -176,6 +208,7 @@ Declare blocks compatibility alongside HPOS:
 ## Notes
 
 - Always check `class_exists( 'WooCommerce' )` before any WC code; gate with `woocommerce_loaded` action.
+- Order lifecycle and gateway hooks must be registered outside `is_admin()` — see §6. Symptom: works when an admin changes the status by hand, never fires for an automatic transition.
 - Minimum WC version requirements: HPOS stable in 8.2, blocks checkout stable in 8.3.
 - Use `wc_get_logger()` for debug logging — writes to **WooCommerce → Status → Logs**, not the WP debug log.
 - For testing: WC ships test helpers in `woocommerce/tests/legacy/includes/` — use `WC_Helper_Product::create_simple_product()` etc. in PHPUnit tests.
